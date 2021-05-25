@@ -1,10 +1,12 @@
-import React, { Component } from 'react'
+import React, { Component, createRef, useRef } from 'react'
 import { Card, CardHeader, CardBody, CardTitle, Button } from 'reactstrap'
 import { List, Maximize, Minimize, Move } from 'react-feather'
-
+import { RCSCanvas } from '@src/components/canvas'
 export class TwoDemensional extends Component {
   constructor() {
     super()
+
+    this.canvasNode = createRef()
     this.state = {
       toggle: true
     }
@@ -44,7 +46,13 @@ export class TwoDemensional extends Component {
           </div>
         </CardHeader>
         <CardBody>
-
+          <div
+            ref={node => {
+              this.canvasNode = node
+            }}
+          >
+            <RCSCanvas parent={this.canvasNode} />
+          </div>
         </CardBody>
       </Card>
     )

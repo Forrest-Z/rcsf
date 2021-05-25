@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Group, Rect, Transformer } from 'react-konva'
 
-export class Rectangle extends Component {
+export class RectangleShape extends Component {
 
   render() {
     return (
@@ -18,7 +18,7 @@ export class Rectangle extends Component {
   }
 }
 
-Rectangle.PropTypes = {
+RectangleShape.PropTypes = {
   id: PropTypes.any,
   name: PropTypes.string,
   x: PropTypes.number,

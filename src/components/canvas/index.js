@@ -1,8 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Stage } from 'react-konva'
+import { Map } from './layer'
+
 export class RCSCanvas extends React.Component {
   constructor() {
+    super()
+    
     this.state = {
       width: null,
       height: null,
@@ -13,17 +17,20 @@ export class RCSCanvas extends React.Component {
     }
   }
 
+  componentDidMount() {
+    console.log(this.props)
+  }
+
+  componentDidUpdate(nextProps) {
+    console.log(nextProps)
+  }
+  
   render() {
     return (
-      <Stage>
-
+      <Stage
+      >
+        <Map />
       </Stage>
     )
   }
-}
-
-
-RCSCanvas.PropTypes = {
-  parent: PropTypes.object,
-  src: PropTypes.string
 }

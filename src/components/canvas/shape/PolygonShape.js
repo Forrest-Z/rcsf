@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-export class Path extends Component {
+export class PolygonShape extends Component {
 
   render() {
     return (
@@ -12,12 +12,13 @@ export class Path extends Component {
   }
 }
 
-Path.PropTypes = {
+PolygonShape.PropTypes = {
   id: PropTypes.any,
   name: PropTypes.string,
   x: PropTypes.number,
   y: PropTypes.number,
   rotation: PropTypes.number,
   scale: PropTypes.object,
-  visible: PropTypes.bool
+  visible: PropTypes.bool,
+  selected: PropTypes.bool
 }

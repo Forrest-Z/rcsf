@@ -2,11 +2,15 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Image } from 'react-konva'
 
-export class Image extends Component {
+export class ImageShape extends Component {
   constructor() {
+    super()
+    
     this.state = {
       image: null
     }
+    
+    this.handleLoad = this.handleLoad.bind(this)
   }
 
   componentDidMount() {
@@ -23,7 +27,7 @@ export class Image extends Component {
     this.image.addEventListener('load', this.handleLoad)
   }
 
-  handleLoad = () => {
+  handleLoad() {
     this.setState({
       image: this.image
     })
@@ -46,13 +50,13 @@ export class Image extends Component {
   }
 }
 
-Image.PropTypes = {
-  id: PropTypes.any,
-  name: PropTypes.string,
-  x: PropTypes.number,
-  y: PropTypes.number,
-  rotation: PropTypes.number,
-  scale: PropTypes.object,
-  visible: PropTypes.bool,
-  src: PropTypes.string
-}
+// ImageShape.PropTypes = {
+//   id: PropTypes.any,
+//   name: PropTypes.string,
+//   x: PropTypes.number,
+//   y: PropTypes.number,
+//   rotation: PropTypes.number,
+//   scale: PropTypes.object,
+//   visible: PropTypes.bool,
+//   src: PropTypes.string
+// }

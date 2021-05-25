@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Circle, Group } from 'react-konva'
 
-export class Point extends Component {
+export class PointShape extends Component {
   constructor() {
     this.state = {
       fill: '#FFFFFF',
@@ -33,7 +33,7 @@ export class Point extends Component {
   }
 }
 
-RoutePoint.PropTypes = {
+PointShape.PropTypes = {
   id: PropTypes.any,
   name: PropTypes.string,
   x: PropTypes.number,

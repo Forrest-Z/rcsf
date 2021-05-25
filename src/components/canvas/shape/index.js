@@ -1,0 +1,6 @@
+export { ImageShape } from './ImageShape'
+export { PointShape } from './PointShape'
+export { RectangleShape } from './RectangleShape'
+export { PolygonShape } from './PolygonShape'
+export { PathShape } from './PathShape'
+export { VehicleShape } from './VehicleShape'

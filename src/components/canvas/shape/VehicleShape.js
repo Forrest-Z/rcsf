@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-export class Vehicle extends Component {
+export class VehicleShape extends Component {
 
   render() {
     return (
@@ -12,7 +12,7 @@ export class Vehicle extends Component {
   }
 }
 
-Vehicle.PropTypes = {
+VehicleShape.PropTypes = {
   id: PropTypes.any,
   name: PropTypes.string,
   x: PropTypes.number,
