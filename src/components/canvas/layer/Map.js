@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Layer } from 'react-konva'
 
-export class Polygon extends Component {
+export class Map extends Component {
 
   render() {
     return (
-      <div>
+      <Layer visible={this.props.visible}>
         
-      </div>
+      </Layer>
     )
   }
 }
 
-Polygon.PropTypes = {
+Map.PropTypes = {
   id: PropTypes.any,
   name: PropTypes.string,
   x: PropTypes.number,
@@ -20,5 +21,5 @@ Polygon.PropTypes = {
   rotation: PropTypes.number,
   scale: PropTypes.object,
   visible: PropTypes.bool,
-  selected: PropTypes.bool
+  padding: PropTypes.number
 }

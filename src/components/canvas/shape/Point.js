@@ -1,18 +1,39 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Circle, Group } from 'react-konva'
 
 export class Point extends Component {
+  constructor() {
+    this.state = {
+      fill: '#FFFFFF',
+      stroke: '#FFFFFF'
+    }
+  }
+
+  componentDidMount() {
+    
+  }
+
+  componentDidUpdate(nextProps, nextState) {
+    
+  }
 
   render() {
     return (
-      <div>
-        
-      </div>
+      <Group>
+        <Circle 
+          x={this.props.x}
+          y={this.props.y}
+          scale={this.props.scale}
+          fill={this.state.fill}
+          stroke={this.state.stroke}
+        />
+      </Group>
     )
   }
 }
 
-Point.PropTypes = {
+RoutePoint.PropTypes = {
   id: PropTypes.any,
   name: PropTypes.string,
   x: PropTypes.number,
@@ -20,5 +41,6 @@ Point.PropTypes = {
   rotation: PropTypes.number,
   scale: PropTypes.object,
   visible: PropTypes.bool,
-  selected: PropTypes.bool
+  selected: PropTypes.bool,
+  type: PropTypes.oneOf(['charge', 'route', 'parking'])
 }

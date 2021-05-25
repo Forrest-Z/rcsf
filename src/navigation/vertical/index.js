@@ -1,16 +1,16 @@
-import { Mail, Home } from 'react-feather'
+import { BarChart2, Home } from 'react-feather'
 
 export default [
   {
-    id: 'home',
-    title: 'Home',
+    id: 'dashboard',
+    title: 'Dashboard',
     icon: <Home size={20} />,
-    navLink: '/home'
+    navLink: '/dashboard'
   },
   {
-    id: 'secondPage',
-    title: 'Second Page',
-    icon: <Mail size={20} />,
-    navLink: '/second-page'
+    id: 'statistics',
+    title: 'Statistics',
+    icon: <BarChart2 size={20} />,
+    navLink: '/statistics'
   }
 ]

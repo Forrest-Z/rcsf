@@ -14,7 +14,7 @@ const themeConfig = {
     contentWidth: 'full', // full, boxed
     menu: {
       isHidden: false,
-      isCollapsed: false
+      isCollapsed: true
     },
     navbar: {
       // ? For horizontal menu, navbar type will work for navMenu type
@@ -22,7 +22,7 @@ const themeConfig = {
       backgroundColor: 'white' // BS color options [primary, success, etc]
     },
     footer: {
-      type: 'static' // static, sticky, hidden
+      type: 'hidden' // static, sticky, hidden
     },
     customizer: true,
     scrollTop: true // Enable scroll to top button
