@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 
 // ** Configs
 import themeConfig from '@configs/themeConfig'
+import ThemeMobx from '@src/utility/mobx/ThemeMobx'
 
 export const useSkin = () => {
   // ** State
@@ -28,6 +29,8 @@ export const useSkin = () => {
       setSkin(valueToStore)
       // ** Save to local storage
       window.localStorage.setItem('skin', JSON.stringify(valueToStore))
+      // ** Save to Mobx
+      ThemeMobx.setSkin(JSON.stringify(valueToStore))
     } catch (error) {
       // ** A more advanced implementation would handle the error case
       console.log(error)

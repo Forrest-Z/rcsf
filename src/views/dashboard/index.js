@@ -27,8 +27,8 @@ export class Dashboard extends React.Component {
             i: 'two-demensional',
             x: 2,
             y: 0,
-            w: 6,
-            h: 30
+            w: 4,
+            h: 20
           },
           {
             i: 'vehicle-controller',
@@ -39,10 +39,10 @@ export class Dashboard extends React.Component {
           },
           {
             i: 'three-demensional',
-            x: 8,
+            x: 6,
             y: 0,
             w: 4,
-            h: 15
+            h: 20
           }
         ]
       }

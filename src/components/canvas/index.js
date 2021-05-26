@@ -1,15 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Stage } from 'react-konva'
 import { Map } from './layer'
 
 export class RCSCanvas extends React.Component {
-  constructor() {
-    super()
-    
+  constructor(props) {
+    super(props)
+
     this.state = {
-      width: null,
-      height: null,
+      width: 0,
+      height: 0,
       scale: {
         x: 1,
         y: 1
@@ -17,20 +16,19 @@ export class RCSCanvas extends React.Component {
     }
   }
 
-  componentDidMount() {
-    console.log(this.props)
-  }
-
-  componentDidUpdate(nextProps) {
-    console.log(nextProps)
-  }
-  
   render() {
+    const { width, height } = this.props
+
     return (
-      <Stage
-      >
-        <Map />
-      </Stage>
+      <div>
+        <Stage
+          width={width}
+          height={height}
+          draggable={true}
+        >
+          <Map />
+        </Stage>
+      </div>
     )
   }
 }

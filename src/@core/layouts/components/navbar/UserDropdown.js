@@ -43,7 +43,7 @@ const UserDropdown = () => {
           <span className='user-name font-weight-bold'>{(userData && userData['username']) || 'John Doe'}</span>
           <span className='user-status'>{(userData && userData.role) || 'Admin'}</span>
         </div>
-        <Avatar initial content={''} imgHeight='40' imgWidth='40' status='online' />
+        <Avatar content={''} imgHeight='40' imgWidth='40' status='online' />
       </DropdownToggle>
       <DropdownMenu right>
         <DropdownItem tag={Link} to='#' onClick={e => e.preventDefault()}>

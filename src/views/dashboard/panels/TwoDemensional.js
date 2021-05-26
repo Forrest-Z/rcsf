@@ -2,6 +2,18 @@ import React, { Component, createRef, useRef } from 'react'
 import { Card, CardHeader, CardBody, CardTitle, Button } from 'reactstrap'
 import { List, Maximize, Minimize, Move } from 'react-feather'
 import { RCSCanvas } from '@src/components/canvas'
+import { useResizeDetector } from 'react-resize-detector'
+
+
+const RCSCanvasContainer = () => {
+  const { width, height, ref } = useResizeDetector()
+  return (
+    <div className='h-100' ref={ref}>
+      <RCSCanvas width={width} height={height} />
+    </div>
+  )
+}
+
 export class TwoDemensional extends Component {
   constructor() {
     super()
@@ -46,13 +58,7 @@ export class TwoDemensional extends Component {
           </div>
         </CardHeader>
         <CardBody>
-          <div
-            ref={node => {
-              this.canvasNode = node
-            }}
-          >
-            <RCSCanvas parent={this.canvasNode} />
-          </div>
+          <RCSCanvasContainer />
         </CardBody>
       </Card>
     )

@@ -1,62 +1,33 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+// https://ftp.bmp.ovh/imgs/2021/04/ac4ffed3f26ef408.png
+
+import { useEffect, useRef, useState } from 'react'
 import { Image } from 'react-konva'
+import useImage from "use-image"
+import ThemeMobx from '@src/utility/mobx/ThemeMobx'
+import { observer } from 'mobx-react-lite'
+import Konva from 'konva'
 
-export class ImageShape extends Component {
-  constructor() {
-    super()
-    
-    this.state = {
-      image: null
+export const ImageShape = observer(({
+  src,
+  rotation,
+  visible
+}) => {
+  const imageRef = useRef()
+  const [image] = useImage(src, 'Anonymous')
+
+  useEffect(() => {
+    if (image) {
+      imageRef.current.cache()
+      imageRef.current.getLayer().draw()
     }
-    
-    this.handleLoad = this.handleLoad.bind(this)
-  }
+  }, [image])
 
-  componentDidMount() {
-    this.loadImage()
-  }
 
-  componentWillUnmount() {
-    this.image.removeEventListener('load', this.handleLoad)
-  }
-
-  loadImage() {
-    this.image = new window.Image()
-    this.image.src = this.props.src
-    this.image.addEventListener('load', this.handleLoad)
-  }
-
-  handleLoad() {
-    this.setState({
-      image: this.image
-    })
-
-    this.imageNode.getLayer().cache()
-    this.imageNode.getLayer().batchDraw()
-  }
-
-  render() {
-    return (
-      <Image 
-        x={this.props.x}
-        y={this.props.y}
-        image={this.state.image}
-        ref={node => {
-          this.imageNode = node
-        }}
-      />
-    )
-  }
-}
-
-// ImageShape.PropTypes = {
-//   id: PropTypes.any,
-//   name: PropTypes.string,
-//   x: PropTypes.number,
-//   y: PropTypes.number,
-//   rotation: PropTypes.number,
-//   scale: PropTypes.object,
-//   visible: PropTypes.bool,
-//   src: PropTypes.string
-// }
+  return (
+    <Image
+      image={image}
+      filters={ThemeMobx.skin === '"dark"' ? [Konva.Filters.Invert] : []}
+      ref={imageRef}
+    />
+  )
+})
