@@ -4,12 +4,16 @@ import {
   VehicleList, 
   TwoDemensional, 
   VehicleController, 
-  ThreeDemensional
+  ThreeDemensional,
+  VehicleState
 } from './panels'
+import { ThemeColors } from '@src/utility/context/ThemeColors'
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
 export class Dashboard extends React.Component {
+  static contextType = ThemeColors
+
   constructor() {
     super()
 
@@ -43,6 +47,13 @@ export class Dashboard extends React.Component {
             y: 0,
             w: 4,
             h: 20
+          },
+          {
+            i: 'vehicle-state',
+            x: 2,
+            y: 20,
+            w: 4,
+            h: 10
           }
         ]
       }
@@ -58,6 +69,7 @@ export class Dashboard extends React.Component {
   }
 
   render() {
+    const { colors } = this.context
     return (
       <ResponsiveGridLayout
         layouts={this.state.layouts}
@@ -84,6 +96,9 @@ export class Dashboard extends React.Component {
         </div>
         <div key='three-demensional'>
           <ThreeDemensional />
+        </div>
+        <div key='vehicle-state'>
+          <VehicleState primary={colors.primary.main} danger={colors.danger.main} />
         </div>
       </ResponsiveGridLayout>
     )
