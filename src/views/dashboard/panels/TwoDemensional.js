@@ -57,7 +57,7 @@ export class TwoDemensional extends Component {
             </Button.Ripple>
           </div>
         </CardHeader>
-        <CardBody>
+        <CardBody className='p-0'>
           <RCSCanvasContainer />
         </CardBody>
       </Card>
