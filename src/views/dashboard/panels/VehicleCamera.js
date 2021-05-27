@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Card, CardHeader, CardBody, CardTitle, Button } from 'reactstrap'
 import { List, Maximize, Minimize, Move } from 'react-feather'
+import { Reflv } from '@src/components/flv-player'
 
 export class VehicleCamera extends Component {
   constructor() {
@@ -28,7 +29,7 @@ export class VehicleCamera extends Component {
           <div className="d-flex align-items-center">
             <List className="mr-2" size={20} />
             <CardTitle tag='h4'>
-              Two Demensional
+              Camera
             </CardTitle>
           </div>
           <div
@@ -43,8 +44,8 @@ export class VehicleCamera extends Component {
             </Button.Ripple>
           </div>
         </CardHeader>
-        <CardBody>
-
+        <CardBody className='p-0'>
+          <Reflv url='http://192.168.1.107:8081/live/livestream.flv' type='flv' isLive={true} config={{ enableStashBuffer: false }}/>
         </CardBody>
       </Card>
     )

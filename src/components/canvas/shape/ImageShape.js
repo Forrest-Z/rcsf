@@ -12,11 +12,15 @@ export const ImageShape = observer(({
   rotation,
   visible
 }) => {
+  const [width, setWidth] = useState(0)
+  const [height, setHeight] = useState(0)
   const imageRef = useRef()
   const [image] = useImage(src, 'Anonymous')
 
   useEffect(() => {
     if (image) {
+      setWidth(image.width)
+      setHeight(image.height)
       imageRef.current.cache()
       imageRef.current.getLayer().draw()
     }
@@ -25,6 +29,8 @@ export const ImageShape = observer(({
 
   return (
     <Image
+      offsetX={width / 2}
+      offsetY={height / 2}
       image={image}
       filters={ThemeMobx.skin === '"dark"' ? [Konva.Filters.Invert] : []}
       ref={imageRef}

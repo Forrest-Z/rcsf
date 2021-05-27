@@ -33,9 +33,9 @@ const fullscreenControlStyle = {
 
 export const ThreeDemensional = () => {
   const [viewport, setViewport] = useState({
-    latitude: 40,
-    longitude: -100,
-    zoom: 3.5,
+    latitude: 30.508,
+    longitude: 114.394,
+    zoom: 14.5,
     bearing: 0,
     pitch: 0
   })
@@ -72,6 +72,7 @@ export const ThreeDemensional = () => {
       </CardHeader>
       <CardBody className='p-0'>
         <ReactMapGL
+          mapStyle='mapbox://styles/yurui0106/ckp6lseg903iy18n4hdmkzvwm'
           width={'100%'}
           height={'100%'}
           {...viewport}

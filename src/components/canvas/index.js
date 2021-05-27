@@ -20,7 +20,7 @@ export class RCSCanvas extends React.Component {
 
   onWheel(e) {
     e.evt.preventDefault()
-    const scaleBy = 1.04
+    const scaleBy = 1.06
 
     const oldScale = this.state.scale.x
     const newScale = e.evt.deltaY < 0 ? oldScale * scaleBy : oldScale / scaleBy
@@ -59,6 +59,8 @@ export class RCSCanvas extends React.Component {
     return (
       <div>
         <Stage
+          x={width / 2}
+          y={height / 2}
           width={width}
           height={height}
           draggable={true}
