@@ -13,6 +13,18 @@ const Routes = [
     component: lazy(() => import('../../views/dashboard/index'))
   },
   {
+    path: '/map',
+    component: lazy(() => import('../../views/map/index'))
+  },
+  {
+    path: '/mission',
+    component: lazy(() => import('../../views/mission/index'))
+  },
+  {
+    path: '/vehicle',
+    component: lazy(() => import('../../views/vehicle/index'))
+  },
+  {
     path: '/statistics',
     component: lazy(() => import('../../views/statistics/index'))
   },
