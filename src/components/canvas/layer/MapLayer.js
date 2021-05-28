@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Layer } from 'react-konva'
 import { ImageShape } from '../shape'
 
-export class Map extends Component {
+export class MapLayer extends Component {
 
   render() {
     return (

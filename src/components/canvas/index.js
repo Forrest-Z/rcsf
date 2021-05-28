@@ -1,6 +1,6 @@
 import React, { createRef } from 'react'
 import { Stage } from 'react-konva'
-import { Map } from './layer'
+import { MapLayer, ShapeLayer } from './layer'
 
 export class RCSCanvas extends React.Component {
   constructor(props) {
@@ -32,17 +32,17 @@ export class RCSCanvas extends React.Component {
       }
     })
 
-    const circles = this.stageRef.current.find('Circle')
-    circles.scale({
-      x: 1 / newScale,
-      y: 1 / newScale
-    })
+    // const circles = this.stageRef.current.find('Circle')
+    // circles.scale({
+    //   x: 1 / newScale,
+    //   y: 1 / newScale
+    // })
 
-    const wedges = this.stageRef.current.find('Path')
-    wedges.scale({
-      x: 1 / newScale,
-      y: 1 / newScale
-    })
+    // const wedges = this.stageRef.current.find('Path')
+    // wedges.scale({
+    //   x: 1 / newScale,
+    //   y: 1 / newScale
+    // })
 
     // const arrows = stageRef.current.find('Arrow')
     // arrows.scale({
@@ -68,7 +68,8 @@ export class RCSCanvas extends React.Component {
           ref={this.stageRef}
           scale={this.state.scale}
         >
-          <Map />
+          <MapLayer />
+          <ShapeLayer />
         </Stage>
       </div>
     )
