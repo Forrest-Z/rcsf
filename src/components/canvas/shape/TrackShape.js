@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Line } from 'react-konva'
+import { Line, Group } from 'react-konva'
 import { SHAPE_STYLES_FILL, SHAPE_STYLES_STROKE } from '../utils/styles'
 
 export class TrackShape extends Component {
@@ -16,12 +16,21 @@ export class TrackShape extends Component {
 
   render() {
     return (
-      <Line
-        fill={this.state.fill}
-        stroke={this.state.stroke}
-        strokeWidth={4}
-        points={[0, 0, 10, 10, 100, 100]}
-      />
+      <Group>
+        <Line
+          fill={this.state.fill}
+          stroke={this.state.stroke}
+          strokeWidth={this.props.width}
+          points={[0, 0, 10, 10, 100, 100]}
+        />
+        <Line
+          fill={this.state.fill}
+          stroke={'#7ac943'}
+          strokeWidth={this.props.width / 5}
+          points={[0, 0, 10, 10, 100, 100]}
+          dash={[4, 8]}
+        />
+      </Group>
     )
   }
 }
