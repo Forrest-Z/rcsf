@@ -100,7 +100,8 @@ export class Reflv extends Component {
         controls={true}
         muted
         style={Object.assign({
-          width: '100%'
+          width: '100%',
+          height: '100%'
         }, style)}
         ref={this.initFlv}
       />

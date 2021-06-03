@@ -10,8 +10,6 @@ export class ShapeLayer extends React.Component {
   render() {
     return (
       <Layer>
-        <RectangleShape width={50} height={50} />
-        <TrackShape />
       </Layer>
     )
   }
