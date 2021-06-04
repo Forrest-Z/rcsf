@@ -22,6 +22,7 @@ const Routes = [
   },
   {
     path: '/vehicle',
+    className: 'ecommerce-application',
     component: lazy(() => import('../../views/vehicle/index'))
   },
   {

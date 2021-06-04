@@ -102,9 +102,9 @@ export class Dashboard extends React.Component {
         <div key='vehicle-controller'>
           <VehicleController />
         </div>
-        <div key='three-demensional'>
+        {/* <div key='three-demensional'>
           <ThreeDemensional />
-        </div>
+        </div> */}
         <div key='vehicle-state'>
           <VehicleState primary={colors.primary.main} danger={colors.danger.main} />
         </div>
