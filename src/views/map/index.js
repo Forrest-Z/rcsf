@@ -1,11 +1,13 @@
 // ** React Imports
 import React, { useState, useContext, Fragment } from 'react'
+import { Link } from 'react-router-dom'
 
 // ** Third Party Components
 import { Card, CardBody, Button, Row, Col, CustomInput, Label, Input } from 'reactstrap'
 import DataTable from 'react-data-table-component'
 import { ChevronDown } from 'react-feather'
 import { ThemeColors } from '@src/utility/context/ThemeColors'
+
 // ** Custom Components
 
 // ** Styles
@@ -50,7 +52,7 @@ const Header = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter, searc
               onChange={e => handleFilter(e.target.value)}
             />
           </div>
-          <Button.Ripple color='primary' onClick={toggleSidebar}>
+          <Button.Ripple tag={Link} to='/map/add' color='primary'>
             Add New Map
           </Button.Ripple>
 
@@ -62,7 +64,7 @@ const Header = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter, searc
 
 const MapView = () => {
   const context = useContext(ThemeColors)
-  
+
   return (
     <Fragment>
       <div className='app-user-list'>

@@ -1,7 +1,7 @@
 import { lazy } from 'react'
 
 // ** Document title
-const TemplateTitle = '%s - Vuexy React Admin Template'
+const TemplateTitle = '%s - Robot Control System'
 
 // ** Default Route
 const DefaultRoute = '/dashboard'
@@ -10,24 +10,30 @@ const DefaultRoute = '/dashboard'
 const Routes = [
   {
     path: '/dashboard',
-    component: lazy(() => import('../../views/dashboard/index'))
+    component: lazy(() => import('../../views/dashboard'))
   },
   {
     path: '/map',
-    component: lazy(() => import('../../views/map/index'))
+    exact: true,
+    component: lazy(() => import('../../views/map'))
+  },
+  {
+    path: '/map/add',
+    exact: true,
+    component: lazy(() => import('../../views/map/add'))
   },
   {
     path: '/mission',
-    component: lazy(() => import('../../views/mission/index'))
+    component: lazy(() => import('../../views/mission'))
   },
   {
     path: '/vehicle',
     className: 'ecommerce-application',
-    component: lazy(() => import('../../views/vehicle/index'))
+    component: lazy(() => import('../../views/vehicle'))
   },
   {
     path: '/statistics',
-    component: lazy(() => import('../../views/statistics/index'))
+    component: lazy(() => import('../../views/statistics'))
   },
   {
     path: '/login',
