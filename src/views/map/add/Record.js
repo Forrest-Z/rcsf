@@ -15,7 +15,7 @@ import {
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { Check } from 'react-feather'
-import Select from 'react-select'
+import Select, { components } from 'react-select'
 
 // ** Custom Components
 import { selectThemeColors } from '@utils'
@@ -39,6 +39,13 @@ const SuccessToast = ({ data }) => {
   )
 }
 
+const OptionComponent = ({ data, ...props }) => {
+  return (
+    <components.Option {...props}>
+      {data.label}
+    </components.Option>
+  )
+}
 
 const Record = () => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm()
@@ -85,14 +92,16 @@ const Record = () => {
             <Select
               id='device'
               name='device'
-              {...register('device', { required: true})}
+              {...register('device', { required: true })}
               theme={selectThemeColors}
               className='react-select'
               classNamePrefix='select'
-              options={deviceOptions}
               isClearable
               onFocus={handleFocus}
               placeholder=''
+              components={{
+                Option: OptionComponent
+              }}
             />
             {errors.device && errors.device.type === "required" && <span className='text-danger'>This is required</span>}
           </FormGroup>
