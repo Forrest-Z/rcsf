@@ -13,8 +13,10 @@ import {
   TabContent,
   TabPane
 } from 'reactstrap'
-import Upload from './Upload'
 
+// ** Custom Components
+import Upload from './Upload'
+import Record from './Record'
 
 const AddNewMap = () => {
   const [active, setActive] = useState('0')
@@ -38,9 +40,9 @@ const AddNewMap = () => {
           <TabPane className='h-100' tabId='0'>
             <Upload />
           </TabPane>
-          {/* <TabPane tabId='1'>
+          <TabPane tabId='1'>
             <Record/>
-          </TabPane> */}
+          </TabPane>
         </TabContent>
       </CardBody>
     </Card>
