@@ -1,5 +1,5 @@
 // ** React Imports
-import React, { useState, useContext, Fragment } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 
 // ** Third Party Components
@@ -8,10 +8,13 @@ import DataTable from 'react-data-table-component'
 import { ChevronDown } from 'react-feather'
 import { ThemeColors } from '@src/utility/context/ThemeColors'
 
-// ** Custom Components
+// ** Store & Actions
+import { getMap } from './store/actions'
+import { useDispatch, useSelector } from 'react-redux'
 
 // ** Styles
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { columns } from './colums'
 
 const Header = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
   return (
@@ -63,7 +66,27 @@ const Header = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter, searc
 }
 
 const MapView = () => {
-  const context = useContext(ThemeColors)
+  const dispatch = useDispatch()
+  const store = useSelector(state => state.map)
+
+  const [pageSize, setPageSize] = useState(10)
+
+  useEffect(() => {
+    dispatch(
+      getMap({
+        pageSize
+      })
+    )
+  }, [dispatch])
+
+  const dataToRender = () => {
+
+    if (store.data.length > 0) {
+      return store.data
+    } else {
+      return []
+    }
+  }
 
   return (
     <Fragment>
@@ -76,7 +99,9 @@ const MapView = () => {
               subHeader
               responsive
               sortIcon={<ChevronDown />}
+              columns={columns}
               paginationServer
+              data={dataToRender()}
               className='react-dataTable'
               subHeaderComponent={
                 <Header />
