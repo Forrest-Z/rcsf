@@ -7,6 +7,7 @@ import { Card, CardBody, Button, Row, Col, CustomInput, Label, Input } from 'rea
 import DataTable from 'react-data-table-component'
 import { ChevronDown } from 'react-feather'
 import { ThemeColors } from '@src/utility/context/ThemeColors'
+import ReactPaginate from 'react-paginate'
 
 // ** Store & Actions
 import { getMap } from './store/actions'
@@ -15,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux'
 // ** Styles
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 import { columns } from './colums'
+
 
 const Header = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
   return (
@@ -70,10 +72,12 @@ const MapView = () => {
   const store = useSelector(state => state.map)
 
   const [pageSize, setPageSize] = useState(10)
+  const [pageNo, setPageNo] = useState(1)
 
   useEffect(() => {
     dispatch(
       getMap({
+        pageNo,
         pageSize
       })
     )
@@ -88,6 +92,51 @@ const MapView = () => {
     }
   }
 
+  const handlePagination = page => {
+    dispatch(
+      getMap({
+        pageNo: page.selected + 1,
+        pageSize
+      })
+    )
+    setPageNo(page.selected + 1)
+  }
+
+  const handlePerPage = e => {
+    dispatch(
+      getMap({
+        pageNo,
+        pageSize: parseInt(e.target.value)
+      })
+    )
+    setPageSize(parseInt(e.target.value))
+  }
+
+  const Pagination = () => {
+    const count = Number((store.count / pageSize).toFixed(0))
+
+    return (
+      <ReactPaginate 
+        pageCount={count || 1}
+        nextLabel=''
+        breakLabel='...'
+        previousLabel=''
+        activeClassName='active'
+        breakClassName='page-item'
+        breakLinkClassName='page-link'
+        forcePage={pageNo !== 0 ? pageNo - 1 : 0}
+        onPageChange={page => handlePagination(page)}
+        pageClassName='page-item'
+        nextLinkClassName='page-link'
+        nextClassName='page-item next'
+        previousClassName='page-item prev'
+        previousLinkClassName='page-link'
+        pageLinkClassName='page-link'
+        containerClassName='pagination react-pagination justify-content-end p-1'
+      />
+    )
+  }
+
   return (
     <Fragment>
       <div className='app-user-list'>
@@ -99,12 +148,18 @@ const MapView = () => {
               subHeader
               responsive
               sortIcon={<ChevronDown />}
+              defaultSortField='id'
+              paginationDefaultPage={pageNo}
+              paginationComponent={Pagination}
               columns={columns}
               paginationServer
               data={dataToRender()}
               className='react-dataTable'
               subHeaderComponent={
-                <Header />
+                <Header 
+                  handlePerPage={handlePerPage}
+                  rowsPerPage={pageSize}
+                />
               }
             />
           </CardBody>

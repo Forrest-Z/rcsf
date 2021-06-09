@@ -67,7 +67,7 @@ export const columns = [
     selector: '',
     cell: row => (
       <div className='column-action d-flex align-items-center'>
-        <div className='mx-1'>
+        <div className='mr-1'>
           <Link id={`edit-tooltip-${row.id}`} to={`/map/eidt/${row.id}`} >
             <Edit2 size={17} />
           </Link>

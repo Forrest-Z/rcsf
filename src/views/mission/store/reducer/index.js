@@ -4,10 +4,9 @@ const initialState = {
   params: {}
 }
 
-const mapReducer = (state = initialState, action) => {
+const missionReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'GET_MAP':
-      console.log(action.params)
+    case 'GET_MISSION':
       return {
         ...state,
         data: action.data.results,
@@ -19,4 +18,4 @@ const mapReducer = (state = initialState, action) => {
   }
 }
 
-export default mapReducer
+export default missionReducer

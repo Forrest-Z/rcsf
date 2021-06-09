@@ -1,9 +1,9 @@
 import React from 'react'
 import { Responsive, WidthProvider } from 'react-grid-layout'
-import { 
-  VehicleList, 
-  TwoDemensional, 
-  VehicleController, 
+import {
+  VehicleList,
+  TwoDemensional,
+  VehicleController,
   ThreeDemensional,
   VehicleState,
   VehicleCamera
@@ -20,6 +20,44 @@ export class Dashboard extends React.Component {
 
     this.state = {
       layouts: {
+        md: [
+          {
+            i: 'vehicle-list',
+            x: 0,
+            y: 0,
+            w: 3,
+            h: 20
+          },
+          {
+            i: 'two-demensional',
+            x: 3,
+            y: 0,
+            w: 4,
+            h: 20
+          },
+          {
+            i: 'vehicle-controller',
+            x: 0,
+            y: 15,
+            w: 3,
+            h: 10
+          },
+          {
+            i: 'vehicle-state',
+            x: 3,
+            y: 20,
+            w: 4,
+            h: 10
+          },
+          {
+            i: 'vehicle-camera',
+            x: 10,
+            y: 0,
+            w: 2,
+            h: 8
+          }
+
+        ],
         lg: [
           {
             i: 'vehicle-list',
@@ -85,11 +123,12 @@ export class Dashboard extends React.Component {
         isResizable={true}
         cols={{
           lg: 12,
-          md: 10,
+          md: 12,
           sm: 6,
           xs: 4,
           xxs: 2
         }}
+        breakpoints={{ lg: 1700, md: 996, sm: 768, xs: 480, xxs: 0 }}
         draggableHandle=".drag-handler"
         rowHeight={18}
       >
