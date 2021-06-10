@@ -55,6 +55,7 @@ const Header = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter, searc
     </div>
   )
 }
+
 const MissionView = () => {
   return (
     <Card>

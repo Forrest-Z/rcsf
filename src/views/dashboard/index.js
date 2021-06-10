@@ -32,7 +32,7 @@ export class Dashboard extends React.Component {
             i: 'two-demensional',
             x: 3,
             y: 0,
-            w: 4,
+            w: 5,
             h: 20
           },
           {
@@ -46,7 +46,7 @@ export class Dashboard extends React.Component {
             i: 'vehicle-state',
             x: 3,
             y: 20,
-            w: 4,
+            w: 5,
             h: 10
           },
           {
@@ -145,7 +145,7 @@ export class Dashboard extends React.Component {
           <ThreeDemensional />
         </div> */}
         <div key='vehicle-state'>
-          <VehicleState primary={colors.primary.main} danger={colors.danger.main} />
+          <VehicleState primary={colors.primary.main} danger={colors.danger.main} success={colors.success.main} />
         </div>
         <div key='vehicle-camera'>
           <VehicleCamera primary={colors.primary.main} danger={colors.danger.main} />

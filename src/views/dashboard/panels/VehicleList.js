@@ -8,6 +8,7 @@ import { FcHighBattery, FcChargeBattery } from 'react-icons/fc'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
+
 export class VehicleList extends Component {
   constructor() {
     super()

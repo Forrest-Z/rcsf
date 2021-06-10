@@ -33,7 +33,7 @@ export const columns = [
       return (
         <div className='d-flex justify-content-left align-items-center'>
           <div className='d-flex flex-column'>
-            <h6 className='user-name text-truncate mb-0'>{row.name}</h6>
+            <h5 className='user-name text-truncate mb-0'>{row.name}</h5>
             <small className='text-truncate text-muted mb-0'>{row.description}</small>
           </div>
         </div>
@@ -47,7 +47,7 @@ export const columns = [
     sortable: true,
     cell: row => (
       <div>
-        <h6 className='user-name text-truncate mb-0'>{row.createTime}</h6>
+        <span className='mb-0'>{row.createTime}</span>
       </div>
     )
   },
@@ -58,7 +58,7 @@ export const columns = [
     sortable: true,
     cell: row => (
       <div>
-        <h6 className='user-name text-truncate mb-0'>{row.updateTime}</h6>
+        <span className='mb-0'>{row.updateTime}</span>
       </div>
     )
   },

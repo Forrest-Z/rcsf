@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Card, CardHeader, CardBody, CardTitle, Button } from 'reactstrap'
-import { List, Maximize, Minimize, Move } from 'react-feather'
+import { Camera, Maximize, Minimize, Move } from 'react-feather'
 import { Reflv } from '@src/components/flv-player'
 
 export class VehicleCamera extends Component {
@@ -27,7 +27,7 @@ export class VehicleCamera extends Component {
           }}
         >
           <div className="d-flex align-items-center">
-            <List className="mr-2" size={20} />
+            <Camera className="mr-2" size={20} />
             <CardTitle tag='h4'>
               Camera
             </CardTitle>

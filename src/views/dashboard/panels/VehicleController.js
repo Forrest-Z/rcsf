@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Card, CardHeader, CardBody, CardTitle, Button } from 'reactstrap'
 import { List, Maximize, Minimize, Move } from 'react-feather'
 
+import Joystick from '@src/components/joystick'
+
 export class VehicleController extends Component {
   constructor() {
     super()
@@ -44,7 +46,7 @@ export class VehicleController extends Component {
           </div>
         </CardHeader>
         <CardBody>
-
+          <Joystick />
         </CardBody>
       </Card>
     )

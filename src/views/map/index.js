@@ -112,6 +112,15 @@ const MapView = () => {
     setPageSize(parseInt(e.target.value))
   }
 
+  const handleFilter = val => {
+    dispatch(
+      getMap({
+        pageSize,
+        pageNo
+      })
+    )
+  }
+
   const Pagination = () => {
     const count = Number((store.count / pageSize).toFixed(0))
 
@@ -159,6 +168,7 @@ const MapView = () => {
                 <Header 
                   handlePerPage={handlePerPage}
                   rowsPerPage={pageSize}
+                  handleFilter={handleFilter}
                 />
               }
             />
