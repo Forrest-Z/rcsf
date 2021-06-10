@@ -33,10 +33,12 @@ const Joystick = ({ onMove, onEnd }) => {
     inner.style.borderRadius = '50%'
 
     back.appendChild(inner)
+    window.dispatchEvent(new Event("resize"))
   }, [])
 
   return (
     <ReactNipple
+      className='h-100'
       options={{
         mode: 'static',
         position: {

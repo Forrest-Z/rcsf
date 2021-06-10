@@ -10,6 +10,17 @@ export class VehicleController extends Component {
     this.state = {
       toggle: true
     }
+
+    this.handleMove = this.handleMove.bind(this)
+    this.handleEnd = this.handleEnd.bind(this)
+  }
+
+  handleMove(evt, data) {
+
+  }
+
+  handleEnd(evt, data) {
+
   }
 
   render() {
@@ -46,7 +57,7 @@ export class VehicleController extends Component {
           </div>
         </CardHeader>
         <CardBody>
-          <Joystick />
+          <Joystick onMove={this.handleMove} onEnd={this.handleEnd} />
         </CardBody>
       </Card>
     )
