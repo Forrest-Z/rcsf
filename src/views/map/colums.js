@@ -23,7 +23,7 @@ export const columns = [
     minWidth: '197',
     selector: 'id',
     sortable: true,
-    cell: row => <Link to={`/apps/invoice/preview/${row.id}`}>{`#${row.id}`}</Link>
+    cell: row => <Link to={`/apps/invoice/preview/${row.id}`}>{`# ${row.id}`}</Link>
   },
   {
     name: 'Name',

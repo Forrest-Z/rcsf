@@ -38,11 +38,14 @@ import * as serviceWorker from './serviceWorker'
 // ** Lazy load app
 const LazyApp = lazy(() => import('./App'))
 
+import Notification from '@src/components/notification'
+
 ReactDOM.render(
   <Provider store={store}>
     <Suspense fallback={<Spinner />}>
       <ThemeContext>
         <LazyApp />
+        <Notification />
         <ToastContainer newestOnTop />
       </ThemeContext>
     </Suspense>
