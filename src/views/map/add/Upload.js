@@ -25,6 +25,11 @@ import Avatar from '@components/avatar'
 import '@styles/react/libs/file-uploader/file-uploader.scss'
 import 'uppy/dist/uppy.css'
 
+// ** Store & Actions
+import { addMap } from '../store/actions'
+import { useDispatch, useSelector } from 'react-redux'
+import { store } from '@store/storeConfig/store'
+
 // TODO: add content
 const SuccessToast = ({ data }) => {
   return (
@@ -44,10 +49,14 @@ const SuccessToast = ({ data }) => {
 }
 
 const Upload = () => {
+
   const { control, register, handleSubmit, watch, formState: { errors }, setValue } = useForm()
 
   const onSubmit = data => {
-    console.log(data)
+    const formData = new FormData()
+    formData.append('name', data.name)
+    formData.append('file', data.file)
+    store.dispatch(addMap(formData))
     toast.success(<SuccessToast data={data} />, { hideProgressBar: true })
   }
 
@@ -55,12 +64,12 @@ const Upload = () => {
     autoProceed: false,
     onBeforeFileAdded: (file) => {
       // Set map file required
-      setValue('mapFile', file.data)
+      setValue('file', file.data)
       return true
     },
     restrictions: {
-      maxNumberOfFiles: 1,
-      allowedFileTypes: ['zip/*']
+      maxNumberOfFiles: 1
+      // allowedFileTypes: ['zip/*']
     }
   })
 
@@ -69,29 +78,29 @@ const Upload = () => {
       <Col xl='4'>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <FormGroup>
-            <Label for='mapName'>Name</Label>
+            <Label for='name'>Name</Label>
             <Input
-              {...register('mapName', { required: true, maxLength: 20 })}
+              {...register('name', { required: true, maxLength: 20 })}
               id='mapName'
               placeholder='Map Name'
             />
-            {errors.mapName && errors.mapName.type === "required" && <span className='text-danger'>This is required</span>}
-            {errors.mapName && errors.mapName.type === "maxLength" && <span className='text-danger'>Max length exceeded</span>}
+            {errors.name && errors.name.type === "required" && <span className='text-danger'>This is required</span>}
+            {errors.name && errors.name.type === "maxLength" && <span className='text-danger'>Max length exceeded</span>}
           </FormGroup>
           <FormGroup>
             <Label for='mapDescription'>Description</Label>
             <Input
-              {...register('mapDescription', { required: false, maxLength: 100 })}
+              {...register('description', { required: false, maxLength: 100 })}
               type='textarea'
               id='mapDescription'
               placeholder='Map Description'
             />
-            {errors.mapDescription && errors.mapDescription.type === "maxLength" && <span className='text-danger'>Max length exceeded</span>}
+            {errors.description && errors.description.type === "maxLength" && <span className='text-danger'>Max length exceeded</span>}
           </FormGroup>
           <FormGroup>
             <Label for='mapFile'>Map File</Label>
             <Controller
-              name='mapFile'
+              name='file'
               control={control}
               rules={{ required: true }}
               render={({ field }) => {
@@ -107,7 +116,7 @@ const Upload = () => {
                 )
               }}
             />
-            {errors.mapFile && errors.mapFile.type === "required" && <span className='text-danger'>This is required</span>}
+            {errors.file && errors.file.type === "required" && <span className='text-danger'>This is required</span>}
           </FormGroup>
           <FormGroup className='d-flex mb-0'>
             <Button.Ripple className='mr-1' color='primary' type='submit'>

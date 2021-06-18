@@ -40,7 +40,7 @@ export const ThreeDemensional = () => {
     pitch: 0
   })
 
-  const [toggle, setToggle] = useState(false)
+  const [toggle, setToggle] = useState(true)
 
   return (
     <Card className='h-100'>

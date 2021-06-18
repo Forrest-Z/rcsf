@@ -1,0 +1,25 @@
+.four-point-star::after,
+.four-point-star::before {
+    /* position: relative; */
+    content: "\2726";
+    font-size: 4rem;
+}
+
+.four-point-star::after { /* The foreground star */
+    /* background: linear-gradient(135deg, rgba(255,191,183,1) 20%, rgba(243,44,117,1) 70%); */
+    background-color: #fff;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: -50px;
+}
+
+.four-point-star::before { /* The star shadow */
+    color: transparent;
+    /* text-shadow: 2px 3px 10px rgba(242, 96, 85, 1); */
+}
+
+.four-point-star {
+    position: relative;
+    margin-top: 44px;
+    margin-left: 15px;
+}

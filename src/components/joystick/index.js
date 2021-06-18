@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import ReactNipple from 'react-nipple'
 
+import './style.css'
+
 const Joystick = ({ onMove, onEnd }) => {
   const [firstPosition, setFirstPosition] = useState()
 
@@ -24,15 +26,23 @@ const Joystick = ({ onMove, onEnd }) => {
     front.style.height = '30px'
     front.style.marginTop = '5px'
     front.style.marginLeft = '-15px'
+    front.style.visibility = 'hidden'
 
     const inner = document.createElement('div')
-    inner.style.height = '165px'
-    inner.style.width = '165px'
+    inner.style.height = '170px'
+    inner.style.width = '170px'
     inner.style.left = 'calc(50% - 75px)'
     inner.style.backgroundImage = 'linear-gradient(0deg, #283046, #283046)'
     inner.style.borderRadius = '50%'
+    // inner.setAttribute('class', 'align-items-center')
+    // inner.setAttribute('class', 'justify-content-center')
+    // inner.setAttribute('class', 'd-flex')
+
+    const star = document.createElement('div')
+    star.setAttribute('class', 'four-point-star')
 
     back.appendChild(inner)
+    inner.appendChild(star)
     window.dispatchEvent(new Event("resize"))
   }, [])
 

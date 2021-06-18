@@ -6,7 +6,8 @@ import {
   VehicleController,
   ThreeDemensional,
   VehicleState,
-  VehicleCamera
+  VehicleCamera,
+  MissionProcession
 } from './panels'
 import { ThemeColors } from '@src/utility/context/ThemeColors'
 
@@ -100,6 +101,13 @@ export class Dashboard extends React.Component {
             y: 0,
             w: 2,
             h: 10
+          },
+          {
+            i: 'mission-procession',
+            x: 6,
+            y: 20,
+            w: 4,
+            h: 10
           }
         ]
       }
@@ -149,6 +157,9 @@ export class Dashboard extends React.Component {
         </div>
         <div key='vehicle-camera'>
           <VehicleCamera primary={colors.primary.main} danger={colors.danger.main} />
+        </div>
+        <div key='mission-procession'>
+          <MissionProcession />
         </div>
       </ResponsiveGridLayout>
     )
