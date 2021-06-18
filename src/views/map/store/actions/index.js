@@ -37,6 +37,11 @@ export const addMap = data => {
       method: 'post',
       data
     }).then(response => {
+      if (response.status !== 201) {
+
+      } else {
+        dispatch({type: 'SET_SUCCESS', message: 'Success upload'})
+      }
       dispatch({
         type: 'ADD_MAP',
         data: response.data,
@@ -45,6 +50,20 @@ export const addMap = data => {
     })
     .catch(error => {
       console.log(error)
+    })
+    .then(() => dispatch(getMap(getStore().maps.params)))
+  }
+}
+
+export const multiDelete = ids => {
+  return (dispatch, getStore) => {
+    axios({
+      url: `/api/map/multi_delete?deleteid=${ids}`,
+      method: 'delete'
+    }).then(response => {
+      dispatch({
+        type: 'DELETE_MAP'
+      })
     })
     .then(() => dispatch(getMap(getStore().maps.params)))
   }

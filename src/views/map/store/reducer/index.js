@@ -15,7 +15,6 @@ const maps = (state = initialState, action) => {
         params: action.params
       }
     case 'ADD_MAP':
-      console.log(action)
       return {
         ...state,
         data: action.data

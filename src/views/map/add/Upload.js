@@ -1,5 +1,6 @@
 // ** React Imports
 import React, { Fragment } from 'react'
+import { useHistory } from 'react-router-dom'
 
 // ** Third Party Components
 import {
@@ -13,13 +14,8 @@ import {
   FormFeedback
 } from 'reactstrap'
 import { useForm, Controller } from 'react-hook-form'
-import { toast } from 'react-toastify'
-import { Check } from 'react-feather'
 import { DragDrop } from '@uppy/react'
 import Uppy from '@uppy/core'
-
-// ** Custom Components
-import Avatar from '@components/avatar'
 
 // ** Styles
 import '@styles/react/libs/file-uploader/file-uploader.scss'
@@ -30,26 +26,9 @@ import { addMap } from '../store/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import { store } from '@store/storeConfig/store'
 
-// TODO: add content
-const SuccessToast = ({ data }) => {
-  return (
-    <Fragment>
-      <div className='toastify-header'>
-        <div className='title-wrapper'>
-          <Avatar size='sm' color='success' icon={<Check size={12} />} />
-          <h6 className='toast-title'>Form Submitted!</h6>
-        </div>
-      </div>
-      <div className='toastify-body'>
-        <ul className='list-unstyled mb-0'>
-        </ul>
-      </div>
-    </Fragment>
-  )
-}
 
 const Upload = () => {
-
+  const history = useHistory()
   const { control, register, handleSubmit, watch, formState: { errors }, setValue } = useForm()
 
   const onSubmit = data => {
@@ -57,7 +36,7 @@ const Upload = () => {
     formData.append('name', data.name)
     formData.append('file', data.file)
     store.dispatch(addMap(formData))
-    toast.success(<SuccessToast data={data} />, { hideProgressBar: true })
+    history.push('/map')
   }
 
   const uppy = new Uppy({
