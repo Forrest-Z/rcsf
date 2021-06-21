@@ -14,7 +14,6 @@ const notification = (state = initialState, action) => {
         isOpen: true
       }
     case 'HIDE':
-      console.log(action)
       return {
         ...state,
         message: '',

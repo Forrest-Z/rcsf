@@ -7,7 +7,8 @@ import {
   ThreeDemensional,
   VehicleState,
   VehicleCamera,
-  MissionProcession
+  MissionProcession,
+  VehicleLidar
 } from './panels'
 import { ThemeColors } from '@src/utility/context/ThemeColors'
 
@@ -108,6 +109,13 @@ export class Dashboard extends React.Component {
             y: 20,
             w: 4,
             h: 10
+          },
+          {
+            i: 'vehicle-lidar',
+            x: 6,
+            y: 0,
+            w: 4,
+            h: 20
           }
         ]
       }
@@ -160,6 +168,9 @@ export class Dashboard extends React.Component {
         </div>
         <div key='mission-procession'>
           <MissionProcession />
+        </div>
+        <div key='vehicle-lidar'>
+          <VehicleLidar />
         </div>
       </ResponsiveGridLayout>
     )

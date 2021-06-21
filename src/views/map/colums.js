@@ -7,7 +7,7 @@ import { deleteMap } from './store/actions'
 import { store } from '@store/storeConfig/store'
 
 // ** Third Party Components
-import { Edit2, Eye, MoreVertical, Download, Trash } from 'react-feather'
+import { Edit2, Eye, MoreVertical, Download, Trash, CheckCircle, XCircle } from 'react-feather'
 import {
   Badge,
   UncontrolledDropdown,
@@ -68,7 +68,7 @@ export const columns = [
     cell: row => (
       <div className='column-action d-flex align-items-center'>
         <div className='mr-1'>
-          <Link id={`edit-tooltip-${row.id}`} to={`/map/eidt/${row.id}`} >
+          <Link id={`edit-tooltip-${row.id}`} to={{ pathname: 'map/edit', map: row }}>
             <Edit2 size={17} />
           </Link>
           <UncontrolledTooltip placement='top' target={`edit-tooltip-${row.id}`}>
@@ -92,6 +92,21 @@ export const columns = [
               <DropdownItem tag='a' href='/' className='w-100' onClick={e => e.preventDefault()}>
                 <Download size={14} className='mr-50' />
                 <span className='align-middle'>Download</span>
+              </DropdownItem>
+              <DropdownItem tag='a' href='/' className='w-100' onClick={e => e.preventDefault()}>
+                {
+                  row.active ? (
+                    <div>
+                      <XCircle size={14} className='mr-50' />
+                      <span className='align-middle'>Inactive</span>
+                    </div>
+                  ) : (
+                      <div>
+                        <CheckCircle size={14} className='mr-50' />
+                        <span className='align-middle'>Active</span>
+                      </div>
+                    )
+                }
               </DropdownItem>
               <DropdownItem
                 tag='a'

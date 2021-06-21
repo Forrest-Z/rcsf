@@ -23,6 +23,14 @@ const Routes = [
     component: lazy(() => import('../../views/map/add'))
   },
   {
+    path: '/map/edit',
+    exact: true,
+    appLayout: true,
+    className: 'chat-application',
+    component: lazy(() => import('../../views/map/edit'))
+    // layout: 'BlankLayout'
+  },
+  {
     path: '/mission',
     component: lazy(() => import('../../views/mission'))
   },

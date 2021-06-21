@@ -1,6 +1,11 @@
 import React, { createRef } from 'react'
 import { Stage } from 'react-konva'
-import { MapLayer, ShapeLayer } from './layer'
+import MapLayer from './layer/MapLayer'
+import ShapeLayer from './layer/ShapeLayer'
+import createStore from './store'
+import { Provider } from "mobx-react"
+
+window.store = createStore()
 
 export class RCSCanvas extends React.Component {
   constructor(props) {
@@ -13,6 +18,10 @@ export class RCSCanvas extends React.Component {
         x: 1,
         y: 1
       }
+    }
+    if (this.props.map) {
+      console.log(this.props.map)
+      window.store.setRoot({ name: this.props.map.name })
     }
 
     this.onWheel = this.onWheel.bind(this)
@@ -57,21 +66,24 @@ export class RCSCanvas extends React.Component {
     const { width, height } = this.props
 
     return (
-      <div>
-        <Stage
-          x={width / 2}
-          y={height / 2}
-          width={width}
-          height={height}
-          draggable={true}
-          onWheel={this.onWheel}
-          ref={this.stageRef}
-          scale={this.state.scale}
-        >
+      <Stage
+        x={width / 2}
+        y={height / 2}
+        width={width}
+        height={height}
+        draggable={true}
+        onWheel={this.onWheel}
+        ref={this.stageRef}
+        scale={this.state.scale}
+        style={{
+          backgroundColor: '#000'
+        }}
+      >
+        <Provider store={window.store}>
           <MapLayer />
           <ShapeLayer />
-        </Stage>
-      </div>
+        </Provider>
+      </Stage>
     )
   }
 }

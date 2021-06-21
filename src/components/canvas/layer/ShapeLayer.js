@@ -2,7 +2,7 @@ import React from 'react'
 import { Layer } from 'react-konva'
 import { PointShape, RectangleShape, TrackShape } from '../shape'
 
-export class ShapeLayer extends React.Component {
+class ShapeLayer extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -14,3 +14,5 @@ export class ShapeLayer extends React.Component {
     )
   }
 }
+
+export default ShapeLayer

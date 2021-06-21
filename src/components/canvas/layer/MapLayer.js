@@ -2,14 +2,19 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Layer } from 'react-konva'
 import { ImageShape } from '../shape'
+import { observer, inject, Provider } from "mobx-react"
 
-export class MapLayer extends Component {
-
+class MapLayer extends Component {
+  constructor(props) {
+    super(props)
+  }
   render() {
     return (
       <Layer visible={this.props.visible}>
-        <ImageShape src='http://localhost:9000/files/123/map.png' />
+        <ImageShape src={`http://localhost:8000/media/maps/${this.props.store.root.name}/map.png`} />
       </Layer>
     )
   }
 }
+
+export default inject("store")(observer(MapLayer))
