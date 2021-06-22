@@ -32,8 +32,10 @@ import { useResizeDetector } from 'react-resize-detector'
 // ** Custom Components
 import { RCSCanvas } from '@src/components/canvas'
 
+// ** Mobx
+import CanvasMobx from '@src/utility/mobx/CanvasMobx'
+
 const RCSCanvasContainer = ({ map }) => {
-  console.log(map)
   const { width, height, ref } = useResizeDetector()
   return (
     <div className='h-100' ref={ref}>
@@ -68,7 +70,7 @@ const Canvas = props => {
                 <Save size={19} className='cursor-pointer d-sm-block d-none  ' />
               </Button.Ripple>
               <Button.Ripple className='btn-icon' color='flat-dark' >
-                <MousePointer size={19} className='cursor-pointer d-sm-block d-none' />
+                <MousePointer size={19} className='cursor-pointer d-sm-block d-none' onClick={() => CanvasMobx.setCurrentTool('mousepoint')} />
               </Button.Ripple>
               <Button.Ripple className='btn-icon' color='flat-dark'>
                 <IoArrowUndoOutline size={20} className='cursor-pointer d-sm-block d-none' />
@@ -78,13 +80,13 @@ const Canvas = props => {
               </Button.Ripple>
 
               <Button.Ripple className='btn-icon' color='flat-dark'>
-                <Circle size={19} className='cursor-pointer d-sm-block d-none' />
+                <Circle size={19} className='cursor-pointer d-sm-block d-none' onClick={() => CanvasMobx.setCurrentTool('point')} />
               </Button.Ripple>
               <Button.Ripple className='btn-icon' color='flat-dark'>
-                <Square size={19} className='cursor-pointer d-sm-block d-none' />
+                <Square size={19} className='cursor-pointer d-sm-block d-none' onClick={() => CanvasMobx.setCurrentTool('area')} />
               </Button.Ripple>
               <Button.Ripple className='btn-icon' color='flat-dark'>
-                <XSquare size={19} className='cursor-pointer d-sm-block d-none' />
+                <XSquare size={19} className='cursor-pointer d-sm-block d-none' onClick={() => CanvasMobx.setCurrentTool('block')} />
               </Button.Ripple>
 
             </div>

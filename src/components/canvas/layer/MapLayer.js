@@ -4,18 +4,18 @@ import { Layer } from 'react-konva'
 import { ImageShape } from '../shape'
 import { observer, inject, Provider } from "mobx-react"
 
-class MapLayer extends Component {
-  constructor(props) {
-    super(props)
-  }
+const MapLayer = props => {
+  const { name, visible } = props
 
-  render() {
-    return (
-      <Layer visible={this.props.visible}>
-        <ImageShape src={`http://localhost:8000/media/maps/${this.props.name}/map.png`} />
-      </Layer>
-    )
-  }
+  return (
+    <Layer visible={visible}>
+      {
+        name && (
+          <ImageShape src={`http://localhost:8000/media/maps/${name}/map.png`} />
+        )
+      }
+    </Layer>
+  )
 }
 
 export default MapLayer

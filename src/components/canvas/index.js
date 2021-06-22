@@ -1,37 +1,29 @@
-import React, { createRef } from 'react'
+import React, { createRef, useState, useEffect } from 'react'
 import { Stage } from 'react-konva'
 import MapLayer from './layer/MapLayer'
 import ShapeLayer from './layer/ShapeLayer'
 
 
-export class RCSCanvas extends React.Component {
-  constructor(props) {
-    super(props)
-    this.stageRef = createRef()
-    this.state = {
-      width: 0,
-      height: 0,
-      scale: {
-        x: 1,
-        y: 1
-      }
-    }
+import CanvasMobx, { PointShapeMobx } from '@src/utility/mobx/CanvasMobx'
+import { getMouseRealPos } from './utils/Coordinate'
 
-    this.onWheel = this.onWheel.bind(this)
-  }
+export const RCSCanvas = props => {
+  const { width, height, map } = props
+  const [scale, setScale] = useState({ x: 1, y: 1 })
 
-  onWheel(e) {
+  const stageRef = createRef()
+
+  const onWheel = (e) => {
     e.evt.preventDefault()
     const scaleBy = 1.06
 
-    const oldScale = this.state.scale.x
+    const oldScale = scale.x
     const newScale = e.evt.deltaY < 0 ? oldScale * scaleBy : oldScale / scaleBy
 
-    this.setState({
-      scale: {
-        x: newScale,
-        y: newScale
-      }
+    setScale({
+      x: newScale,
+      y: newScale
+
     })
 
     // const circles = this.stageRef.current.find('Circle')
@@ -52,29 +44,58 @@ export class RCSCanvas extends React.Component {
     //   y: 1 / newScale
     // })
 
-    this.stageRef.current.batchDraw()
+    stageRef.current.batchDraw()
   }
 
-  render() {
-    const { width, height } = this.props
+  const handleClick = (e) => {
+    e.evt.preventDefault()
+    const mousePosition = getMouseRealPos(e)
 
-    return (
-      <Stage
-        x={width / 2}
-        y={height / 2}
-        width={width}
-        height={height}
-        draggable={true}
-        onWheel={this.onWheel}
-        ref={this.stageRef}
-        scale={this.state.scale}
-        style={{
-          backgroundColor: '#000'
-        }}
-      >
-        <MapLayer />
-        <ShapeLayer />
-      </Stage>
-    )
+    switch (CanvasMobx.currentTool) {
+      case 'mousepoint':
+        break
+      case 'point':
+        CanvasMobx.setRaw(CanvasMobx.raw.concat({
+          type: 'point',
+          store: new PointShapeMobx({
+            x: mousePosition.x
+          })
+        }))
+        break
+      case 'area':
+        CanvasMobx.setRaw(CanvasMobx.raw.concat({
+          type: 'area'
+        }))
+        break
+      case 'block':
+        CanvasMobx.setRaw(CanvasMobx.raw.concat({
+          type: 'block'
+        }))
+        break
+    }
   }
+
+  return (
+    <Stage
+      x={width / 2}
+      y={height / 2}
+      width={width}
+      height={height}
+      draggable={true}
+      onWheel={onWheel}
+      ref={stageRef}
+      scale={scale}
+      style={{
+        backgroundColor: '#000'
+      }}
+      onClick={handleClick}
+    >
+      {
+        map && (
+          <MapLayer name={map.name} />
+        )
+      }
+      <ShapeLayer width={width} height={height} />
+    </Stage>
+  )
 }

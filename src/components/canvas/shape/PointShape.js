@@ -1,96 +1,64 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Circle, Group, Arrow } from 'react-konva'
 import { SHAPE_STYLES_FILL, SHAPE_STYLES_STROKE } from '../utils/styles'
-export class PointShape extends Component {
-  static propsTypes = {
-    id: PropTypes.any,
-    name: PropTypes.string,
-    x: PropTypes.number,
-    y: PropTypes.number,
-    rotation: PropTypes.number,
-    scale: PropTypes.object,
-    visible: PropTypes.bool,
-    selected: PropTypes.bool,
-    type: PropTypes.oneOf(['charge', 'route', 'parking'])
+import { getMouseRealPos } from '../utils/Coordinate'
+
+export const PointShape = props => {
+
+  const [fill, setFill] = useState(SHAPE_STYLES_FILL.INACTIVE)
+  const [stroke, setStroke] = useState(SHAPE_STYLES_STROKE.INACTIVE)
+  const [selected, setSelected] = useState(false)
+
+  const handleMouseOver = () => {
+    setFill(SHAPE_STYLES_FILL.HOVERED)
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      fill: SHAPE_STYLES_FILL.INACTIVE,
-      stroke: SHAPE_STYLES_STROKE.INACTIVE,
-      selected: false
-    }
-
-    this.handleMouseOver = this.handleMouseOver.bind(this)
-    this.handleMouseLeave = this.handleMouseLeave.bind(this)
-    this.handleClick = this.handleClick.bind(this)
+  const handleMouseLeave = () => {
+    setFill(SHAPE_STYLES_FILL.INACTIVE)
   }
 
-  componentDidMount() {
-
+  const handleDragEnd = (e) => {
+    const position = getMouseRealPos(e)
+    console.log(position)
+    props.store.setX(position.x)
+    console.log(props.store)
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      selected: nextProps.selected
-    })
-  }
-
-  handleMouseOver() {
-    this.setState({
-      fill: SHAPE_STYLES_FILL.HOVERED
-    })
-  }
-
-  handleMouseLeave() {
-    this.setState({
-      fill: SHAPE_STYLES_FILL.INACTIVE
-    })
-  }
-
-  handleClick() {
-    this.setState({
-      selected: true
-    })
-  }
-
-  render() {
-    return (
-      <Group
+  return (
+    <Group
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseLeave}
+    // onDragEnd={handleDragEnd}
+    >
+      <Circle
         draggable={true}
-        onClick={this.handleClick}
-        onMouseOver={this.handleMouseOver}
-        onMouseLeave={this.handleMouseLeave}
-      >
-        <Circle
-          x={this.props.x}
-          y={this.props.y}
-          radius={16}
-          scale={this.props.scale}
-          fill={this.state.fill}
-          stroke={this.state.stroke}
-          strokeWidth={2}
-          strokeScaleEnabled={false}
-          dash={!this.state.selected && [10, 2]}
-        />
-        {
-          this.props.rotation && (
-            <Arrow
-              x={this.props.x}
-              y={this.props.y}
-              points={[0, -8, 0, 6]}
-              fill={this.state.stroke}
-              stroke={this.state.stroke}
-              strokeWidth={5}
-              strokeScaleEnabled={false}
-              pointerLength={4}
-              pointerWidth={6}
-            />
-          )
-        }
-      </Group>
-    )
-  }
+        x={props.store.x}
+        y={props.y}
+        radius={16}
+        scale={props.scale}
+        fill={fill}
+        stroke={stroke}
+        strokeWidth={2}
+        strokeScaleEnabled={false}
+        dash={!selected && [10, 2]}
+        onDragEnd={handleDragEnd}
+      />
+      {
+        props.rotation && (
+          <Arrow
+            x={props.x}
+            y={props.y}
+            points={[0, -8, 0, 6]}
+            fill={stroke}
+            stroke={stroke}
+            strokeWidth={5}
+            strokeScaleEnabled={false}
+            pointerLength={4}
+            pointerWidth={6}
+          />
+        )
+      }
+    </Group>
+  )
 }
