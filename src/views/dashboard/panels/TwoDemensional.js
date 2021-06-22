@@ -1,8 +1,13 @@
+// ** React Imports
 import React, { Component, createRef, useRef } from 'react'
+
+// ** Thrid Components
 import { Card, CardHeader, CardBody, CardTitle, Button } from 'reactstrap'
 import { List, Maximize, Minimize, Move } from 'react-feather'
-import { RCSCanvas } from '@src/components/canvas'
 import { useResizeDetector } from 'react-resize-detector'
+
+// ** Custom Components
+import { RCSCanvas } from '@src/components/canvas'
 
 
 const RCSCanvasContainer = () => {

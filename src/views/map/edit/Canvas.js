@@ -67,7 +67,7 @@ const Canvas = props => {
               <Button.Ripple className='btn-icon mr-3' color='flat-dark'>
                 <Save size={19} className='cursor-pointer d-sm-block d-none  ' />
               </Button.Ripple>
-              <Button.Ripple className='btn-icon' color='flat-dark'>
+              <Button.Ripple className='btn-icon' color='flat-dark' onClick={() => Store.setTool('mouse')}>
                 <MousePointer size={19} className='cursor-pointer d-sm-block d-none' />
               </Button.Ripple>
               <Button.Ripple className='btn-icon' color='flat-dark'>
@@ -78,13 +78,13 @@ const Canvas = props => {
               </Button.Ripple>
 
               <Button.Ripple className='btn-icon' color='flat-dark'>
-                <Circle size={19} className='cursor-pointer d-sm-block d-none  ' />
+                <Circle size={19} className='cursor-pointer d-sm-block d-none' onClick={() => Store.setTool('point')} />
               </Button.Ripple>
               <Button.Ripple className='btn-icon' color='flat-dark'>
-                <Square size={19} className='cursor-pointer d-sm-block d-none' />
+                <Square size={19} className='cursor-pointer d-sm-block d-none' onClick={() => Store.setTool('area')} />
               </Button.Ripple>
               <Button.Ripple className='btn-icon' color='flat-dark'>
-                <XSquare size={19} className='cursor-pointer d-sm-block d-none' />
+                <XSquare size={19} className='cursor-pointer d-sm-block d-none' onClick={() => Store.setTool('block')} />
               </Button.Ripple>
 
             </div>
