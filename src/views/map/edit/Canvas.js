@@ -67,7 +67,7 @@ const Canvas = props => {
               <Button.Ripple className='btn-icon mr-3' color='flat-dark'>
                 <Save size={19} className='cursor-pointer d-sm-block d-none  ' />
               </Button.Ripple>
-              <Button.Ripple className='btn-icon' color='flat-dark' onClick={() => Store.setTool('mouse')}>
+              <Button.Ripple className='btn-icon' color='flat-dark' >
                 <MousePointer size={19} className='cursor-pointer d-sm-block d-none' />
               </Button.Ripple>
               <Button.Ripple className='btn-icon' color='flat-dark'>
@@ -78,13 +78,13 @@ const Canvas = props => {
               </Button.Ripple>
 
               <Button.Ripple className='btn-icon' color='flat-dark'>
-                <Circle size={19} className='cursor-pointer d-sm-block d-none' onClick={() => Store.setTool('point')} />
+                <Circle size={19} className='cursor-pointer d-sm-block d-none' />
               </Button.Ripple>
               <Button.Ripple className='btn-icon' color='flat-dark'>
-                <Square size={19} className='cursor-pointer d-sm-block d-none' onClick={() => Store.setTool('area')} />
+                <Square size={19} className='cursor-pointer d-sm-block d-none' />
               </Button.Ripple>
               <Button.Ripple className='btn-icon' color='flat-dark'>
-                <XSquare size={19} className='cursor-pointer d-sm-block d-none' onClick={() => Store.setTool('block')} />
+                <XSquare size={19} className='cursor-pointer d-sm-block d-none' />
               </Button.Ripple>
 
             </div>
@@ -94,19 +94,19 @@ const Canvas = props => {
                   <MoreVertical size='18' />
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem href='/' onClick={e => e.preventDefault()}>
+                  <DropdownItem href='/' >
                     View Contact
                     </DropdownItem>
-                  <DropdownItem href='/' onClick={e => e.preventDefault()}>
+                  <DropdownItem href='/' >
                     Mute Notifications
                     </DropdownItem>
-                  <DropdownItem href='/' onClick={e => e.preventDefault()}>
+                  <DropdownItem href='/' >
                     Block Contact
                     </DropdownItem>
-                  <DropdownItem href='/' onClick={e => e.preventDefault()}>
+                  <DropdownItem href='/' >
                     Clear Chat
                     </DropdownItem>
-                  <DropdownItem href='/' onClick={e => e.preventDefault()}>
+                  <DropdownItem href='/' >
                     Report
                     </DropdownItem>
                 </DropdownMenu>
