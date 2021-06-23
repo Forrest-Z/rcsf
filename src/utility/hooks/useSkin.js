@@ -11,6 +11,7 @@ export const useSkin = () => {
     try {
       // ** Get from local storage by key
       const item = window.localStorage.getItem('skin')
+      ThemeMobx.setSkin(JSON.stringify(themeConfig.layout.skin))
       // ** Parse stored json or if none return initialValue
       return item ? JSON.parse(item) : themeConfig.layout.skin
     } catch (error) {

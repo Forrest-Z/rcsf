@@ -6,7 +6,7 @@ class ThemeMobx {
   }
 
   // ------------- skin ------------------
-  skin = null
+  skin = "\"light\""
   
   setSkin(skin) {
     this.skin = skin

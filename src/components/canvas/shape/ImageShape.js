@@ -32,7 +32,7 @@ export const ImageShape = observer(({
       offsetX={width / 2}
       offsetY={height / 2}
       image={image}
-      filters={ThemeMobx.skin === '"dark"' ? [Konva.Filters.Invert] : []}
+      filters={ThemeMobx.skin === '"light"' ? [Konva.Filters.Invert] : []}
       ref={imageRef}
     />
   )

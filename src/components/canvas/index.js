@@ -2,12 +2,13 @@ import React, { createRef, useState, useEffect } from 'react'
 import { Stage } from 'react-konva'
 import MapLayer from './layer/MapLayer'
 import ShapeLayer from './layer/ShapeLayer'
-
+import { observer } from 'mobx-react'
+import ThemeMobx from '@src/utility/mobx/ThemeMobx'
 
 import CanvasMobx, { PointShapeMobx } from '@src/utility/mobx/CanvasMobx'
 import { getMouseRealPos } from './utils/Coordinate'
 
-export const RCSCanvas = props => {
+export const RCSCanvas = observer(props => {
   const { width, height, map } = props
   const [scale, setScale] = useState({ x: 1, y: 1 })
 
@@ -23,7 +24,11 @@ export const RCSCanvas = props => {
     setScale({
       x: newScale,
       y: newScale
+    })
 
+    CanvasMobx.setScale({
+      x: newScale,
+      y: newScale
     })
 
     // const circles = this.stageRef.current.find('Circle')
@@ -49,30 +54,36 @@ export const RCSCanvas = props => {
 
   const handleClick = (e) => {
     e.evt.preventDefault()
-    const mousePosition = getMouseRealPos(e)
+    const position = getMouseRealPos(e)
 
-    switch (CanvasMobx.currentTool) {
-      case 'mousepoint':
-        break
-      case 'point':
-        CanvasMobx.setRaw(CanvasMobx.raw.concat({
-          type: 'point',
-          store: new PointShapeMobx({
-            x: mousePosition.x
-          })
-        }))
-        break
-      case 'area':
-        CanvasMobx.setRaw(CanvasMobx.raw.concat({
-          type: 'area'
-        }))
-        break
-      case 'block':
-        CanvasMobx.setRaw(CanvasMobx.raw.concat({
-          type: 'block'
-        }))
-        break
+    if (e.target.className === 'Image') {
+      switch (CanvasMobx.currentTool) {
+        case 'mousepoint':
+          break
+        case 'point':
+          CanvasMobx.setRaw(CanvasMobx.raw.concat({
+            type: 'point',
+            store: new PointShapeMobx({
+              x: position.x,
+              y: position.y,
+              rotation: 0
+            })
+          }))
+          break
+        case 'area':
+          CanvasMobx.setRaw(CanvasMobx.raw.concat({
+            type: 'area'
+          }))
+          break
+        case 'block':
+          CanvasMobx.setRaw(CanvasMobx.raw.concat({
+            type: 'block'
+          }))
+          break
+      }
     }
+
+
   }
 
   return (
@@ -86,7 +97,7 @@ export const RCSCanvas = props => {
       ref={stageRef}
       scale={scale}
       style={{
-        backgroundColor: '#000'
+        backgroundColor: ThemeMobx.skin === "\"light\"" ? '#f3f3f3' : '#000'
       }}
       onClick={handleClick}
     >
@@ -98,4 +109,4 @@ export const RCSCanvas = props => {
       <ShapeLayer width={width} height={height} />
     </Stage>
   )
-}
+})
