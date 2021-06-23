@@ -14,7 +14,7 @@ export const PointShape = observer(props => {
   const [fill, setFill] = useState(SHAPE_STYLES_FILL.INACTIVE)
   const [stroke, setStroke] = useState(SHAPE_STYLES_STROKE.INACTIVE)
   const [selected, setSelected] = useState(false)
-  
+
   // ** Ref
   const trRef = useRef()
   const arrowRef = useRef()
@@ -47,8 +47,11 @@ export const PointShape = observer(props => {
 
 
   return (
-    <Group>
+    <Group
+    >
+
       <Group
+        name='object'
         scale={{
           x: 1 / CanvasMobx.scale.x,
           y: 1 / CanvasMobx.scale.y
