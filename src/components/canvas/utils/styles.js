@@ -1,7 +1,7 @@
 export const SHAPE_STYLES_STROKE = {
   INACTIVE: '#26B5F2',
   HOVERED: '#26B5F2',
-  SELECTED: '#26B5F2'
+  SELECTED: '#7AC943'
 }
 
 export const SHAPE_STYLES_FILL = {

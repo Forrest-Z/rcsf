@@ -257,7 +257,7 @@ const ShapeLayer = observer((props) => {
           switch (item.type) {
             case 'point':
               return (
-                <PointShape store={item.store} />
+                <PointShape store={item} />
               )
             case 'area':
               return (

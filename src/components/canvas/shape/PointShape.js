@@ -35,20 +35,31 @@ export const PointShape = observer(props => {
 
   const handleTransformEnd = (e) => {
     const node = arrowRef.current
-    console.log(node.rotation())
     props.store.setRotation(node.rotation())
     trRef.current.getLayer().batchDraw()
   }
 
   useEffect(() => {
-    trRef.current.nodes([arrowRef.current])
-    trRef.current.getLayer().batchDraw()
-  }, [])
+    if (selected) {
+      trRef.current.nodes([arrowRef.current])
+      trRef.current.getLayer().batchDraw()
+    }
+
+  }, [selected])
+
+  useEffect(() => {
+    if (CanvasMobx.selected === props.store.id) {
+      setSelected(true)
+      setStroke(SHAPE_STYLES_STROKE.SELECTED)
+    } else {
+      setSelected(false)
+      setStroke(SHAPE_STYLES_STROKE.INACTIVE)
+    }
+  }, [CanvasMobx.selected])
 
 
   return (
-    <Group
-    >
+    <Group>
 
       <Group
         name='object'
@@ -67,15 +78,16 @@ export const PointShape = observer(props => {
         onTransformEnd={handleTransformEnd}
       >
         <Circle
+          id={props.store.id}
           radius={18}
           fill={fill}
           stroke={stroke}
           strokeWidth={2}
           strokeScaleEnabled={false}
           dash={!selected && [8, 2]}
-
         />
         <Arrow
+          listening={false}
           points={[0, -8, 0, 6]}
           fill={stroke}
           stroke={stroke}
@@ -86,12 +98,16 @@ export const PointShape = observer(props => {
         />
 
       </Group>
-      <Transformer
-        borderEnabled={true}
-        ref={trRef}
-        ignoreStroke
-        enabledAnchors={[]}
-      />
+      {
+        selected && (
+          <Transformer
+            borderEnabled={true}
+            ref={trRef}
+            ignoreStroke
+            enabledAnchors={[]}
+          />
+        )
+      }
     </Group>
 
   )

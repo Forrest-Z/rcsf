@@ -5,7 +5,7 @@ import ShapeLayer from './layer/ShapeLayer'
 import { observer } from 'mobx-react'
 import ThemeMobx from '@src/utility/mobx/ThemeMobx'
 
-import CanvasMobx, { PointShapeMobx } from '@src/utility/mobx/CanvasMobx'
+import CanvasMobx, { ShapeMobx } from '@src/utility/mobx/CanvasMobx'
 import { getMouseRealPos } from './utils/Coordinate'
 
 export const RCSCanvas = observer(props => {
@@ -61,14 +61,14 @@ export const RCSCanvas = observer(props => {
         case 'mousepoint':
           break
         case 'point':
-          CanvasMobx.setRaw(CanvasMobx.raw.concat({
-            type: 'point',
-            store: new PointShapeMobx({
+          CanvasMobx.setRaw(CanvasMobx.raw.concat(
+            new ShapeMobx({
+              type: 'point',
               x: position.x,
               y: position.y,
               rotation: 0
             })
-          }))
+          ))
           break
         case 'area':
           CanvasMobx.setRaw(CanvasMobx.raw.concat({
@@ -82,7 +82,8 @@ export const RCSCanvas = observer(props => {
           break
       }
     }
-
+    
+    CanvasMobx.setSelected(e.target.id())
 
   }
 
