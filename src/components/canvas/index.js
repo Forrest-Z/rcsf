@@ -64,16 +64,25 @@ export const RCSCanvas = observer(props => {
           CanvasMobx.setRaw(CanvasMobx.raw.concat(
             new ShapeMobx({
               type: 'point',
+              shape: 'circle',
               x: position.x,
               y: position.y,
               rotation: 0
             })
           ))
           break
-        case 'area':
-          CanvasMobx.setRaw(CanvasMobx.raw.concat({
-            type: 'area'
-          }))
+        case 'rectarea':
+          CanvasMobx.setRaw(CanvasMobx.raw.concat(
+            new ShapeMobx({
+              type: 'area',
+              shape: 'rectarea',
+              x: position.x,
+              y: position.y,
+              width: 30,
+              height: 30,
+              rotation: 0
+            })
+          ))
           break
         case 'block':
           CanvasMobx.setRaw(CanvasMobx.raw.concat({
@@ -82,7 +91,7 @@ export const RCSCanvas = observer(props => {
           break
       }
     }
-    
+    console.log(e.target.id())
     CanvasMobx.setSelected(e.target.id())
 
   }

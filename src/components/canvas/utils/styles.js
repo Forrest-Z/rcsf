@@ -5,7 +5,8 @@ export const SHAPE_STYLES_STROKE = {
 }
 
 export const SHAPE_STYLES_FILL = {
-  INACTIVE: 'rgb(169, 169, 169, 0.3)',
+  INACTIVE: 'rgb(169, 169, 169, 0.1)',
   HOVERED: 'rgb(122, 201, 67, 0.3)',
-  SELECTED: 'rgb(255, 255, 0, 0.3)'
+  SELECTED: 'rgb(255, 255, 0, 0.3)',
+  BLOCK: ''
 }

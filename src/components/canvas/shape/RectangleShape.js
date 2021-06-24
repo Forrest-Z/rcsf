@@ -1,73 +1,79 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState, useEffect, useRef } from 'react'
 import { Group, Rect, Transformer } from 'react-konva'
 import { SHAPE_STYLES_FILL, SHAPE_STYLES_STROKE } from '../utils/styles'
+import CanvasMobx from '@src/utility/mobx/CanvasMobx'
+import { observer } from 'mobx-react'
 
-export class RectangleShape extends Component {
-  static propsTypes = {
-    id: PropTypes.any,
-    name: PropTypes.string,
-    x: PropTypes.number,
-    y: PropTypes.number,
-    width: PropTypes.number,
-    height: PropTypes.number,
-    rotation: PropTypes.number,
-    scale: PropTypes.object,
-    visible: PropTypes.bool,
-    selected: PropTypes.bool
+export const RectangleShape = observer(props => {
+  // ** State
+  const [fill, setFill] = useState(SHAPE_STYLES_FILL.INACTIVE)
+  const [stroke, setStroke] = useState(SHAPE_STYLES_STROKE.INACTIVE)
+  const [selected, setSelected] = useState(false)
+
+  // ** Ref
+  const trRef = useRef()
+  const RectRef = useRef()
+
+  const handleMouseOver = () => {
+    setFill(SHAPE_STYLES_FILL.HOVERED)
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      fill: SHAPE_STYLES_FILL.INACTIVE,
-      stroke: SHAPE_STYLES_STROKE.INACTIVE,
-      selected: false
+  const handleMouseLeave = () => {
+    setFill(SHAPE_STYLES_FILL.INACTIVE)
+  }
+
+  useEffect(() => {
+    if (selected) {
+      trRef.current.nodes([RectRef.current])
+      trRef.current.getLayer().batchDraw()
     }
 
-    this.handleMouseOver = this.handleMouseOver.bind(this)
-    this.handleMouseLeave = this.handleMouseLeave.bind(this)
-    this.handleClick = this.handleClick.bind(this)
-  }
+  }, [selected])
 
-  handleMouseOver() {
-    this.setState({
-      fill: SHAPE_STYLES_FILL.HOVERED
-    })
-  }
+  useEffect(() => {
+    if (CanvasMobx.selected === props.store.id) {
+      setSelected(true)
+      setStroke(SHAPE_STYLES_STROKE.SELECTED)
+    } else {
+      setSelected(false)
+      setStroke(SHAPE_STYLES_STROKE.INACTIVE)
+    }
+  }, [CanvasMobx.selected])
 
-  handleMouseLeave() {
-    this.setState({
-      fill: SHAPE_STYLES_FILL.INACTIVE
-    })
-  }
+  return (
+    <Group
+      name='object'
+      draggable={true}
 
-  handleClick() {
-    this.setState({
-      selected: true
-    })
-  }
-
-  render() {
-    return (
-      <Group
-        draggable={true}
-        onClick={this.handleClick}
-        onMouseOver={this.handleMouseOver}
-        onMouseLeave={this.handleMouseLeave}
-      >
-        <Rect
-          x={this.props.x}
-          y={this.props.y}
-          width={this.props.width}
-          height={this.props.height}
-          fill={this.state.fill}
-          stroke={this.state.stroke}
-          strokeWidth={2}
-          strokeScaleEnabled={false}
-          dash={!this.state.selected && [10, 2]}
-        />
-      </Group>
-    )
-  }
-}
+    >
+      <Rect
+        listening={true}
+        ref={RectRef}
+        id={props.store.id}
+        offsetX={props.store.width / 2}
+        offsetY={props.store.height / 2}
+        x={props.store.x}
+        y={props.store.y}
+        width={props.store.width}
+        height={props.store.height}
+        fill={fill}
+        stroke={stroke}
+        strokeWidth={2}
+        strokeScaleEnabled={false}
+        dash={!selected && [10, 2]}
+        // onMouseOver={handleMouseOver}
+        // onMouseLeave={handleMouseLeave}
+      />
+      {
+        selected && (
+          <Transformer
+            listening={selected}
+            ref={trRef}
+            ignoreStroke
+          // enabledAnchors={['top-center']}
+          />
+        )
+      }
+    </Group>
+  )
+})

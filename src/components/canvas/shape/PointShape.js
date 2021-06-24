@@ -7,7 +7,7 @@ import { observer } from 'mobx-react'
 
 // ** Custom Components
 import { SHAPE_STYLES_FILL, SHAPE_STYLES_STROKE } from '../utils/styles'
-import CanvasMobx from '../../../utility/mobx/CanvasMobx'
+import CanvasMobx from '@src/utility/mobx/CanvasMobx'
 
 export const PointShape = observer(props => {
   // ** State
@@ -17,7 +17,7 @@ export const PointShape = observer(props => {
 
   // ** Ref
   const trRef = useRef()
-  const arrowRef = useRef()
+  const pointRef = useRef()
 
   const handleMouseOver = () => {
     setFill(SHAPE_STYLES_FILL.HOVERED)
@@ -28,20 +28,19 @@ export const PointShape = observer(props => {
   }
 
   const handleDragEnd = (e) => {
-    console.log(e.target)
     props.store.setX(e.target.attrs.x)
     props.store.setY(e.target.attrs.y)
   }
 
   const handleTransformEnd = (e) => {
-    const node = arrowRef.current
+    const node = pointRef.current
     props.store.setRotation(node.rotation())
     trRef.current.getLayer().batchDraw()
   }
 
   useEffect(() => {
     if (selected) {
-      trRef.current.nodes([arrowRef.current])
+      trRef.current.nodes([pointRef.current])
       trRef.current.getLayer().batchDraw()
     }
 
@@ -69,7 +68,7 @@ export const PointShape = observer(props => {
         }}
         x={props.store.x}
         y={props.store.y}
-        ref={arrowRef}
+        ref={pointRef}
         rotation={props.store.rotation}
         draggable={true}
         onMouseLeave={handleMouseLeave}
@@ -101,6 +100,7 @@ export const PointShape = observer(props => {
       {
         selected && (
           <Transformer
+            listening={selected}
             borderEnabled={true}
             ref={trRef}
             ignoreStroke

@@ -261,7 +261,7 @@ const ShapeLayer = observer((props) => {
               )
             case 'area':
               return (
-                <PolygonShape />
+                <RectangleShape store={item} />
               )
             case 'block':
               return (

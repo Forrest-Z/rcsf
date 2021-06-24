@@ -115,7 +115,7 @@ const Canvas = props => {
 
               <UncontrolledButtonDropdown className='dropdown-icon-wrapper mr-2' direction='down'>
                 <Button.Ripple className='btn-icon' color='flat-dark'>
-                  <Square size={20} className='cursor-pointer d-sm-block d-none' onClick={() => CanvasMobx.setCurrentTool('area')} />
+                  <Square size={20} className='cursor-pointer d-sm-block d-none' onClick={() => CanvasMobx.setCurrentTool('rectarea')} />
                 </Button.Ripple>
                 <DropdownToggle className='dropdown-toggle-split' color='flat-dark' caret><ChevronDown size={18} /></DropdownToggle>
                 <DropdownMenu tag='ul' className='p-0' right>
