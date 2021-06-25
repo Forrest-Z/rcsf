@@ -261,7 +261,10 @@ const ShapeLayer = observer((props) => {
                 <PointShape store={item} />
               )
             case 'charge-point':
-              console.log(item)
+              return (
+                <PointShape store={item} />
+              )
+            case 'park-point':
               return (
                 <PointShape store={item} />
               )

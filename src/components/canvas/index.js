@@ -83,6 +83,17 @@ export const RCSCanvas = observer(props => {
             })
           ))
           break
+        case 'park-point':
+          CanvasMobx.setRaw(CanvasMobx.raw.concat(
+            new ShapeMobx({
+              type: 'park-point',
+              shape: 'circle',
+              x: position.x,
+              y: position.y,
+              rotation: 0
+            })
+          ))
+          break
         case 'rectarea':
           CanvasMobx.setRaw(CanvasMobx.raw.concat(
             new ShapeMobx({
