@@ -268,21 +268,18 @@ const ShapeLayer = observer((props) => {
               return (
                 <PointShape store={item} />
               )
-            case 'area':
-              if (item.shape === 'rectangle') {
-                return (
-                  <RectangleShape store={item} />
-                )
-              }
-            case 'block':
-              if (item.shape === 'rectangle') {
-                return (
-                  <RectangleShape store={item} />
-                )
-              }
-
+            case 'rect-area':
+              return (
+                <RectangleShape store={item} />
+              )
+            case 'poly-area':
+              return (
+                <PolygonShape store={item} />
+              )
           }
-        })
+
+        }
+        )
       }
     </Layer>
   )

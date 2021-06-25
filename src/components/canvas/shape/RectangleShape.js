@@ -6,7 +6,7 @@ import { observer } from 'mobx-react'
 
 export const RectangleShape = observer(props => {
   // ** State
-  const [fill, setFill] = useState(props.store.type === 'area' ? SHAPE_STYLES_FILL.INACTIVE : SHAPE_STYLES_FILL.BLOCK)
+  const [fill, setFill] = useState(props.store.type === 'rect-area' ? SHAPE_STYLES_FILL.INACTIVE : SHAPE_STYLES_FILL.BLOCK)
   const [stroke, setStroke] = useState(SHAPE_STYLES_STROKE.INACTIVE)
   const [selected, setSelected] = useState(false)
 
@@ -19,7 +19,7 @@ export const RectangleShape = observer(props => {
   }
 
   const handleMouseLeave = () => {
-    setFill(props.store.type === 'area' ? SHAPE_STYLES_FILL.INACTIVE : SHAPE_STYLES_FILL.BLOCK)
+    setFill(props.store.type === 'rect-area' ? SHAPE_STYLES_FILL.INACTIVE : SHAPE_STYLES_FILL.BLOCK)
   }
 
   useEffect(() => {

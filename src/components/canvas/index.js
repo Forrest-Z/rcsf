@@ -94,10 +94,10 @@ export const RCSCanvas = observer(props => {
             })
           ))
           break
-        case 'rectarea':
+        case 'rect-area':
           CanvasMobx.setRaw(CanvasMobx.raw.concat(
             new ShapeMobx({
-              type: 'area',
+              type: 'rect-area',
               shape: 'rectangle',
               x: position.x,
               y: position.y,
@@ -107,10 +107,10 @@ export const RCSCanvas = observer(props => {
             })
           ))
           break
-        case 'rectblock':
+        case 'rect-block':
           CanvasMobx.setRaw(CanvasMobx.raw.concat(
             new ShapeMobx({
-              type: 'block',
+              type: 'rect-block',
               shape: 'rectangle',
               x: position.x,
               y: position.y,
@@ -119,6 +119,18 @@ export const RCSCanvas = observer(props => {
               rotation: 0
             })
           ))
+
+        case 'poly-area':
+          CanvasMobx.setRaw(CanvasMobx.raw.concat(
+            new ShapeMobx({
+              type: 'poly-area',
+              shape: 'rectangle',
+              x: position.x,
+              y: position.y,
+              rotation: 0
+            })
+          ))
+          break
           break
       }
     }
