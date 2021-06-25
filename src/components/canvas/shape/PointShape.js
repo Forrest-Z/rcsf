@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 
 // ** Thrid Components
-import { Circle, Group, Arrow, Transformer } from 'react-konva'
+import { Circle, Group, Arrow, Transformer, Path } from 'react-konva'
 import { observer } from 'mobx-react'
 
 // ** Custom Components
@@ -75,6 +75,7 @@ export const PointShape = observer(props => {
         onMouseOver={handleMouseOver}
         onDragEnd={handleDragEnd}
         onTransformEnd={handleTransformEnd}
+        onTransform={handleTransformEnd}
       >
         <Circle
           id={props.store.id}
@@ -83,7 +84,7 @@ export const PointShape = observer(props => {
           stroke={stroke}
           strokeWidth={2}
           strokeScaleEnabled={false}
-          dash={!selected && [8, 2]}
+        // dash={!selected && [8, 2]}
         />
         <Arrow
           listening={false}
@@ -92,8 +93,16 @@ export const PointShape = observer(props => {
           stroke={stroke}
           strokeWidth={5}
           strokeScaleEnabled={false}
+          visible={props.store.rotation !== 0}
           pointerLength={4}
           pointerWidth={6}
+        />
+        <Path
+          data={'M2,-10, -7,2, -1,2, -3,8, 7,-2, L0,-2Z'}
+          fill={fill}
+          stroke={stroke}
+          strokeWidth={2}
+          visible={props.store.type === 'charge-point'}
         />
 
       </Group>

@@ -57,13 +57,25 @@ export const RCSCanvas = observer(props => {
     const position = getMouseRealPos(e)
 
     if (e.target.className === 'Image') {
+      console.log(CanvasMobx.currentTool)
       switch (CanvasMobx.currentTool) {
-        case 'mousepoint':
+        case 'mouse-pointer':
           break
-        case 'point':
+        case 'route-point':
           CanvasMobx.setRaw(CanvasMobx.raw.concat(
             new ShapeMobx({
-              type: 'point',
+              type: 'route-point',
+              shape: 'circle',
+              x: position.x,
+              y: position.y,
+              rotation: 0
+            })
+          ))
+          break
+        case 'charge-point':
+          CanvasMobx.setRaw(CanvasMobx.raw.concat(
+            new ShapeMobx({
+              type: 'charge-point',
               shape: 'circle',
               x: position.x,
               y: position.y,
@@ -75,7 +87,7 @@ export const RCSCanvas = observer(props => {
           CanvasMobx.setRaw(CanvasMobx.raw.concat(
             new ShapeMobx({
               type: 'area',
-              shape: 'rectarea',
+              shape: 'rectangle',
               x: position.x,
               y: position.y,
               width: 30,
@@ -84,10 +96,18 @@ export const RCSCanvas = observer(props => {
             })
           ))
           break
-        case 'block':
-          CanvasMobx.setRaw(CanvasMobx.raw.concat({
-            type: 'block'
-          }))
+        case 'rectblock':
+          CanvasMobx.setRaw(CanvasMobx.raw.concat(
+            new ShapeMobx({
+              type: 'block',
+              shape: 'rectangle',
+              x: position.x,
+              y: position.y,
+              width: 30,
+              height: 30,
+              rotation: 0
+            })
+          ))
           break
       }
     }

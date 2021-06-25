@@ -24,7 +24,6 @@ const ShapeLayer = observer((props) => {
 
     // and we snap over edges and center of each object on the canvas
     stage.find('.object').forEach((guideItem) => {
-      console.log(guideItem)
       if (guideItem === skipShape) {
         return
       }
@@ -148,6 +147,7 @@ const ShapeLayer = observer((props) => {
           stroke: 'rgb(0, 161, 255)',
           strokeWidth: 1,
           name: 'guid-line',
+          strokeScaleEnabled: false,
           dash: [4, 6]
         })
         layer.add(line)
@@ -160,6 +160,7 @@ const ShapeLayer = observer((props) => {
           points: [0, -6000, 0, 6000],
           stroke: 'rgb(0, 161, 255)',
           strokeWidth: 1,
+          strokeScaleEnabled: false,
           name: 'guid-line',
           dash: [4, 6]
         })
@@ -255,18 +256,27 @@ const ShapeLayer = observer((props) => {
       {
         CanvasMobx.raw.map((item, key) => {
           switch (item.type) {
-            case 'point':
+            case 'route-point':
+              return (
+                <PointShape store={item} />
+              )
+            case 'charge-point':
+              console.log(item)
               return (
                 <PointShape store={item} />
               )
             case 'area':
-              return (
-                <RectangleShape store={item} />
-              )
+              if (item.shape === 'rectangle') {
+                return (
+                  <RectangleShape store={item} />
+                )
+              }
             case 'block':
-              return (
-                <PolygonShape />
-              )
+              if (item.shape === 'rectangle') {
+                return (
+                  <RectangleShape store={item} />
+                )
+              }
 
           }
         })
