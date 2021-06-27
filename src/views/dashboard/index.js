@@ -27,28 +27,28 @@ export class Dashboard extends React.Component {
             i: 'vehicle-list',
             x: 0,
             y: 0,
-            w: 3,
+            w: 2,
             h: 20
           },
           {
             i: 'two-demensional',
-            x: 3,
+            x: 2,
             y: 0,
-            w: 5,
+            w: 3,
             h: 20
           },
           {
             i: 'vehicle-controller',
             x: 0,
             y: 15,
-            w: 3,
+            w: 2,
             h: 10
           },
           {
             i: 'vehicle-state',
-            x: 3,
+            x: 2,
             y: 20,
-            w: 5,
+            w: 3,
             h: 10
           },
           {
@@ -57,6 +57,20 @@ export class Dashboard extends React.Component {
             y: 0,
             w: 2,
             h: 8
+          },
+          {
+            i: 'mission-procession',
+            x: 5,
+            y: 20,
+            w: 3,
+            h: 10
+          },
+          {
+            i: 'vehicle-lidar',
+            x: 5,
+            y: 0,
+            w: 3,
+            h: 20
           }
 
         ],
@@ -139,7 +153,7 @@ export class Dashboard extends React.Component {
         isResizable={true}
         cols={{
           lg: 12,
-          md: 12,
+          md: 10,
           sm: 6,
           xs: 4,
           xxs: 2

@@ -1,7 +1,15 @@
 import React, { Component } from 'react'
 
 // ** Third Party Components
-import { Card, CardHeader, CardBody, CardTitle, Button } from 'reactstrap'
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardTitle,
+  Button,
+  Col,
+  Row
+} from 'reactstrap'
 import { PieChart, Maximize, Minimize, Move, MapPin, Check, AlertCircle, X } from 'react-feather'
 import Chart from 'react-apexcharts'
 
@@ -166,8 +174,14 @@ export class VehicleState extends Component {
           </div>
         </CardHeader>
         <CardBody className='p-0 d-flex'>
-          <Chart options={this.state.speedChart.options} series={[0.5 * 100]} height={280} type='radialBar' id='support-tracker-card' />
-          <Chart options={this.state.progress.options} series={[89]} height={280} type='radialBar' />
+          <Row>
+            <Col xl='6' md='6'>
+              <Chart options={this.state.speedChart.options} series={[0.5 * 100]} height={280} type='radialBar' id='support-tracker-card' />
+            </Col>
+            <Col xl='6' md='6'>
+              <Chart options={this.state.progress.options} series={[89]} height={280} type='radialBar' />
+            </Col>
+          </Row>
           {/* <div className='d-flex flex-column ml-2 mt-1'>
             <div className='d-flex justify-content-left align-items-center mb-1'>
               <Avatar className='mr-2 rounded' color={'light-warning'} content={<AlertCircle size={18} />} />
