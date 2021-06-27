@@ -29,6 +29,7 @@ import {
   Zap,
   StopCircle,
   Octagon,
+  Map,
   XOctagon
 } from 'react-feather'
 import {
@@ -74,9 +75,16 @@ const Canvas = props => {
     </Button.Ripple>
   )
 
+  const [areaButton, setAreaButton] = useState(
+    <Button.Ripple className='btn-icon' color='flat-dark' onClick={() => CanvasMobx.setCurrentTool('rect-area')}>
+      <Square size={20} className='cursor-pointer d-sm-block d-none' />
+    </Button.Ripple>
+  )
+
   const renderPointButton = (type) => {
     switch (type) {
       case 'route-point':
+        CanvasMobx.setCurrentTool('route-point')
         setPointButton(
           <Button.Ripple className='btn-icon' color='flat-dark' onClick={() => CanvasMobx.setCurrentTool('route-point')}>
             <Circle size={20} className='cursor-pointer d-sm-block d-none' />
@@ -84,23 +92,45 @@ const Canvas = props => {
         )
         break
       case 'charge-point':
+        CanvasMobx.setCurrentTool('charge-point')
         setPointButton(
           <Button.Ripple className='btn-icon' color='flat-dark' onClick={() => CanvasMobx.setCurrentTool('charge-point')}>
             <Zap size={20} className='cursor-pointer d-sm-block d-none' />
           </Button.Ripple>
         )
         break
-        case 'park-point':
-          setPointButton(
-            <Button.Ripple className='btn-icon' color='flat-dark' onClick={() => CanvasMobx.setCurrentTool('park-point')}>
-              <StopCircle size={20} className='cursor-pointer d-sm-block d-none' />
-            </Button.Ripple>
-          )
-          break
+      case 'park-point':
+        CanvasMobx.setCurrentTool('park-point')
+        setPointButton(
+          <Button.Ripple className='btn-icon' color='flat-dark' onClick={() => CanvasMobx.setCurrentTool('park-point')}>
+            <StopCircle size={20} className='cursor-pointer d-sm-block d-none' />
+          </Button.Ripple>
+        )
+        break
       default:
         setPointButton(
           <Button.Ripple className='btn-icon' color='flat-dark' onClick={() => CanvasMobx.setCurrentTool('route-point')}>
             <Circle size={20} className='cursor-pointer d-sm-block d-none' />
+          </Button.Ripple>
+        )
+        break
+    }
+  }
+
+  const renderAreaButton = (type) => {
+    switch (type) {
+      case 'rect-area':
+        setAreaButton(
+          <Button.Ripple className='btn-icon' color='flat-dark' onClick={() => CanvasMobx.setCurrentTool('rect-area')}>
+            <Square size={20} className='cursor-pointer d-sm-block d-none' />
+          </Button.Ripple>
+        )
+
+        break
+      case 'poly-area':
+        setAreaButton(
+          <Button.Ripple className='btn-icon' color='flat-dark' onClick={() => CanvasMobx.setCurrentTool('poly-area')}>
+            <Octagon size={20} className='cursor-pointer d-sm-block d-none' />
           </Button.Ripple>
         )
         break
@@ -145,19 +175,17 @@ const Canvas = props => {
                 <DropdownToggle className='dropdown-toggle-split' color='flat-dark' caret><ChevronDown size={18} /></DropdownToggle>
                 <DropdownMenu tag='ul' className='p-0' right>
                   <DropdownItem tag='li'><Circle size={20} onClick={() => renderPointButton('route-point')} /></DropdownItem>
-                  <DropdownItem tag='li'><Zap size={20} onClick={() => renderPointButton('charge-point')}/></DropdownItem>
-                  <DropdownItem tag='li'><StopCircle size={20} onClick={() => renderPointButton('park-point')}/></DropdownItem>
+                  <DropdownItem tag='li'><Zap size={20} onClick={() => renderPointButton('charge-point')} /></DropdownItem>
+                  <DropdownItem tag='li'><StopCircle size={20} onClick={() => renderPointButton('park-point')} /></DropdownItem>
                 </DropdownMenu>
               </UncontrolledButtonDropdown>
 
               <UncontrolledButtonDropdown className='dropdown-icon-wrapper mr-2' direction='down'>
-                <Button.Ripple className='btn-icon' color='flat-dark' onClick={() => CanvasMobx.setCurrentTool('rectarea')}>
-                  <Square size={20} className='cursor-pointer d-sm-block d-none' />
-                </Button.Ripple>
+                {areaButton}
                 <DropdownToggle className='dropdown-toggle-split' color='flat-dark' caret><ChevronDown size={18} /></DropdownToggle>
                 <DropdownMenu tag='ul' className='p-0' right>
-                  <DropdownItem tag='li'><Square size={20} /></DropdownItem>
-                  <DropdownItem tag='li'><Octagon size={20} /></DropdownItem>
+                  <DropdownItem tag='li'><Square size={20} onClick={() => renderAreaButton('rect-area')} /></DropdownItem>
+                  <DropdownItem tag='li'><Octagon size={20} onClick={() => renderAreaButton('poly-area')} /></DropdownItem>
                 </DropdownMenu>
               </UncontrolledButtonDropdown>
 

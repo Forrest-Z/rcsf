@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 
 // ** Thrid Components
-import { Circle, Group, Arrow, Transformer, Path } from 'react-konva'
+import { Circle, Group, Arrow, Transformer, Path, Text } from 'react-konva'
 import { observer } from 'mobx-react'
 
 // ** Custom Components
@@ -39,7 +39,7 @@ export const PointShape = observer(props => {
   }
 
   useEffect(() => {
-    if (selected) {
+    if (selected && props.store.type === 'route-point') {
       trRef.current.nodes([pointRef.current])
       trRef.current.getLayer().batchDraw()
     }
@@ -98,16 +98,29 @@ export const PointShape = observer(props => {
           pointerWidth={6}
         />
         <Path
-          data={'M2,-10, -7,2, -1,2, -3,8, 7,-2, L0,-2Z'}
-          fill={fill}
+          onTransform={false}
+          data={'M2,-10, -7,2, -1,2, -3,10, 7,-2, L0,-2Z'}
+          fill={stroke}
           stroke={stroke}
           strokeWidth={2}
           visible={props.store.type === 'charge-point'}
         />
+        <Text
+          onTransform={false}
+          text='P'
+          fontSize={30}
+          fontFamily={'Calibri'}
+          offsetX={9}
+          offsetY={15}
+          fill={stroke}
+          stroke={stroke}
+          strokeWidth={3}
+          visible={props.store.type === 'park-point'}
+        />
 
       </Group>
       {
-        selected && (
+        selected && props.store.type === 'route-point' && (
           <Transformer
             listening={selected}
             borderEnabled={true}
