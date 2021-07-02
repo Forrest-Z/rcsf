@@ -20,6 +20,7 @@ import Select, { components } from 'react-select'
 // ** Custom Components
 import { selectThemeColors } from '@utils'
 import Avatar from '@components/avatar'
+import { Viz } from '../../../components/viz'
 
 // TODO:  add content
 const SuccessToast = ({ data }) => {
@@ -65,7 +66,7 @@ const Record = () => {
   }
 
   return (
-    <Row>
+    <Row className='h-100'>
       <Col xl='4'>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <FormGroup>
@@ -114,6 +115,9 @@ const Record = () => {
             </Button.Ripple>
           </FormGroup>
         </Form>
+      </Col>
+      <Col xl='8'>
+        <Viz />
       </Col>
     </Row>
   )

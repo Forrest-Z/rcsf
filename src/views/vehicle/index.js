@@ -12,7 +12,7 @@ const VehicleView = () => {
   const renderVehicles = ()  => {
     return vehicles.map(item => {
       return (
-        <Card key={item.id} className='ecommerce-card'>
+        <Card key={item.id} className='ecommerce-card h-100'>
           <div className='item-img'>
             <Link>
               <img className='img-fluid' src={item.image} alt={item.name} />

@@ -13,13 +13,8 @@ export class ShapeMobx {
     this.height = props.height
     this.vertices = props.vertices
     this.type = props.type
-    this.shape = props.shape
   }
 
-  shape = ''
-  setShape(shape) {
-    this.shape = shape
-  }
 
   x = 0
   setX(x) {
@@ -49,6 +44,11 @@ export class ShapeMobx {
   height = 0
   setHeight(height) {
     this.height = height
+  }
+
+  vertices = []
+  setVertices(value) {
+    this.vertices = value
   }
 }
 class CanvasMobx {

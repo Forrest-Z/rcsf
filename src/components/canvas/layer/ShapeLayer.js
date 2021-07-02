@@ -273,6 +273,7 @@ const ShapeLayer = observer((props) => {
                 <RectangleShape store={item} />
               )
             case 'poly-area':
+              console.log(item)
               return (
                 <PolygonShape store={item} />
               )

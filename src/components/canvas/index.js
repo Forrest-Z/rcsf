@@ -52,12 +52,24 @@ export const RCSCanvas = observer(props => {
     stageRef.current.batchDraw()
   }
 
+  const polyDefaultVertices = (position) => {
+    return [
+      position.x - 20,
+      position.y + 20,
+      position.x + 20,
+      position.y + 20,
+      position.x + 20,
+      position.y - 20,
+      position.x - 20,
+      position.y - 20
+    ]
+  }
+
   const handleClick = (e) => {
     e.evt.preventDefault()
     const position = getMouseRealPos(e)
 
     if (e.target.className === 'Image') {
-      console.log(CanvasMobx.currentTool)
       switch (CanvasMobx.currentTool) {
         case 'mouse-pointer':
           break
@@ -65,7 +77,6 @@ export const RCSCanvas = observer(props => {
           CanvasMobx.setRaw(CanvasMobx.raw.concat(
             new ShapeMobx({
               type: 'route-point',
-              shape: 'circle',
               x: position.x,
               y: position.y,
               rotation: 0
@@ -76,7 +87,6 @@ export const RCSCanvas = observer(props => {
           CanvasMobx.setRaw(CanvasMobx.raw.concat(
             new ShapeMobx({
               type: 'charge-point',
-              shape: 'circle',
               x: position.x,
               y: position.y,
               rotation: 0
@@ -87,7 +97,6 @@ export const RCSCanvas = observer(props => {
           CanvasMobx.setRaw(CanvasMobx.raw.concat(
             new ShapeMobx({
               type: 'park-point',
-              shape: 'circle',
               x: position.x,
               y: position.y,
               rotation: 0
@@ -98,7 +107,6 @@ export const RCSCanvas = observer(props => {
           CanvasMobx.setRaw(CanvasMobx.raw.concat(
             new ShapeMobx({
               type: 'rect-area',
-              shape: 'rectangle',
               x: position.x,
               y: position.y,
               width: 30,
@@ -111,7 +119,6 @@ export const RCSCanvas = observer(props => {
           CanvasMobx.setRaw(CanvasMobx.raw.concat(
             new ShapeMobx({
               type: 'rect-block',
-              shape: 'rectangle',
               x: position.x,
               y: position.y,
               width: 30,
@@ -124,10 +131,10 @@ export const RCSCanvas = observer(props => {
           CanvasMobx.setRaw(CanvasMobx.raw.concat(
             new ShapeMobx({
               type: 'poly-area',
-              shape: 'rectangle',
               x: position.x,
               y: position.y,
-              rotation: 0
+              rotation: 0,
+              vertices: polyDefaultVertices(position)
             })
           ))
           break
@@ -150,7 +157,7 @@ export const RCSCanvas = observer(props => {
       ref={stageRef}
       scale={scale}
       style={{
-        backgroundColor: ThemeMobx.skin === "\"light\"" ? '#f3f3f3' : '#000'
+        backgroundColor: ThemeMobx.skin === "\"light\"" ? '#f3f3f3' : '#262e43'
       }}
       onClick={handleClick}
     >

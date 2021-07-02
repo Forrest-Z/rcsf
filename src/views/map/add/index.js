@@ -18,11 +18,14 @@ import {
 import Upload from './Upload'
 import Record from './Record'
 
+import '@styles/base/pages/app-chat.scss'
+import '@styles/base/pages/app-chat-list.scss'
+
 const AddNewMap = () => {
   const [active, setActive] = useState('0')
 
   return (
-    <Card className='h-100'>
+    <Card className='h-100 w-100'>
       <CardBody>
         <Nav pills>
           <NavItem>
