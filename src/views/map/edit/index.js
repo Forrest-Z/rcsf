@@ -4,7 +4,7 @@ import '@styles/base/pages/app-chat.scss'
 import '@styles/base/pages/app-chat-list.scss'
 
 // ** Custom Components
-import Canvas from './Canvas'
+import Content from './Content'
 import Sidebar from './Sidebar'
 
 
@@ -31,7 +31,7 @@ const MapEdit = props => {
       <div className='content-right'>
         <div className='content-wrapper'>
           <div className='content-body'>
-            <Canvas
+            <Content
               map={props.location.map}
               handleSidebar={handleSidebar}
             />

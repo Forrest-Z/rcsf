@@ -1,20 +1,22 @@
-import React, { createRef, useState, useEffect } from 'react'
+// React Imports
+import React, { useState, createRef } from 'react'
+import PropTypes from 'prop-types'
+
+// Thrid Components
 import { Stage } from 'react-konva'
-import MapLayer from './layer/MapLayer'
-import ShapeLayer from './layer/ShapeLayer'
-import { observer } from 'mobx-react'
-import ThemeMobx from '@src/utility/mobx/ThemeMobx'
 
-import CanvasMobx, { ShapeMobx } from '@src/utility/mobx/CanvasMobx'
-import { getMouseRealPos } from './utils/Coordinate'
-
-export const RCSCanvas = observer(props => {
-  const { width, height, map } = props
-  const [scale, setScale] = useState({ x: 1, y: 1 })
+export const RCSCanvas = props => {
+  const {
+    // Render options
+    data,
+    width,
+    height,
+    mode
+  } = props
 
   const stageRef = createRef()
 
-  const onWheel = (e) => {
+  const onWheel = e => {
     e.evt.preventDefault()
     const scaleBy = 1.06
 
@@ -52,121 +54,25 @@ export const RCSCanvas = observer(props => {
     stageRef.current.batchDraw()
   }
 
-  const polyDefaultVertices = (position) => {
-    return [
-      position.x - 20,
-      position.y + 20,
-      position.x + 20,
-      position.y + 20,
-      position.x + 20,
-      position.y - 20,
-      position.x - 20,
-      position.y - 20
-    ]
-  }
-
-  const handleClick = (e) => {
-    e.evt.preventDefault()
-    const position = getMouseRealPos(e)
-
-    if (e.target.className === 'Image') {
-      switch (CanvasMobx.currentTool) {
-        case 'mouse-pointer':
-          break
-        case 'route-point':
-          CanvasMobx.setRaw(CanvasMobx.raw.concat(
-            new ShapeMobx({
-              type: 'route-point',
-              x: position.x,
-              y: position.y,
-              rotation: 0
-            })
-          ))
-          break
-        case 'charge-point':
-          CanvasMobx.setRaw(CanvasMobx.raw.concat(
-            new ShapeMobx({
-              type: 'charge-point',
-              x: position.x,
-              y: position.y,
-              rotation: 0
-            })
-          ))
-          break
-        case 'park-point':
-          CanvasMobx.setRaw(CanvasMobx.raw.concat(
-            new ShapeMobx({
-              type: 'park-point',
-              x: position.x,
-              y: position.y,
-              rotation: 0
-            })
-          ))
-          break
-        case 'rect-area':
-          CanvasMobx.setRaw(CanvasMobx.raw.concat(
-            new ShapeMobx({
-              type: 'rect-area',
-              x: position.x,
-              y: position.y,
-              width: 30,
-              height: 30,
-              rotation: 0
-            })
-          ))
-          break
-        case 'rect-block':
-          CanvasMobx.setRaw(CanvasMobx.raw.concat(
-            new ShapeMobx({
-              type: 'rect-block',
-              x: position.x,
-              y: position.y,
-              width: 30,
-              height: 30,
-              rotation: 0
-            })
-          ))
-
-        case 'poly-area':
-          CanvasMobx.setRaw(CanvasMobx.raw.concat(
-            new ShapeMobx({
-              type: 'poly-area',
-              x: position.x,
-              y: position.y,
-              rotation: 0,
-              vertices: polyDefaultVertices(position)
-            })
-          ))
-          break
-          break
-      }
-    }
-    console.log(e.target.id())
-    CanvasMobx.setSelected(e.target.id())
-
-  }
-
   return (
     <Stage
+      ref={stageRef}
       x={width / 2}
       y={height / 2}
       width={width}
       height={height}
       draggable={true}
       onWheel={onWheel}
-      ref={stageRef}
-      scale={scale}
-      style={{
-        backgroundColor: ThemeMobx.skin === "\"light\"" ? '#f3f3f3' : '#262e43'
-      }}
-      onClick={handleClick}
+      // scale={scale}
     >
-      {
-        map && (
-          <MapLayer name={map.name} />
-        )
-      }
-      <ShapeLayer width={width} height={height} />
+
     </Stage>
   )
-})
+}
+
+RCSCanvas.propTypes = {
+  mode: PropTypes.oneOfType(['edit', 'view']),
+  width: PropTypes.number,
+  height: PropTypes.number,
+  data: PropTypes.object
+}
