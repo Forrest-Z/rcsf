@@ -4,8 +4,8 @@ import '@styles/base/pages/app-chat.scss'
 import '@styles/base/pages/app-chat-list.scss'
 
 // ** Custom Components
-import Content from './Content'
-import Sidebar from './Sidebar'
+import Content from './content'
+import Sidebar from './sidebar'
 
 
 const MapEdit = props => {

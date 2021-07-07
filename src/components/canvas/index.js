@@ -4,8 +4,13 @@ import PropTypes from 'prop-types'
 
 // Thrid Components
 import { Stage } from 'react-konva'
+import { GridLayer, OriginAxisLayer } from './layers'
+import { observer } from "mobx-react"
 
-export const RCSCanvas = props => {
+// Mobx
+import StageMobx from '@src/utility/mobx/StageMobx'
+
+export const RCSCanvas = observer(props => {
   const {
     // Render options
     data,
@@ -20,15 +25,15 @@ export const RCSCanvas = props => {
     e.evt.preventDefault()
     const scaleBy = 1.06
 
-    const oldScale = scale.x
+    const oldScale = StageMobx.scale.x
     const newScale = e.evt.deltaY < 0 ? oldScale * scaleBy : oldScale / scaleBy
 
-    setScale({
-      x: newScale,
-      y: newScale
-    })
+    // setScale({
+    //   x: newScale,
+    //   y: newScale
+    // })
 
-    CanvasMobx.setScale({
+    StageMobx.setScale({
       x: newScale,
       y: newScale
     })
@@ -63,12 +68,13 @@ export const RCSCanvas = props => {
       height={height}
       draggable={true}
       onWheel={onWheel}
-      // scale={scale}
+      scale={StageMobx.scale}
     >
-
+      {/* <GridLayer visible={true} width={10000} height={10000} padding={30} /> */}
+      {/* <OriginAxisLayer width={width} height={height} x={0} y={0} /> */}
     </Stage>
   )
-}
+})
 
 RCSCanvas.propTypes = {
   mode: PropTypes.oneOfType(['edit', 'view']),
