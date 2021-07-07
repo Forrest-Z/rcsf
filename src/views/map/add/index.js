@@ -1,5 +1,5 @@
 // ** React Imports
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // ** Third Party Components
 import {
@@ -27,7 +27,7 @@ const AddNewMap = () => {
   return (
     <Card className='h-100 w-100'>
       <CardBody>
-        <Nav pills>
+        <Nav pills id='tab-header'>
           <NavItem>
             <NavLink active={active === '0'} onClick={() => setActive('0')}>
               Upload
@@ -39,12 +39,12 @@ const AddNewMap = () => {
             </NavLink>
           </NavItem>
         </Nav>
-        <TabContent activeTab={active}>
+        <TabContent id='tab-content' className='h-100' activeTab={active}>
           <TabPane className='h-100' tabId='0'>
             <Upload />
           </TabPane>
           <TabPane tabId='1'>
-            <Record/>
+            <Record />
           </TabPane>
         </TabContent>
       </CardBody>

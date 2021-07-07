@@ -4,19 +4,26 @@ import PropTypes from 'prop-types'
 // Thrid Components
 import { Layer } from 'react-konva'
 
-const MapLayer = props => {
-  const { visible, url } = props
+// Custom Components
+import { ImageShape } from '../shapes'
+
+// Mobx
+import StageMobx from '@src/utility/mobx/StageMobx'
+
+export const MapLayer = props => {
+  const { visible } = props
 
   return (
     <Layer
       visible={visible}
     >
-      
+      {StageMobx.map && (
+        <ImageShape url={`http://localhost:8000/media/maps/${StageMobx.map.name}/map.png`} />
+      )}
     </Layer>
   )
 }
 
 MapLayer.propTypes = {
-  url: PropTypes.string,
   visible: PropTypes.bool
 }

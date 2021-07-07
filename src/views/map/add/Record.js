@@ -66,9 +66,9 @@ const Record = () => {
   }
 
   return (
-    <Row className='h-100'>
+    <Row>
       <Col xl='4'>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form className='h-100' onSubmit={handleSubmit(onSubmit)}>
           <FormGroup>
             <Label for='mapName'>Name</Label>
             <Input

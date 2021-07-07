@@ -18,16 +18,15 @@ import { useResizeDetector } from 'react-resize-detector'
 // ** Custom Components
 import { RCSCanvas } from '@src/components/canvas'
 import Header from './Header'
+import Footer from './Footer'
 
 // ** Mobx
-import CanvasMobx from '@src/utility/mobx/CanvasMobx'
-import { Footer } from './Footer'
 
 const RCSCanvasContainer = () => {
   const { width, height, ref } = useResizeDetector()
   return (
     <div className='h-100' ref={ref}>
-      <RCSCanvas width={width} height={height} />
+      <RCSCanvas width={width} height={height} mode='edit' />
     </div>
   )
 }

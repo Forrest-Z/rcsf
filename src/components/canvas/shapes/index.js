@@ -1,0 +1,1 @@
+export { ImageShape } from './image-shape'

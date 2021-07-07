@@ -1,14 +1,20 @@
 import React, { useState, Fragment, useEffect } from 'react'
 
-import '@styles/base/pages/app-chat.scss'
-import '@styles/base/pages/app-chat-list.scss'
+// Thrid Components
+import { observer } from "mobx-react"
 
 // ** Custom Components
 import Content from './content'
 import Sidebar from './sidebar'
 
+// Mobx
+import StageMobx from '@src/utility/mobx/StageMobx'
 
-const MapEdit = props => {
+// Styles
+import '@styles/base/pages/app-chat.scss'
+import '@styles/base/pages/app-chat-list.scss'
+
+const MapEdit = observer(props => {
   const [sidebar, setSidebar] = useState(false)
   const [mapSidebarLeft, setMapSidebarLeft] = useState(false)
 
@@ -16,8 +22,10 @@ const MapEdit = props => {
   const handleSidebar = () => setSidebar(!sidebar)
 
   useEffect(() => {
-    console.log(props)
-  }, [])
+    if (props.location.map) {
+      StageMobx.setMap(props.location.map)
+    }
+  }, [props.location.map])
 
   return (
     <Fragment>
@@ -40,7 +48,7 @@ const MapEdit = props => {
       </div>
     </Fragment>
   )
-}
+})
 
 MapEdit.propTypes = {
 

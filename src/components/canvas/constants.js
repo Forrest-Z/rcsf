@@ -13,3 +13,10 @@ export const SHAPE_STYLES_FILL = {
   HOVERED: 'rgb(122, 201, 67, 0.3)',
   SELECTED: 'rgb(255, 255, 0, 0.3)'
 }
+
+export const LAYER_Z_INDEX = {
+  MAP: 0,
+  GRID: 1,
+  AXIS: 2,
+  SHAPEl: 3
+}

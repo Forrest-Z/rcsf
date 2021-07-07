@@ -53,9 +53,9 @@ const Upload = () => {
   })
 
   return (
-    <Row>
+    <Row className='flex-grow-1 h-100'>
       <Col xl='4'>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form className='h-100 d-flex flex-column' onSubmit={handleSubmit(onSubmit)}>
           <FormGroup>
             <Label for='name'>Name</Label>
             <Input
@@ -97,7 +97,7 @@ const Upload = () => {
             />
             {errors.file && errors.file.type === "required" && <span className='text-danger'>This is required</span>}
           </FormGroup>
-          <FormGroup className='d-flex mb-0'>
+          <FormGroup className='d-flex mb-0 mt-5'>
             <Button.Ripple className='mr-1' color='primary' type='submit'>
               Submit
             </Button.Ripple>
