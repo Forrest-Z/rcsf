@@ -10,13 +10,18 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 import Tree, { TreeNode } from 'rc-tree'
 import Select, { components } from 'react-select'
 import { PointProperties } from './Properties'
+import { observer } from "mobx-react"
 
 // ** Custom Components
 import Avatar from '@components/avatar'
+import { DRAW_TOOL_TYPE } from '@src/components/canvas/constants'
 
 // ** Styles
 import 'rc-tree/assets/index.css'
 import '@styles/react/libs/react-select/_react-select.scss'
+
+// Mobx
+import StageMobx from '../../../../utility/mobx/StageMobx'
 
 const treeData = [
   {
@@ -83,7 +88,7 @@ const treeData = [
   }
 ]
 
-const Sidebar = props => {
+const Sidebar = observer(props => {
   // ** Props & Store
   const { map, store, sidebar, handleSidebar, mapSidebarLeft, handleMapSidebarLeft } = props
   const [query, setQuery] = useState('')
@@ -110,7 +115,12 @@ const Sidebar = props => {
   }
 
   const renderProperties = (item) => {
-    return PointProperties()
+    switch (StageMobx.selection.type) {
+      case DRAW_TOOL_TYPE.ROUTE_POINT:
+        return (
+          <PointProperties />
+        )
+    }
   }
 
   // ** Handles Filter
@@ -234,6 +244,6 @@ const Sidebar = props => {
       </div>
     </div>
   )
-}
+})
 
 export default Sidebar

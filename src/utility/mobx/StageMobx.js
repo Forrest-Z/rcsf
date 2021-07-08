@@ -13,7 +13,7 @@ class StageMobx {
   drawTool = DRAW_TOOL_TYPE.INACTIVE
   shapes = []
 
-  selection = []
+  selection = {id: -1}
 
   constructor() {
     makeAutoObservable(this)

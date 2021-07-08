@@ -92,7 +92,7 @@ export const PolygonShape = observer(props => {
   }
 
   useEffect(() => {
-    if (StageMobx.selection.includes(id)) {
+    if (StageMobx.selection.id === id) {
       setSelection(true)
     }
   }, [StageMobx.selection])

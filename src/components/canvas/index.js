@@ -114,12 +114,12 @@ export const RCSCanvas = observer(props => {
           break
       }
 
-      StageMobx.setSelection([])
+      StageMobx.setSelection({id: -1})
     }
 
-    // TODO: selection only one shape.
-    if (!StageMobx.selection.includes(e.target.id())) {
-      StageMobx.setSelection([e.target.id()])
+    const selection = StageMobx.shapes.find(element => element.id === e.target.id())
+    if (selection) {
+      StageMobx.setSelection(selection)
     }
   }
 

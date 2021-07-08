@@ -31,7 +31,7 @@ export const PointShape = observer(props => {
   }
 
   useEffect(() => {
-    if (StageMobx.selection.includes(id)) {
+    if (StageMobx.selection.id === id) {
       setSelection(true)
       setStroke(SHAPE_STYLES_STROKE.SELECTED)
     } else {
