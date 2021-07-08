@@ -3,11 +3,14 @@
  */
 
 // React Imports
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, createRef } from 'react'
 import PropTypes from 'prop-types'
 
 // Thrid Components
 import { Layer, Line } from 'react-konva'
+
+// Custom Components
+import { LAYER_Z_INDEX } from '../constants'
 
 export const GridLayer = props => {
   const { visible, width, height, padding } = props
@@ -15,6 +18,9 @@ export const GridLayer = props => {
   // State
   const [rowLines, setRowLines] = useState([])
   const [colLines, setColLines] = useState([])
+
+  // Refs
+  const layerRef = createRef()
 
   useEffect(() => {
     const rowLinesTemp = []
@@ -31,8 +37,14 @@ export const GridLayer = props => {
     setColLines(colLinesTemp)
   }, [width, height])
 
+
+  useEffect(() => {
+    layerRef.current.zIndex(LAYER_Z_INDEX.GRID)
+  }, [])
+
   return (
     <Layer
+      ref={layerRef}
       visible={visible}
       offsetX={width / 2}
       offsetY={height / 2}
@@ -41,8 +53,8 @@ export const GridLayer = props => {
         rowLines.map((item, key) => (
           <Line
             key={key}
-            stroke={'#283046'}
-            strokeWidth={1}
+            stroke={key % 5 === 0 ? '#445075' : '#2b3450'}
+            strokeWidth={key % 5 === 0 ? 2 : 1}
             points={item}
             strokeScaleEnabled={false}
           />
@@ -52,8 +64,8 @@ export const GridLayer = props => {
         colLines.map((item, key) => (
           <Line
             key={key}
-            stroke={'#283046'}
-            strokeWidth={1}
+            stroke={key % 5 === 0 ? '#445075' : '#2b3450'}
+            strokeWidth={key % 5 === 0 ? 2 : 1}
             points={item}
             strokeScaleEnabled={false}
           />

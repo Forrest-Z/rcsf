@@ -4,13 +4,16 @@ import PropTypes from 'prop-types'
 
 // Thrid Components
 import { Stage } from 'react-konva'
-import { GridLayer, OriginAxisLayer, MapLayer } from './layers'
 import { observer } from "mobx-react"
 
 // Custom Components
+import { GridLayer, OriginAxisLayer, MapLayer, ShapeLayer } from './layers'
 import { getMouseRealPos } from './utils/Coordinate'
+import { DRAW_TOOL_TYPE } from './constants'
+
 // Mobx
 import StageMobx from '@src/utility/mobx/StageMobx'
+import { ShapeMobx } from '../../utility/mobx/StageMobx'
 
 export const RCSCanvas = observer(props => {
   const {
@@ -22,6 +25,19 @@ export const RCSCanvas = observer(props => {
   } = props
 
   const stageRef = createRef()
+
+  const polyDefaultPoints = (position) => {
+    return [
+      position.x - 20,
+      position.y + 20,
+      position.x + 20,
+      position.y + 20,
+      position.x + 20,
+      position.y - 20,
+      position.x - 20,
+      position.y - 20
+    ]
+  }
 
   const onWheel = e => {
     e.evt.preventDefault()
@@ -65,6 +81,48 @@ export const RCSCanvas = observer(props => {
     StageMobx.setMousePosition(getMouseRealPos(e))
   }
 
+  const onClick = e => {
+    e.evt.preventDefault()
+    const position = getMouseRealPos(e)
+
+    if (position === null) {
+      return
+    }
+
+    if (e.target.className === 'Image') {
+      switch (StageMobx.drawTool) {
+        case DRAW_TOOL_TYPE.INACTIVE:
+          break
+        case DRAW_TOOL_TYPE.ROUTE_POINT: case DRAW_TOOL_TYPE.CHARGE_POINT: case DRAW_TOOL_TYPE.PARK_POINT:
+          StageMobx.setShapes(StageMobx.shapes.concat(
+            new ShapeMobx({
+              x: position.x,
+              y: position.y,
+              type: StageMobx.drawTool
+            })))
+          break
+        case DRAW_TOOL_TYPE.AREA:
+          StageMobx.setShapes(StageMobx.shapes.concat(
+            new ShapeMobx({
+              x: position.x,
+              y: position.y,
+              type: DRAW_TOOL_TYPE.AREA,
+              points: polyDefaultPoints(position)
+            })))
+          break
+        case DRAW_TOOL_TYPE.BLOCK:
+          break
+      }
+
+      StageMobx.setSelection([])
+    }
+
+    // TODO: selection only one shape.
+    if (!StageMobx.selection.includes(e.target.id())) {
+      StageMobx.setSelection([e.target.id()])
+    }
+  }
+
   return (
     <Stage
       ref={stageRef}
@@ -76,10 +134,12 @@ export const RCSCanvas = observer(props => {
       onWheel={onWheel}
       scale={StageMobx.scale}
       onMouseMove={onMouseMove}
+      onClick={onClick}
     >
       <GridLayer visible={StageMobx.grid} width={10000} height={10000} padding={30} />
       <OriginAxisLayer visible={StageMobx.axis} width={width} height={height} x={0} y={0} />
       <MapLayer />
+      <ShapeLayer visible={true} />
     </Stage>
   )
 })

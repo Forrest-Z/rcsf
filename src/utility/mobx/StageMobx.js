@@ -1,15 +1,19 @@
 import { makeAutoObservable } from "mobx"
 
-class StageMobx {
+// Custom Components
+import { DRAW_TOOL_TYPE } from '@src/components/canvas/constants'
 
+class StageMobx {
   scale = { x: 1, y: 1 }
   map = null
   data = null
-
-  grid = true
-  axis = true
-
+  grid = false
+  axis = false
   mousePosition = {}
+  drawTool = DRAW_TOOL_TYPE.INACTIVE
+  shapes = []
+
+  selection = []
 
   constructor() {
     makeAutoObservable(this)
@@ -38,6 +42,18 @@ class StageMobx {
   setMousePosition(value) {
     this.mousePosition = value
   }
+
+  setDrawTool(value) {
+    this.drawTool = value
+  }
+
+  setShapes(value) {
+    this.shapes = value
+  }
+
+  setSelection(value) {
+    this.selection = value
+  }
 }
 
 export class ShapeMobx {
@@ -48,7 +64,7 @@ export class ShapeMobx {
   rotation = ''
   width = 0
   height = 0
-  vertices = []
+  points = []
   type = 0
 
   constructor(props) {
@@ -59,7 +75,7 @@ export class ShapeMobx {
     this.name = props.name
     this.id = Math.round(Math.random() * 10000)
     this.rotation = props.rotation
-    this.vertices = props.vertices
+    this.points = props.points
     this.type = props.type
     this.width = props.width
     this.height = props.height
@@ -96,7 +112,6 @@ export class ShapeMobx {
   setType(type) {
     this.type = type
   }
-
 }
 
 export default new StageMobx()

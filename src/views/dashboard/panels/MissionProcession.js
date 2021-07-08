@@ -88,28 +88,28 @@ export const MissionProcession = () => {
                   <Step>
                     {({ accomplished }) => (
                       <div className='d-flex flex-column'>
-                        <Avatar content={<Check size={15} />} size='md' color={`${accomplished ? 'info' : 'secondary'}`} />
+                        <Avatar content={'1'} color={`${accomplished ? 'info' : 'secondary'}`} />
                       </div>
                     )}
                   </Step>
                   <Step>
                     {({ accomplished }) => (
-                      <Avatar content='2' size='md' color={`${accomplished ? 'info' : 'secondary'}`} />
+                      <Avatar content='2' color={`${accomplished ? 'info' : 'secondary'}`} />
                     )}
                   </Step>
                   <Step>
                     {({ accomplished }) => (
-                      <Avatar content='3' size='md' color={`${accomplished ? 'info' : 'secondary'}`} />
+                      <Avatar content='3' color={`${accomplished ? 'info' : 'secondary'}`} />
                     )}
                   </Step>
                   <Step>
                     {({ accomplished }) => (
-                      <Avatar content='4' size='md' color={`${accomplished ? 'info' : 'secondary'}`} />
+                      <Avatar content='4' color={`${accomplished ? 'info' : 'secondary'}`} />
                     )}
                   </Step>
                   <Step>
                     {({ accomplished }) => (
-                      <Avatar content='5' size='md' color={`${accomplished ? 'info' : 'secondary'}`} />
+                      <Avatar content='5' color={`${accomplished ? 'info' : 'secondary'}`} />
                     )}
                   </Step>
                 </ProgressBar>
@@ -131,28 +131,28 @@ export const MissionProcession = () => {
                   <Step>
                     {({ accomplished }) => (
                       <div className='d-flex flex-column'>
-                        <Avatar content={<Check size={15} />} size='md' color={`${accomplished ? 'info' : 'secondary'}`} />
+                        <Avatar content={'1'} color={`${accomplished ? 'info' : 'secondary'}`} />
                       </div>
                     )}
                   </Step>
                   <Step>
                     {({ accomplished }) => (
-                      <Avatar content='2' size='md' color={`${accomplished ? 'info' : 'secondary'}`} />
+                      <Avatar content='2' color={`${accomplished ? 'info' : 'secondary'}`} />
                     )}
                   </Step>
                   <Step>
                     {({ accomplished }) => (
-                      <Avatar content='3' size='md' color={`${accomplished ? 'info' : 'secondary'}`} />
+                      <Avatar content='3' color={`${accomplished ? 'info' : 'secondary'}`} />
                     )}
                   </Step>
                   <Step>
                     {({ accomplished }) => (
-                      <Avatar content='4' size='md' color={`${accomplished ? 'info' : 'secondary'}`} />
+                      <Avatar content='4' color={`${accomplished ? 'info' : 'secondary'}`} />
                     )}
                   </Step>
                   <Step>
                     {({ accomplished }) => (
-                      <Avatar content='5' size='md' color={`${accomplished ? 'info' : 'secondary'}`} />
+                      <Avatar content='5' color={`${accomplished ? 'info' : 'secondary'}`} />
                     )}
                   </Step>
                 </ProgressBar>

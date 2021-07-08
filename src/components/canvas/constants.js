@@ -18,5 +18,15 @@ export const LAYER_Z_INDEX = {
   MAP: 0,
   GRID: 1,
   AXIS: 2,
-  SHAPEl: 3
+  SHAPLE: 3
+}
+
+export const DRAW_TOOL_TYPE = {
+  INACTIVE: 0,
+  MOUSE_POINTER: 1,
+  ROUTE_POINT: 2,
+  CHARGE_POINT: 3,
+  PARK_POINT: 4,
+  AREA: 5,
+  BLOCK: 6
 }

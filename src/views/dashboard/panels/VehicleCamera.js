@@ -45,7 +45,7 @@ export class VehicleCamera extends Component {
           </div>
         </CardHeader>
         <CardBody className='p-0'>
-          <Reflv url='http://192.168.1.107:8081/live/livestream.flv' type='flv' isLive={true} config={{ enableStashBuffer: false }}/>
+          {/* <Reflv url='./sample-flv-file.flv' type='flv' isLive={false} config={{ enableStashBuffer: false }}/> */}
         </CardBody>
       </Card>
     )

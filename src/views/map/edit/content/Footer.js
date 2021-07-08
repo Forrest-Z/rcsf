@@ -16,7 +16,7 @@ const Footer = props => {
             type='checkbox'
             id='grid-checkbox'
             label='Grid'
-            defaultChecked
+            // defaultChecked
             onChange={e => StageMobx.setGrid(e.target.checked)}
           />
         </Col>
@@ -27,7 +27,7 @@ const Footer = props => {
             type='checkbox'
             id='axis-checkbox'
             label='Axis'
-            defaultChecked
+            // defaultChecked
             onChange={e => StageMobx.setAxis(e.target.checked)}
           />
         </Col>

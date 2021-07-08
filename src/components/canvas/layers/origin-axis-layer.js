@@ -38,12 +38,11 @@ export const OriginAxisLayer = props => {
       />
       <Ring
         id='origin'
-        points={[x, y, 10000, 0]}
         stroke={SHAPE_STYLES_STROKE.INACTIVE}
         strokeWidth={1}
         strokeScaleEnabled={false}
-        outerRadius={11}
-        innerRadius={10}
+        outerRadius={9}
+        innerRadius={8}
         scaleX={1 / StageMobx.scale.x}
         scaleY={1 / StageMobx.scale.y}
       />
