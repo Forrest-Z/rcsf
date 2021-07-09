@@ -14,6 +14,7 @@ class StageMobx {
   shapes = []
 
   selection = {id: -1}
+  menu = null
 
   constructor() {
     makeAutoObservable(this)
@@ -53,6 +54,10 @@ class StageMobx {
 
   setSelection(value) {
     this.selection = value
+  }
+
+  setMenu(value) {
+    this.menu = value
   }
 }
 

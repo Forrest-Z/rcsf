@@ -111,7 +111,9 @@ export const PolygonShape = observer(props => {
   }, [points])
 
   return (
-    <Group>
+    <Group
+      draggable
+    >
       <Line
         id={id}
         points={points}
@@ -122,6 +124,7 @@ export const PolygonShape = observer(props => {
         strokeScaleEnabled={false}
         onMouseOver={onMouseOver}
         onMouseLeave={onMouseLeave}
+
       />
       {
         vertices.map((item, key) => (

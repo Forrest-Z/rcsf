@@ -11,7 +11,6 @@ import { SHAPE_STYLES_STROKE, SHAPE_STYLES_FILL } from '../constants'
 
 // Mobx
 import StageMobx from '../../../utility/mobx/StageMobx'
-import { data } from 'jquery'
 
 export const PointShape = observer(props => {
   const { id, x, y, rotation, type } = props.data
@@ -48,6 +47,11 @@ export const PointShape = observer(props => {
     props.data.setY(e.target.attrs.y)
   }
 
+  const onContextMenu = e => {
+    e.evt.preventDefault(true)
+    StageMobx.shapes.remove(props.data)
+  }
+
   useEffect(() => {
     if (StageMobx.selection.id === id) {
       setSelection(true)
@@ -74,15 +78,16 @@ export const PointShape = observer(props => {
         ref={pointRef}
         x={x}
         y={y}
+        draggable={true}
+        scaleX={1 / StageMobx.scale.x}
+        scaleY={1 / StageMobx.scale.y}
         onMouseOver={onMouseOver}
         onMouseLeave={onMouseLeave}
         onDragMove={onDragMove}
         onDblClick={() => setTransformerShow(!transformerShow)}
-        scaleX={1 / StageMobx.scale.x}
-        scaleY={1 / StageMobx.scale.y}
         onTransformEnd={onTransformEnd}
         onTransform={onTransformEnd}
-        draggable={true}
+        onContextMenu={onContextMenu}
       >
         <Circle
           id={id}
