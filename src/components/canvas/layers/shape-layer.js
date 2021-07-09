@@ -272,6 +272,7 @@ export const ShapeLayer = observer(props => {
                 />
               )
             case DRAW_TOOL_TYPE.AREA:
+            case DRAW_TOOL_TYPE.BLOCK:
               return (
                 <PolygonShape
                   data={item}

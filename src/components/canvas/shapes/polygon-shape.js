@@ -8,13 +8,13 @@ import { observer } from 'mobx-react'
 import { toJS } from 'mobx'
 
 // Custom Conponents
-import { SHAPE_STYLES_STROKE, SHAPE_STYLES_FILL } from '../constants'
+import { SHAPE_STYLES_STROKE, SHAPE_STYLES_FILL, DRAW_TOOL_TYPE } from '../constants'
 
 // Mobx
 import StageMobx from '../../../utility/mobx/StageMobx'
 
 export const PolygonShape = observer(props => {
-  const { id, x, y, points } = props.data
+  const { id, x, y, points, type } = props.data
 
   // State
   const [selection, setSelection] = useState(false)
@@ -38,7 +38,6 @@ export const PolygonShape = observer(props => {
         y: points[i + 1]
       })
     }
-    console.log(vertices)
 
     setVertices(vertices)
 
@@ -90,6 +89,13 @@ export const PolygonShape = observer(props => {
     updatePoints()
   }
 
+  const onDragMove = e => {
+    if (e.target.className !== 'Circle') {
+      props.data.setX(e.target.attrs.x)
+      props.data.setY(e.target.attrs.y)
+    }
+  }
+
   useEffect(() => {
     if (StageMobx.selection.id === id) {
       setSelection(true)
@@ -112,13 +118,16 @@ export const PolygonShape = observer(props => {
   return (
     <Group
       draggable
+      onDragMove={onDragMove}
+      // x={x}
+      // y={y}
     >
       <Line
         id={id}
         points={points}
-        fill={fill}
+        fill={type === DRAW_TOOL_TYPE.BLOCK ? 'rgb(234, 172, 172, 0.6)' : fill}
         stroke={stroke}
-        strokeWidth={2}
+        strokeWidth={type === DRAW_TOOL_TYPE.AREA && 2}
         closed
         strokeScaleEnabled={false}
         onMouseOver={onMouseOver}

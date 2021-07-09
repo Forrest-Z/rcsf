@@ -103,19 +103,20 @@ export const RCSCanvas = observer(props => {
             })))
           break
         case DRAW_TOOL_TYPE.AREA:
+        case DRAW_TOOL_TYPE.BLOCK:
           StageMobx.setShapes(StageMobx.shapes.concat(
             new ShapeMobx({
               x: position.x,
               y: position.y,
-              type: DRAW_TOOL_TYPE.AREA,
+              type: StageMobx.drawTool,
               points: polyDefaultPoints(position)
             })))
           break
-        case DRAW_TOOL_TYPE.BLOCK:
+
           break
       }
 
-      StageMobx.setSelection({id: -1})
+      StageMobx.setSelection({ id: -1 })
     }
 
     const selection = StageMobx.shapes.find(element => element.id === e.target.id())
