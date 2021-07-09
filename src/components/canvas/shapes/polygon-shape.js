@@ -55,7 +55,6 @@ export const PolygonShape = observer(props => {
     }
 
     setAnchors(anchors)
-    console.log(anchor)
   }
 
   // Callback
@@ -124,7 +123,10 @@ export const PolygonShape = observer(props => {
         strokeScaleEnabled={false}
         onMouseOver={onMouseOver}
         onMouseLeave={onMouseLeave}
-
+        onContextMenu={(e) => {
+          e.evt.preventDefault(true)
+          StageMobx.shapes.remove(props.data)
+        }}
       />
       {
         vertices.map((item, key) => (
@@ -143,6 +145,18 @@ export const PolygonShape = observer(props => {
             scaleX={1 / StageMobx.scale.x}
             scaleY={1 / StageMobx.scale.y}
             onDragMove={onVerticeDragMove}
+            onContextMenu={(e) => {
+              e.evt.preventDefault(true)
+              if (vertices.length > 3) {
+                for (let i = 0; i < vertices.length; i++) {
+                  if (vertices[i] === item) {
+                    points.splice(2 * i, 1)
+                    points.splice(2 * i, 1)
+                    updatePoints()
+                  }
+                }
+              }
+            }}
           />
         ))
       }
