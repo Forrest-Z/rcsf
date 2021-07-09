@@ -98,7 +98,8 @@ export const RCSCanvas = observer(props => {
             new ShapeMobx({
               x: position.x,
               y: position.y,
-              type: StageMobx.drawTool
+              type: StageMobx.drawTool,
+              rotation: 0
             })))
           break
         case DRAW_TOOL_TYPE.AREA:

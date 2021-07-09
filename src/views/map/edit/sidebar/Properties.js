@@ -11,15 +11,6 @@ import StageMobx from '../../../../utility/mobx/StageMobx'
 
 
 export const PointProperties = observer(() => {
-  const [properties, setProperties] = useState({
-    x: 0,
-    y: 0
-  })
-
-  useEffect(() => {
-    console.log(StageMobx.selection)
-    setProperties(toJS(StageMobx.selection))
-  }, [StageMobx.selection])
 
   return (
     <div className='p-1'>
@@ -36,24 +27,24 @@ export const PointProperties = observer(() => {
         <Col xl='4'>
           <Label>Position</Label>
         </Col>
-        <Col xl='4'>
+        <Col xl='4' className='pr-0'>
           <InputGroup size='sm'>
             <InputGroupAddon addonType='prepend'>
               <InputGroupText>
-                X:
+                X: 
               </InputGroupText>
             </InputGroupAddon>
-            <Input defaultValue={properties.x} />
+            <Input value={StageMobx.selection.x} />
           </InputGroup>
         </Col>
-        <Col xl='4'>
+        <Col xl='4' className='pl-0'>
           <InputGroup size='sm'>
             <InputGroupAddon addonType='prepend'>
               <InputGroupText>
                 Y:
           </InputGroupText>
             </InputGroupAddon>
-            <Input defaultValue={properties.y} />
+            <Input value={StageMobx.selection.y} />
           </InputGroup>
         </Col>
       </Row>
@@ -64,7 +55,7 @@ export const PointProperties = observer(() => {
         </Col>
         <Col xl='4'>
           <InputGroup size='sm'>
-            <Input defaultValue={StageMobx.selection.rotation} />
+            <Input value={StageMobx.selection.rotation} />
             <InputGroupAddon addonType='append'>
               <InputGroupText>∠</InputGroupText>
             </InputGroupAddon>

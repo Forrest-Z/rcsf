@@ -117,6 +117,8 @@ const Sidebar = observer(props => {
   const renderProperties = (item) => {
     switch (StageMobx.selection.type) {
       case DRAW_TOOL_TYPE.ROUTE_POINT:
+      case DRAW_TOOL_TYPE.CHARGE_POINT:
+      case DRAW_TOOL_TYPE.PARK_POINT:
         return (
           <PointProperties />
         )
