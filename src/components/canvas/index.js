@@ -1,32 +1,57 @@
-import React, { createRef, useState, useEffect } from 'react'
-import { Stage } from 'react-konva'
-import MapLayer from './layer/MapLayer'
-import ShapeLayer from './layer/ShapeLayer'
-import { observer } from 'mobx-react'
-import ThemeMobx from '@src/utility/mobx/ThemeMobx'
+// React Imports
+import React, { useState, createRef, useEffect } from 'react'
+import PropTypes from 'prop-types'
 
-import CanvasMobx, { ShapeMobx } from '@src/utility/mobx/CanvasMobx'
+// Thrid Components
+import { Stage } from 'react-konva'
+import { observer } from "mobx-react"
+
+// Custom Components
+import { GridLayer, OriginAxisLayer, MapLayer, ShapeLayer } from './layers'
 import { getMouseRealPos } from './utils/Coordinate'
+import { DRAW_TOOL_TYPE } from './constants'
+
+// Mobx
+import StageMobx from '@src/utility/mobx/StageMobx'
+import { ShapeMobx } from '../../utility/mobx/StageMobx'
 
 export const RCSCanvas = observer(props => {
-  const { width, height, map } = props
-  const [scale, setScale] = useState({ x: 1, y: 1 })
+  const {
+    // Render options
+    data,
+    width,
+    height,
+    mode
+  } = props
 
   const stageRef = createRef()
 
-  const onWheel = (e) => {
+  const polyDefaultPoints = (position) => {
+    return [
+      position.x - 20,
+      position.y + 20,
+      position.x + 20,
+      position.y + 20,
+      position.x + 20,
+      position.y - 20,
+      position.x - 20,
+      position.y - 20
+    ]
+  }
+
+  const onWheel = e => {
     e.evt.preventDefault()
     const scaleBy = 1.06
 
-    const oldScale = scale.x
+    const oldScale = StageMobx.scale.x
     const newScale = e.evt.deltaY < 0 ? oldScale * scaleBy : oldScale / scaleBy
 
-    setScale({
-      x: newScale,
-      y: newScale
-    })
+    // setScale({
+    //   x: newScale,
+    //   y: newScale
+    // })
 
-    CanvasMobx.setScale({
+    StageMobx.setScale({
       x: newScale,
       y: newScale
     })
@@ -52,114 +77,83 @@ export const RCSCanvas = observer(props => {
     stageRef.current.batchDraw()
   }
 
-  const handleClick = (e) => {
+  const onMouseMove = e => {
+    StageMobx.setMousePosition(getMouseRealPos(e))
+  }
+
+  const onClick = e => {
     e.evt.preventDefault()
     const position = getMouseRealPos(e)
 
-    if (e.target.className === 'Image') {
-      console.log(CanvasMobx.currentTool)
-      switch (CanvasMobx.currentTool) {
-        case 'mouse-pointer':
-          break
-        case 'route-point':
-          CanvasMobx.setRaw(CanvasMobx.raw.concat(
-            new ShapeMobx({
-              type: 'route-point',
-              shape: 'circle',
-              x: position.x,
-              y: position.y,
-              rotation: 0
-            })
-          ))
-          break
-        case 'charge-point':
-          CanvasMobx.setRaw(CanvasMobx.raw.concat(
-            new ShapeMobx({
-              type: 'charge-point',
-              shape: 'circle',
-              x: position.x,
-              y: position.y,
-              rotation: 0
-            })
-          ))
-          break
-        case 'park-point':
-          CanvasMobx.setRaw(CanvasMobx.raw.concat(
-            new ShapeMobx({
-              type: 'park-point',
-              shape: 'circle',
-              x: position.x,
-              y: position.y,
-              rotation: 0
-            })
-          ))
-          break
-        case 'rect-area':
-          CanvasMobx.setRaw(CanvasMobx.raw.concat(
-            new ShapeMobx({
-              type: 'rect-area',
-              shape: 'rectangle',
-              x: position.x,
-              y: position.y,
-              width: 30,
-              height: 30,
-              rotation: 0
-            })
-          ))
-          break
-        case 'rect-block':
-          CanvasMobx.setRaw(CanvasMobx.raw.concat(
-            new ShapeMobx({
-              type: 'rect-block',
-              shape: 'rectangle',
-              x: position.x,
-              y: position.y,
-              width: 30,
-              height: 30,
-              rotation: 0
-            })
-          ))
+    if (position === null) {
+      return
+    }
 
-        case 'poly-area':
-          CanvasMobx.setRaw(CanvasMobx.raw.concat(
+    if (e.target.className === 'Image') {
+      switch (StageMobx.drawTool) {
+        case DRAW_TOOL_TYPE.INACTIVE:
+          break
+        case DRAW_TOOL_TYPE.ROUTE_POINT: case DRAW_TOOL_TYPE.CHARGE_POINT: case DRAW_TOOL_TYPE.PARK_POINT:
+          StageMobx.setShapes(StageMobx.shapes.concat(
             new ShapeMobx({
-              type: 'poly-area',
-              shape: 'rectangle',
+              id: `Point-${StageMobx.getPointIndex()}`,
               x: position.x,
               y: position.y,
+              type: StageMobx.drawTool,
               rotation: 0
-            })
-          ))
+            })))
           break
+        case DRAW_TOOL_TYPE.AREA:
+        case DRAW_TOOL_TYPE.BLOCK:
+          StageMobx.setShapes(StageMobx.shapes.concat(
+            new ShapeMobx({
+              x: 0,
+              y: 0,
+              type: StageMobx.drawTool,
+              points: polyDefaultPoints(position)
+            })))
+          break
+
           break
       }
-    }
-    console.log(e.target.id())
-    CanvasMobx.setSelected(e.target.id())
 
+      StageMobx.setSelection({ id: -1 })
+    }
+
+    const selection = StageMobx.shapes.find(element => element.id === e.target.id())
+    if (selection) {
+      StageMobx.setSelection(selection)
+    }
   }
+
+  useEffect(() => {
+    console.log(width, height)
+  }, [props])
 
   return (
     <Stage
+      ref={stageRef}
       x={width / 2}
       y={height / 2}
       width={width}
       height={height}
       draggable={true}
       onWheel={onWheel}
-      ref={stageRef}
-      scale={scale}
-      style={{
-        backgroundColor: ThemeMobx.skin === "\"light\"" ? '#f3f3f3' : '#000'
-      }}
-      onClick={handleClick}
+      scale={StageMobx.scale}
+      onMouseMove={onMouseMove}
+      onClick={onClick}
     >
-      {
-        map && (
-          <MapLayer name={map.name} />
-        )
-      }
-      <ShapeLayer width={width} height={height} />
+      <MapLayer />
+      <GridLayer visible={StageMobx.grid} width={10000} height={10000} padding={30} />
+      <OriginAxisLayer visible={StageMobx.axis} width={width} height={height} x={0} y={0} />
+      <ShapeLayer visible={true} />
     </Stage>
   )
 })
+
+RCSCanvas.propTypes = {
+  mode: PropTypes.oneOfType(['edit', 'view', 'simple']),
+  width: PropTypes.number,
+  height: PropTypes.number,
+  data: PropTypes.object
+}
