@@ -1,20 +1,20 @@
 
 // ** React Imports
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // ** Third Party Components
 import classnames from 'classnames'
-import { X, Search, CheckSquare, Bell, User, Trash, Map } from 'react-feather'
+import { X, Search, CheckSquare, Bell, User, Trash, Map, Circle, Square } from 'react-feather'
 import { Label, Row, Col, InputGroup, InputGroupAddon, Input, InputGroupText, Badge, CustomInput, Button } from 'reactstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import Tree, { TreeNode } from 'rc-tree'
 import Select, { components } from 'react-select'
-import { PointProperties } from './Properties'
 import { observer } from "mobx-react"
 
 // ** Custom Components
+import { AreaProperties, PointProperties } from './Properties'
 import Avatar from '@components/avatar'
 import { DRAW_TOOL_TYPE } from '@src/components/canvas/constants'
+import Elements from './Elements'
 
 // ** Styles
 import 'rc-tree/assets/index.css'
@@ -27,64 +27,17 @@ const treeData = [
   {
     key: '0',
     title: 'Points',
-    children: [
-      {
-        key: '0-0',
-        title: 'Point-01'
-      },
-      {
-        key: '0-1',
-        title: 'Point-02'
-      },
-      {
-        key: '0-2',
-        title: 'Point-03'
-      }
-    ]
+    children: []
   },
   {
     key: '1',
     title: 'Areas',
-    children: [
-      {
-        key: '1-0',
-        title: 'Area-01'
-      },
-      {
-        key: '1-1',
-        title: 'Area-02'
-      },
-      {
-        key: '1-2',
-        title: 'Area-03'
-      }
-    ]
+    children: []
   },
   {
     key: '2',
     title: 'Blocks',
-    children: [
-      {
-        key: '2-0',
-        title: 'Block-01'
-      },
-      {
-        key: '2-1',
-        title: 'Block-02'
-      },
-      {
-        key: '2-2',
-        title: 'Block-03'
-      },
-      {
-        key: '2-3',
-        title: 'Block-03'
-      },
-      {
-        key: '2-4',
-        title: 'Block-03'
-      }
-    ]
+    children: []
   }
 ]
 
@@ -92,27 +45,6 @@ const Sidebar = observer(props => {
   // ** Props & Store
   const { map, store, sidebar, handleSidebar, mapSidebarLeft, handleMapSidebarLeft } = props
   const [query, setQuery] = useState('')
-
-  const handleSelect = (selectedKeys, info) => {
-    console.log('selected', selectedKeys, info)
-    // this.selKey = info.node.props.eventKey;
-  }
-
-  const renderElements = () => {
-    return (
-      <div className='pl-2 pt-1 h-100'>
-        <Tree
-          // showLine
-          // checkable={true}
-          defaultExpandAll
-          onSelect={handleSelect}
-          treeData={treeData}
-        >
-        </Tree>
-      </div>
-
-    )
-  }
 
   const renderProperties = (item) => {
     switch (StageMobx.selection.type) {
@@ -122,12 +54,17 @@ const Sidebar = observer(props => {
         return (
           <PointProperties />
         )
+      case DRAW_TOOL_TYPE.AREA:
+        return (
+          <AreaProperties />
+        )
     }
   }
 
   // ** Handles Filter
   const handleFilter = e => {
   }
+
 
   return (
     <div className='sidebar-left'>
@@ -230,7 +167,9 @@ const Sidebar = observer(props => {
             <div className='h-50'>
               <PerfectScrollbar className='chat-user-list-wrapper list-group h-100' options={{ wheelPropagation: false }}>
                 <h4 className='m-1 text-primary'>Elements</h4>
-                <div className='chat-users-list chat-list media-list'>{renderElements()}</div>
+                <div className='chat-users-list chat-list media-list'>
+                  <Elements />
+                </div>
               </PerfectScrollbar>
             </div>
             <hr className='m-0' />

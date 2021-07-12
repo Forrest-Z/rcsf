@@ -13,7 +13,7 @@ class StageMobx {
   drawTool = DRAW_TOOL_TYPE.INACTIVE
   shapes = []
 
-  selection = {id: -1}
+  selection = { id: -1 }
   menu = null
 
   constructor() {
@@ -59,6 +59,19 @@ class StageMobx {
   setMenu(value) {
     this.menu = value
   }
+
+  getPointIndex() {
+    let index = 0
+    for (let i = 0; i < this.shapes.length; i++) {
+      if (this.shapes[i].type === DRAW_TOOL_TYPE.ROUTE_POINT ||
+        this.shapes[i].type === DRAW_TOOL_TYPE.CHARGE_POINT ||
+        this.shapes[i].type === DRAW_TOOL_TYPE.PARK_POINT
+      ) {
+        index++
+      }
+    }
+    return index + 1
+  }
 }
 
 export class ShapeMobx {
@@ -78,7 +91,7 @@ export class ShapeMobx {
     this.x = props.x
     this.y = props.y
     this.name = props.name
-    this.id = Math.round(Math.random() * 10000)
+    this.id = props.id
     this.rotation = props.rotation
     this.points = props.points
     this.type = props.type
@@ -86,6 +99,10 @@ export class ShapeMobx {
     this.height = props.height
   }
 
+  setID(value) {
+    this.id = value
+  }
+  
   setX(x) {
     this.x = x
   }

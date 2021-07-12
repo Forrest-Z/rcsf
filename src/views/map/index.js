@@ -9,6 +9,9 @@ import { ChevronDown } from 'react-feather'
 import { ThemeColors } from '@src/utility/context/ThemeColors'
 import ReactPaginate from 'react-paginate'
 
+// ** Custom Components
+import BreadCrumbs from '@components/breadcrumbs'
+
 // ** Store & Actions
 import { getMap, multiDelete } from './store/actions'
 import { useDispatch, useSelector } from 'react-redux'
@@ -182,6 +185,7 @@ const MapView = () => {
 
   return (
     <Fragment>
+      <BreadCrumbs breadCrumbTitle='MAP' breadCrumbActive='Map' />
       <div className='app-user-list'>
         <Card>
           <CardBody>

@@ -90,10 +90,17 @@ export const PolygonShape = observer(props => {
   }
 
   const onDragMove = e => {
-    if (e.target.className !== 'Circle') {
+    if (e.target.attrs.id === id) {
       props.data.setX(e.target.attrs.x)
       props.data.setY(e.target.attrs.y)
     }
+  }
+
+  const onContextMenu = e => {
+    e.evt.preventDefault(true)
+    StageMobx.shapes.remove(props.data)
+    setVertices([])
+    setAnchors([])
   }
 
   useEffect(() => {
@@ -117,12 +124,15 @@ export const PolygonShape = observer(props => {
 
   return (
     <Group
+      id={id}
       draggable
       onDragMove={onDragMove}
-      // x={x}
-      // y={y}
+      x={x}
+      y={y}
+
     >
       <Line
+
         id={id}
         points={points}
         fill={type === DRAW_TOOL_TYPE.BLOCK ? 'rgb(234, 172, 172, 0.6)' : fill}
@@ -132,10 +142,7 @@ export const PolygonShape = observer(props => {
         strokeScaleEnabled={false}
         onMouseOver={onMouseOver}
         onMouseLeave={onMouseLeave}
-        onContextMenu={(e) => {
-          e.evt.preventDefault(true)
-          StageMobx.shapes.remove(props.data)
-        }}
+        onContextMenu={selection && onContextMenu}
       />
       {
         vertices.map((item, key) => (

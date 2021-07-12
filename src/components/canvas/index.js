@@ -96,6 +96,7 @@ export const RCSCanvas = observer(props => {
         case DRAW_TOOL_TYPE.ROUTE_POINT: case DRAW_TOOL_TYPE.CHARGE_POINT: case DRAW_TOOL_TYPE.PARK_POINT:
           StageMobx.setShapes(StageMobx.shapes.concat(
             new ShapeMobx({
+              id: `Point-${StageMobx.getPointIndex()}`,
               x: position.x,
               y: position.y,
               type: StageMobx.drawTool,
@@ -106,8 +107,8 @@ export const RCSCanvas = observer(props => {
         case DRAW_TOOL_TYPE.BLOCK:
           StageMobx.setShapes(StageMobx.shapes.concat(
             new ShapeMobx({
-              x: position.x,
-              y: position.y,
+              x: 0,
+              y: 0,
               type: StageMobx.drawTool,
               points: polyDefaultPoints(position)
             })))
@@ -125,6 +126,10 @@ export const RCSCanvas = observer(props => {
     }
   }
 
+  useEffect(() => {
+    console.log(width, height)
+  }, [props])
+
   return (
     <Stage
       ref={stageRef}
@@ -138,9 +143,9 @@ export const RCSCanvas = observer(props => {
       onMouseMove={onMouseMove}
       onClick={onClick}
     >
+      <MapLayer />
       <GridLayer visible={StageMobx.grid} width={10000} height={10000} padding={30} />
       <OriginAxisLayer visible={StageMobx.axis} width={width} height={height} x={0} y={0} />
-      <MapLayer />
       <ShapeLayer visible={true} />
     </Stage>
   )

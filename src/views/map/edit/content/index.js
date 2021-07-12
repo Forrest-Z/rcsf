@@ -26,7 +26,11 @@ const RCSCanvasContainer = () => {
   const { width, height, ref } = useResizeDetector()
   return (
     <div className='h-100' ref={ref}>
-      <RCSCanvas width={width} height={height} mode='edit' />
+      {
+        width !== undefined && (
+          <RCSCanvas width={width} height={height} mode='edit' />
+        )
+      }
     </div>
   )
 }
