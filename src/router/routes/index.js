@@ -45,6 +45,14 @@ const Routes = [
     component: lazy(() => import('../../views/statistics'))
   },
   {
+    path: '/system',
+    component: lazy(() => import('../../views/system'))
+  },
+  {
+    path: '/help/apidoc',
+    component: lazy(() => import('../../views/help/Apidoc.js'))
+  },
+  {
     path: '/login',
     component: lazy(() => import('../../views/Login')),
     layout: 'BlankLayout',

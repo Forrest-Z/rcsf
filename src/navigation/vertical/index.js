@@ -1,4 +1,4 @@
-import { BarChart2, Home, Map, Send, Slack } from 'react-feather'
+import { BarChart2, Home, Map, Send, Slack, Layers, HelpCircle, Circle } from 'react-feather'
 
 export default [
   {
@@ -30,5 +30,24 @@ export default [
     title: 'Vehicle',
     icon: <Slack size={20} />,
     navLink: '/vehicle'
+  },
+  {
+    id: 'system',
+    title: 'System',
+    icon: <Layers size={20} />,
+    navLink: '/system'
+  },
+  {
+    id: 'help',
+    title: 'Help',
+    icon: <HelpCircle size={20} />,
+    children: [
+      {
+        id: 'apidoc',
+        title: 'API Document',
+        icon: <Circle size={12} />,
+        navLink: '/help/apidoc'
+      }
+    ]
   }
 ]

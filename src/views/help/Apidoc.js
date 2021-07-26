@@ -1,9 +1,9 @@
 import { Card } from 'reactstrap'
 
-const APIView = props => {
+const ApidocView = props => {
   return (
     <Card></Card>
   )
 }
 
-export default APIView
+export default ApidocView
