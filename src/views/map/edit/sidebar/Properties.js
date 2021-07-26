@@ -140,36 +140,6 @@ export const AreaProperties = observer(properties => {
         </Col>
       </Row>
       <hr />
-      {/* <Row>
-        <Col xl='4'>
-          <Label>Orientation</Label>
-        </Col>
-        <Col xl='4'>
-          <InputGroup size='sm'>
-            <Input />
-            <InputGroupAddon addonType='append'>
-              <InputGroupText>∠</InputGroupText>
-            </InputGroupAddon>
-          </InputGroup>
-        </Col>
-        <Col>
-          <Input disabled bsSize='sm' defaultValue={'[0,0,0,1]'} />
-        </Col>
-      </Row>
-      <hr /> */}
-      {/* <Row>
-        <Col xl='4'>
-          <Label>Type</Label>
-        </Col>
-        <Col xl='8'>
-          <Input type='select' name='select' bsSize='sm' id='select-sm'>
-            <option>Route</option>
-            <option>Charge</option>
-            <option>Parking</option>
-          </Input>
-        </Col>
-      </Row>
-      <hr /> */}
       <Row>
         <Col xl='4'>
           <Label>Group</Label>
