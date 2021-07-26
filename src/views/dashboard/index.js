@@ -14,6 +14,104 @@ import { ThemeColors } from '@src/utility/context/ThemeColors'
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
+const defaultLayouts = {
+  md: [
+    {
+      i: 'vehicle-list',
+      x: 0,
+      y: 0,
+      w: 3,
+      h: 20
+    },
+    {
+      i: 'two-demensional',
+      x: 3,
+      y: 0,
+      w: 5,
+      h: 20
+    },
+    {
+      i: 'vehicle-controller',
+      x: 0,
+      y: 15,
+      w: 3,
+      h: 10
+    },
+    {
+      i: 'vehicle-state',
+      x: 3,
+      y: 20,
+      w: 5,
+      h: 10
+    },
+    {
+      i: 'vehicle-camera',
+      x: 10,
+      y: 0,
+      w: 2,
+      h: 8
+    }
+  ],
+  lg: [
+    {
+      i: 'vehicle-list',
+      x: 0,
+      y: 0,
+      w: 2,
+      h: 20
+    },
+    {
+      i: 'two-demensional',
+      x: 2,
+      y: 0,
+      w: 4,
+      h: 20
+    },
+    {
+      i: 'vehicle-controller',
+      x: 0,
+      y: 20,
+      w: 2,
+      h: 10
+    },
+    {
+      i: 'three-demensional',
+      x: 6,
+      y: 0,
+      w: 4,
+      h: 20
+    },
+    {
+      i: 'vehicle-state',
+      x: 2,
+      y: 20,
+      w: 4,
+      h: 10
+    },
+    {
+      i: 'vehicle-camera',
+      x: 10,
+      y: 0,
+      w: 2,
+      h: 10
+    },
+    {
+      i: 'mission-procession',
+      x: 6,
+      y: 20,
+      w: 4,
+      h: 10
+    },
+    {
+      i: 'vehicle-lidar',
+      x: 6,
+      y: 0,
+      w: 4,
+      h: 20
+    }
+  ]
+}
+
 export class Dashboard extends React.Component {
   static contextType = ThemeColors
 
@@ -21,106 +119,11 @@ export class Dashboard extends React.Component {
     super()
 
     this.state = {
+      visible: 'all',
       rowHeight: 19,
-      layouts: {
-        md: [
-          {
-            i: 'vehicle-list',
-            x: 0,
-            y: 0,
-            w: 3,
-            h: 20
-          },
-          {
-            i: 'two-demensional',
-            x: 3,
-            y: 0,
-            w: 5,
-            h: 20
-          },
-          {
-            i: 'vehicle-controller',
-            x: 0,
-            y: 15,
-            w: 3,
-            h: 10
-          },
-          {
-            i: 'vehicle-state',
-            x: 3,
-            y: 20,
-            w: 5,
-            h: 10
-          },
-          {
-            i: 'vehicle-camera',
-            x: 10,
-            y: 0,
-            w: 2,
-            h: 8
-          }
-
-        ],
-        lg: [
-          {
-            i: 'vehicle-list',
-            x: 0,
-            y: 0,
-            w: 2,
-            h: 20
-          },
-          {
-            i: 'two-demensional',
-            x: 2,
-            y: 0,
-            w: 4,
-            h: 20
-          },
-          {
-            i: 'vehicle-controller',
-            x: 0,
-            y: 20,
-            w: 2,
-            h: 10
-          },
-          {
-            i: 'three-demensional',
-            x: 6,
-            y: 0,
-            w: 4,
-            h: 20
-          },
-          {
-            i: 'vehicle-state',
-            x: 2,
-            y: 20,
-            w: 4,
-            h: 10
-          },
-          {
-            i: 'vehicle-camera',
-            x: 10,
-            y: 0,
-            w: 2,
-            h: 10
-          },
-          {
-            i: 'mission-procession',
-            x: 6,
-            y: 20,
-            w: 4,
-            h: 10
-          },
-          {
-            i: 'vehicle-lidar',
-            x: 6,
-            y: 0,
-            w: 4,
-            h: 20
-          }
-        ]
-      }
+      layouts: defaultLayouts
     }
+    this.handleFullScreen = this.handleFullScreen.bind(this)
   }
 
   componentDidMount() {
@@ -137,8 +140,32 @@ export class Dashboard extends React.Component {
     })
   }
 
-  componentWillUnmount() {
+  componentWillUnmount() {}
 
+  handleFullScreen(i, tag) {
+    if (!tag) {
+      this.setState((preState) => ({
+        layouts: {
+          ...preState.layouts,
+          lg: preState.layouts.lg.map((item) => {
+            return {
+              ...item,
+              w: item.i === i ? 12 : 0,
+              h: item.i === i ? 30 : 0,
+              x: 0,
+              y: 0
+            }
+          })
+        },
+        visible: i
+      }))
+    } else {
+      console.log(1111)
+      this.setState({
+        layouts: defaultLayouts,
+        visible: 'all'
+      })
+    }
   }
 
   render() {
@@ -159,28 +186,62 @@ export class Dashboard extends React.Component {
         draggableHandle=".drag-handler"
         rowHeight={this.state.rowHeight}
       >
-        <div key='vehicle-list'>
+        <div
+          key="vehicle-list"
+          hidden={!['all', 'vehicle-list'].includes(this.state.visible)}
+        >
           <VehicleList />
         </div>
-        <div key='two-demensional'>
-          <TwoDemensional />
+
+        <div
+          key="two-demensional"
+          hidden={!['all', 'two-demensional'].includes(this.state.visible)}
+        >
+          <TwoDemensional onFullScreen={this.handleFullScreen} />
         </div>
-        <div key='vehicle-controller'>
+
+        <div
+          key="vehicle-controller"
+          hidden={!['all', 'vehicle-controller'].includes(this.state.visible)}
+        >
           <VehicleController />
         </div>
         {/* <div key='three-demensional'>
           <ThreeDemensional />
         </div> */}
-        <div key='vehicle-state'>
-          <VehicleState primary={colors.primary.main} danger={colors.danger.main} success={colors.success.main} />
+
+        <div
+          key="vehicle-state"
+          hidden={!['all', 'vehicle-state'].includes(this.state.visible)}
+        >
+          <VehicleState
+            primary={colors.primary.main}
+            danger={colors.danger.main}
+            success={colors.success.main}
+          />
         </div>
-        <div key='vehicle-camera'>
-          <VehicleCamera primary={colors.primary.main} danger={colors.danger.main} />
+
+        <div
+          key="vehicle-camera"
+          hidden={!['all', 'vehicle-camera'].includes(this.state.visible)}
+        >
+          <VehicleCamera
+            primary={colors.primary.main}
+            danger={colors.danger.main}
+          />
         </div>
-        <div key='mission-procession'>
+
+        <div
+          key="mission-procession"
+          hidden={!['all', 'mission-procession'].includes(this.state.visible)}
+        >
           <MissionProcession />
         </div>
-        <div key='vehicle-lidar'>
+
+        <div
+          key="vehicle-lidar"
+          hidden={!['all', 'vehicle-lidar'].includes(this.state.visible)}
+        >
           <VehicleLidar />
         </div>
       </ResponsiveGridLayout>

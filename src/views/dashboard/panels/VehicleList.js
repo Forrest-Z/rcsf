@@ -55,9 +55,9 @@ export const VehicleList = props => {
           <Button.Ripple size='sm' className='btn-icon drag-handler' color='flat-primary'>
             <Move className='cursor-move' size={16} />
           </Button.Ripple>
-          <Button.Ripple size='sm' className='btn-icon' color='flat-primary'>
+          {/* <Button.Ripple size='sm' className='btn-icon' color='flat-primary'>
             <Maximize size={16} />
-          </Button.Ripple>
+          </Button.Ripple> */}
         </div>
       </CardHeader>
       <CardBody className='p-0'>
