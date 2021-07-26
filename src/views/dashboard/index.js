@@ -21,6 +21,7 @@ export class Dashboard extends React.Component {
     super()
 
     this.state = {
+      rowHeight: 19,
       layouts: {
         md: [
           {
@@ -123,7 +124,17 @@ export class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-
+    window.addEventListener('resize', () => {
+      if (screen.height === window.innerHeight) {
+        this.setState({
+          rowHeight: 22.5
+        })
+      } else {
+        this.setState({
+          rowHeight: 19
+        })
+      }
+    })
   }
 
   componentWillUnmount() {
@@ -146,7 +157,7 @@ export class Dashboard extends React.Component {
         }}
         breakpoints={{ lg: 1700, md: 996, sm: 768, xs: 480, xxs: 0 }}
         draggableHandle=".drag-handler"
-        rowHeight={18}
+        rowHeight={this.state.rowHeight}
       >
         <div key='vehicle-list'>
           <VehicleList />

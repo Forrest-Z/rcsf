@@ -76,8 +76,10 @@ const Elements = observer(props => {
   }
 
   const onTreeNodeClick = (selectedKeys, info) => {
-    const selection = StageMobx.shapes.find(element => element.id === info.node.title) 
-    StageMobx.setSelection(selection)
+    const selection = StageMobx.shapes.find(element => element.id === info.node.title)
+    if (selection !== undefined) {
+      StageMobx.setSelection(selection)
+    }
   }
 
   useEffect(() => {

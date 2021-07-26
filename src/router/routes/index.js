@@ -20,7 +20,7 @@ const Routes = [
   {
     path: '/map/add',
     exact: true,
-    appLayout: true,
+    // appLayout: true,
     component: lazy(() => import('../../views/map/add'))
   },
   {
