@@ -107,6 +107,7 @@ export const RCSCanvas = observer(props => {
         case DRAW_TOOL_TYPE.BLOCK:
           StageMobx.setShapes(StageMobx.shapes.concat(
             new ShapeMobx({
+              id: `Area-${StageMobx.getAreaIndex()}`,
               x: 0,
               y: 0,
               type: StageMobx.drawTool,

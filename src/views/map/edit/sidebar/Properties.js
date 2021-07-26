@@ -140,7 +140,7 @@ export const AreaProperties = observer(properties => {
         </Col>
       </Row>
       <hr />
-      <Row>
+      {/* <Row>
         <Col xl='4'>
           <Label>Orientation</Label>
         </Col>
@@ -156,7 +156,7 @@ export const AreaProperties = observer(properties => {
           <Input disabled bsSize='sm' defaultValue={'[0,0,0,1]'} />
         </Col>
       </Row>
-      <hr />
+      <hr /> */}
       {/* <Row>
         <Col xl='4'>
           <Label>Type</Label>
