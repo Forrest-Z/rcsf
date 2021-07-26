@@ -55,6 +55,7 @@ const Sidebar = observer(props => {
           <PointProperties />
         )
       case DRAW_TOOL_TYPE.AREA:
+      case DRAW_TOOL_TYPE.BLOCK:
         return (
           <AreaProperties />
         )

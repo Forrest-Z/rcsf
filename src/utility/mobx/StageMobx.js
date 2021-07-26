@@ -83,6 +83,17 @@ class StageMobx {
     }
     return index + 1
   }
+
+  getBlockIndex() {
+    let index = 0
+    for (let i = 0; i < this.shapes.length; i++) {
+      if (this.shapes[i].type === DRAW_TOOL_TYPE.BLOCK
+      ) {
+        index++
+      }
+    }
+    return index + 1
+  }
 }
 
 export class ShapeMobx {

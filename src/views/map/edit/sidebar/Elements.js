@@ -25,14 +25,18 @@ const Elements = observer((props) => {
   // State
   const [pointTree, setPointTree] = useState([])
   const [areaTree, setAreaTree] = useState([])
+  const [blockTree, setBlockTree] = useState([])
 
   const onLoadData = (treeNode) => {
     return new Promise((resolve) => {
       setTimeout(() => {
         const points = []
         const areas = []
+        const blocks = []
+
         let pointIndex = 0
         let areaIndex = 0
+        let blockIndex = 0
         for (let i = 0; i < StageMobx.shapes.length; i++) {
           if (
             StageMobx.shapes[i].type === DRAW_TOOL_TYPE.ROUTE_POINT ||
@@ -55,9 +59,19 @@ const Elements = observer((props) => {
             })
             areaIndex++
           }
+
+          if (StageMobx.shapes[i].type === DRAW_TOOL_TYPE.BLOCK) {
+            blocks.push({
+              key: `2-${blockIndex}`,
+              title: StageMobx.shapes[i].id,
+              isLeaf: true
+            })
+            blockIndex++
+          }
         }
         setAreaTree(areas)
         setPointTree(points)
+        setBlockTree(blocks)
 
         resolve()
       }, 100)
@@ -109,6 +123,20 @@ const Elements = observer((props) => {
           }
         >
           {areaTree.map((item) => (
+            <TreeNode title={item.title} key={item.key} />
+          ))}
+        </TreeNode>
+
+        <TreeNode
+          title="Blocks"
+          key="2"
+          icon={
+            <div className="d-flex justify-content-left align-items-center">
+              <Square className="text-danger" size={15} />
+            </div>
+          }
+        >
+          {blockTree.map((item) => (
             <TreeNode title={item.title} key={item.key} />
           ))}
         </TreeNode>

@@ -8,11 +8,10 @@ const initialState = {
 const vehicle = (state = initialState, action) => {
   switch (action.type) {
     case 'GET_VEHICLE':
+      console.log(action.data)
       return {
         ...state,
-        data: action.data.results,
-        count: action.data.count,
-        params: action.params
+        data: action.data
       }
     default:
       return { ...state }
