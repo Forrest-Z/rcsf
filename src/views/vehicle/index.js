@@ -12,9 +12,20 @@ import {
   CustomInput,
   Label,
   Input,
-  Alert
+  Alert,
+  Badge
 } from 'reactstrap'
-import { Info, X, Settings } from 'react-feather'
+import {
+  Info,
+  X,
+  Settings,
+  WifiOff,
+  MinusCircle,
+  Loader,
+  BatteryCharging,
+  PauseCircle,
+  AlertTriangle
+} from 'react-feather'
 
 // ** Custom Components
 import BreadCrumbs from '@components/breadcrumbs'
@@ -31,6 +42,65 @@ const VehicleView = () => {
   const dispatch = useDispatch()
   const store = useSelector((state) => state.vehicle)
 
+  const renderState = (state) => {
+    switch (state) {
+      case 0:
+        return (
+          <div>
+            <Badge className="mr-1" color="dark">
+              OFFLINE
+            </Badge>
+            <WifiOff size={20} />
+          </div>
+        )
+      case 1:
+        return (
+          <div>
+            <Badge className="mr-1" color="success">
+              IDLE
+            </Badge>
+            <MinusCircle size={20} />
+          </div>
+        )
+      case 2:
+        return (
+          <div>
+            <Badge className="mr-1" color="info">
+              BUSY
+            </Badge>
+            <Loader className="spinner" size={18} />
+          </div>
+        )
+      case 3:
+        return (
+          <div>
+            <Badge className="mr-1" color="primary">
+              PAUSE
+            </Badge>
+            <PauseCircle size={20} />
+          </div>
+        )
+      case 4:
+        return (
+          <div>
+            <Badge className="mr-1" color="warning">
+              ERROR
+            </Badge>
+            <AlertTriangle size={20} />
+          </div>
+        )
+      case 5:
+        return (
+          <div>
+            <Badge className="mr-1" color="info bg-darken-2">
+              CHARGING
+            </Badge>
+            <BatteryCharging size={20} />
+          </div>
+        )
+    }
+  }
+
   const renderVehicleList = () => {
     return store.data.map((item) => {
       return (
@@ -41,16 +111,22 @@ const VehicleView = () => {
           <CardBody>
             <div className="item-wrapper">
               <div className="item-name">
-                <h5 color='primary'>{item.name}</h5>
+                <h5 color="primary">{item.name}</h5>
               </div>
+              <div className="item-cost">{renderState(item.state)}</div>
             </div>
           </CardBody>
           <div className="item-options text-center">
-            <Button className="btn-wishlist remove-wishlist" color="flat-light">
+            <Button className="btn-wishlist remove-wishlist bg-dark bg-lighten-1">
               <X className="mr-25" size={14} />
               <span>Remove</span>
             </Button>
-            <Button color="primary" className="btn-cart move-cart">
+            <Button
+              tag={Link}
+              to={{ pathname: '/vehicle/settings', vehicle: item }}
+              // params={{ vehicle: item }}
+              className="btn-cart move-cart bg-primary bg-lighten-1"
+            >
               <Settings className="mr-50" size={14} />
               <span>Setting</span>
             </Button>

@@ -37,8 +37,18 @@ const Routes = [
   },
   {
     path: '/vehicle',
+    exact: true,
     className: 'ecommerce-application',
     component: lazy(() => import('../../views/vehicle'))
+  },
+  {
+    path: '/vehicle/settings',
+    exact: true,
+    className: 'ecommerce-application',
+    component: lazy(() => import('../../views/vehicle/settings'))
+    // meta: {
+    //   contentWidth: 'boxed'
+    // }
   },
   {
     path: '/statistics',
@@ -47,10 +57,6 @@ const Routes = [
   {
     path: '/system',
     component: lazy(() => import('../../views/system'))
-  },
-  {
-    path: '/help/apidoc',
-    component: lazy(() => import('../../views/help/Apidoc.js'))
   },
   {
     path: '/login',

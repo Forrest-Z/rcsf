@@ -46,7 +46,8 @@ export default [
         id: 'apidoc',
         title: 'API Document',
         icon: <Circle size={12} />,
-        navLink: '/help/apidoc'
+        navLink: 'http://localhost:8000/api/schema/doc',
+        externalLink: true
       }
     ]
   }
