@@ -161,6 +161,20 @@ export const PolygonShape = observer(props => {
             scaleX={1 / StageMobx.scale.x}
             scaleY={1 / StageMobx.scale.y}
             onDragMove={onVerticeDragMove}
+            onMouseOver={(e) => {
+              e.target.setAttrs({
+                scaleX: 1 / StageMobx.scale.x * 1.3,
+                scaleY: 1 / StageMobx.scale.y * 1.3
+              })
+              e.target.getLayer().draw()
+            }}
+            onMouseLeave={(e) => {
+              e.target.setAttrs({
+                scaleX: 1 / StageMobx.scale.x,
+                scaleY: 1 / StageMobx.scale.y
+              })
+              e.target.getLayer().draw()
+            }}
             onContextMenu={(e) => {
               e.evt.preventDefault(true)
               if (vertices.length > 3) {
@@ -194,6 +208,20 @@ export const PolygonShape = observer(props => {
             onDragStart={onAnchorDragStart}
             onDragMove={onAnchorDragMove}
             onDragEnd={onAnchorDragEnd}
+            onMouseOver={(e) => {
+              e.target.setAttrs({
+                scaleX: 1 / StageMobx.scale.x * 1.3,
+                scaleY: 1 / StageMobx.scale.y * 1.3
+              })
+              e.target.getLayer().draw()
+            }}
+            onMouseLeave={(e) => {
+              e.target.setAttrs({
+                scaleX: 1 / StageMobx.scale.x,
+                scaleY: 1 / StageMobx.scale.y
+              })
+              e.target.getLayer().draw()
+            }}
           />
         ))
       }
