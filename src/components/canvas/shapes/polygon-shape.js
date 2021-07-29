@@ -153,9 +153,9 @@ export const PolygonShape = observer(props => {
             radius={8}
             x={item.x}
             y={item.y}
-            fill={fill}
-            strokeWidth={2}
-            stroke={stroke}
+            fill={SHAPE_STYLES_STROKE.HOVERED}
+            stroke={"#f3f3f3"}
+            strokeWidth={selection ? 3 : 2}
             visible={selection}
             draggable={true}
             scaleX={1 / StageMobx.scale.x}
@@ -199,7 +199,7 @@ export const PolygonShape = observer(props => {
             fill={"#fbb03b"}
             x={item.x}
             y={item.y}
-            stroke={"#ffffff"}
+            stroke={"#f3f3f3"}
             strokeWidth={selection ? 3 : 2}
             draggable={true}
             visible={selection}

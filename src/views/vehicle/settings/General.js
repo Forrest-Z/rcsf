@@ -7,7 +7,8 @@ import {
   FormGroup,
   Label,
   Input,
-  Button
+  Button,
+  FormText
 } from 'reactstrap'
 import classnames from 'classnames'
 
@@ -71,7 +72,7 @@ const General = ({ vehicle }) => {
   }
 
   return (
-    <Row className='w-100'>
+    <Row className="w-100">
       <Col sm="12">
         <Media className="mb-2">
           {renderVehicleAvatar()}
@@ -83,8 +84,8 @@ const General = ({ vehicle }) => {
       </Col>
       <Col sm="12">
         <Form onSubmit={(e) => e.preventDefault()}>
-          <Row>
-            <Col md="3" xs="12">
+          <Row className="d-flex flex-column">
+            <Col md="4" xs="12">
               <FormGroup>
                 <Label for="vehicle-name">Name</Label>
                 <Input
@@ -95,14 +96,13 @@ const General = ({ vehicle }) => {
                 />
               </FormGroup>
             </Col>
-            <Col md="3" xs="12">
+            <Col md="4" xs="12">
               <FormGroup>
                 <Label for="vehicle-state">State</Label>
                 <Input
                   type="select"
                   id="vehicle-state"
                   value={vehicle && vehicle.state}
-                  // placeholder="his vehicle's maximum velocity (in m/s)."
                   // defaultValue={vehicle && vehicle.name}
                 >
                   <option value={0}>Offline</option>
@@ -114,31 +114,41 @@ const General = ({ vehicle }) => {
                 </Input>
               </FormGroup>
             </Col>
-            <Col md="3" xs="12">
+            <Col md="4" xs="12">
               <FormGroup>
-                <Label for="vehicle-max-velocity">Max velocity</Label>
+                <Label for="vehicle-max-velocity">Max Linear Speed</Label>
                 <Input
                   type="text"
                   id="vehicle-max-velocity"
-                  placeholder="his vehicle's maximum velocity (in m/s)."
+                  // placeholder="his vehicle's maximum velocity (in m/s)."
                   // defaultValue={vehicle && vehicle.name}
                 />
+                <FormText>
+                  Enter a value in meters/second for the max. forward or
+                  backward speed during the relative move, or select the XYZ
+                  icon to define a variable.
+                </FormText>
               </FormGroup>
             </Col>
-            <Col md="3" xs="12">
+            <Col md="4" xs="12">
               <FormGroup>
                 <Label for="vehicle-max-reverse-velocity">
-                  Max reverse velocity
+                  Max Angular Speed
                 </Label>
                 <Input
                   type="text"
                   id="vehicle-max-reverse-velocity"
-                  placeholder="This vehicle's maximum reverse velocity (in m/s)."
+                  // placeholder="This vehicle's maximum reverse velocity (in m/s)."
                   // defaultValue={vehicle && vehicle.name}
                 />
+                <FormText>
+                  Enter a value in meters/second for the max. turn speed during
+                  the relative move, or select the XYZ icon to define a
+                  variable.
+                </FormText>
               </FormGroup>
             </Col>
-            <Col md="3" xs="12">
+            <Col md="4" xs="12">
               <FormGroup>
                 <Label for="vehicle-map">Map</Label>
                 <Input
@@ -149,10 +159,25 @@ const General = ({ vehicle }) => {
                 />
               </FormGroup>
             </Col>
-            <Col md="3" xs="12">
+            <Col md="4" xs="12">
+              <FormGroup>
+                <Label for="vehicle-map">IP</Label>
+                <Input
+                  disabled
+                  type="text"
+                  id="vehicle-map"
+                  placeholder="Actived map"
+                  defaultValue="192.168.1.120"
+                  // defaultValue={vehicle && vehicle.name}
+                />
+              </FormGroup>
+            </Col>
+            <Col md="4" xs="12">
               <FormGroup className="product-color-options mt-0">
                 <Label for="theme-color">Theme Color</Label>
-                <ul className="list-unstyled mb-0 mt-50">{renderColorOptions()}</ul>
+                <ul className="list-unstyled mb-0 mt-50">
+                  {renderColorOptions()}
+                </ul>
               </FormGroup>
             </Col>
             <Col className="d-flex flex-sm-row flex-column mt-2" sm="12">

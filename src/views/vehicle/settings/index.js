@@ -23,7 +23,6 @@ import '@styles/base/pages/app-ecommerce-details.scss'
 import General from './General'
 import Hardware from './Hardware'
 import BreadCrumbs from '@components/breadcrumbs'
-import BatteryTab from './Battery'
 import Sounds from './Sounds'
 import Lights from './Lights'
 
@@ -67,14 +66,6 @@ const Settings = (props) => {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink active={activeTab === '3'} onClick={() => toggle('3')}>
-                  <Battery size={16} />
-                  <span className="align-middle d-none d-sm-block">
-                    Battery
-                  </span>
-                </NavLink>
-              </NavItem>
-              <NavItem>
                 <NavLink active={activeTab === '4'} onClick={() => toggle('4')}>
                   <Volume2 size={16} />
                   <span className="align-middle d-none d-sm-block">
@@ -97,9 +88,6 @@ const Settings = (props) => {
               </TabPane>
               <TabPane tabId="2">
                 <Hardware />
-              </TabPane>
-              <TabPane tabId="3">
-                <BatteryTab />
               </TabPane>
               <TabPane tabId="4">
                 <Sounds />

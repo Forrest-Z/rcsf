@@ -24,7 +24,9 @@ import {
   Loader,
   BatteryCharging,
   PauseCircle,
-  AlertTriangle
+  AlertTriangle,
+  Wifi,
+  Plus
 } from 'react-feather'
 
 // ** Custom Components
@@ -142,7 +144,22 @@ const VehicleView = () => {
 
   return (
     <Fragment>
-      <BreadCrumbs breadCrumbTitle="VEHICLE" breadCrumbActive="Vehicle" />
+      <Row className="w-100 d-flex">
+        <Col xl="9">
+          <BreadCrumbs breadCrumbTitle="VEHICLE" breadCrumbActive="Vehicle" />
+        </Col>
+        <Col xl="3">
+          <Button.Ripple className="mr-1 rounded" color='relief-primary'>
+            <Wifi className='mr-1' size={18} />
+            <span>Scan for robots</span>
+          </Button.Ripple>
+          <Button.Ripple className="rounded" color='relief-primary'>
+            <Plus className='mr-1' size={18} />
+            <span>Add robot manually</span>
+          </Button.Ripple>
+        </Col>
+      </Row>
+
       {store.data && store.data.length ? (
         <section className="grid-view wishlist-items">
           {renderVehicleList()}

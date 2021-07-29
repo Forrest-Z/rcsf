@@ -56,6 +56,8 @@ const Routes = [
   },
   {
     path: '/system',
+    exact: true,
+    className: 'ecommerce-application',
     component: lazy(() => import('../../views/system'))
   },
   {
