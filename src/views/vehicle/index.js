@@ -17,7 +17,7 @@ import {
 } from 'reactstrap'
 import {
   Info,
-  X,
+  Menu,
   Settings,
   WifiOff,
   MinusCircle,
@@ -38,11 +38,14 @@ import { getVehicle } from './store/actions'
 
 // ** Styles
 import '@styles/base/pages/app-ecommerce.scss'
+import ScanForRobotsModal from './ScanForRobotsModal'
 
 const VehicleView = () => {
   // ** Store Vars
   const dispatch = useDispatch()
   const store = useSelector((state) => state.vehicle)
+  const [isOpenScanModal, setIsOpenScanModal] = useState(false)
+
 
   const renderState = (state) => {
     switch (state) {
@@ -119,15 +122,16 @@ const VehicleView = () => {
             </div>
           </CardBody>
           <div className="item-options text-center">
-            <Button className="btn-wishlist remove-wishlist bg-dark bg-lighten-1">
-              <X className="mr-25" size={14} />
-              <span>Remove</span>
+            <Button className="btn-wishlist remove-wishlist" color='primary'>
+              <Menu className="mr-25" size={14} />
+              <span>Detail</span>
             </Button>
             <Button
               tag={Link}
               to={{ pathname: '/vehicle/settings', vehicle: item }}
               // params={{ vehicle: item }}
-              className="btn-cart move-cart bg-primary bg-lighten-1"
+              className="btn-cart move-cart"
+              color='primary'
             >
               <Settings className="mr-50" size={14} />
               <span>Setting</span>
@@ -144,12 +148,13 @@ const VehicleView = () => {
 
   return (
     <Fragment>
+      <ScanForRobotsModal isOpen={isOpenScanModal} toggle={() => setIsOpenScanModal(!isOpenScanModal)} data={[]} />
       <Row className="w-100 d-flex">
         <Col xl="9">
           <BreadCrumbs breadCrumbTitle="VEHICLE" breadCrumbActive="Vehicle" />
         </Col>
         <Col xl="3">
-          <Button.Ripple className="mr-1 rounded" color='relief-primary'>
+          <Button.Ripple className="mr-1 rounded" color='relief-primary' onClick={() => setIsOpenScanModal(!isOpenScanModal)}>
             <Wifi className='mr-1' size={18} />
             <span>Scan for robots</span>
           </Button.Ripple>

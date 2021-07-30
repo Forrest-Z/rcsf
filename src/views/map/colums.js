@@ -7,7 +7,7 @@ import { deleteMap } from './store/actions'
 import { store } from '@store/storeConfig/store'
 
 // ** Third Party Components
-import { Edit2, Eye, MoreVertical, Download, Trash, CheckCircle, XCircle } from 'react-feather'
+import { Edit2, Eye, MoreVertical, Download, Trash, CheckCircle, XCircle, Check } from 'react-feather'
 import {
   Badge,
   UncontrolledDropdown,
@@ -54,11 +54,24 @@ export const columns = [
   {
     name: 'Update Time',
     minWidth: '297',
-    selector: 'updateTime',
+    selector: 'active',
     sortable: true,
     cell: row => (
       <div>
         <span className='mb-0'>{row.updateTime}</span>
+      </div>
+    )
+  },
+  {
+    name: 'Using',
+    minWidth: '47',
+    selector: 'using',
+    sortable: true,
+    cell: row => (
+      <div>
+        {
+          row.active ? <Check className='text-success' size={20} /> : null
+        }
       </div>
     )
   },
@@ -98,12 +111,12 @@ export const columns = [
                   row.active ? (
                     <div>
                       <XCircle size={14} className='mr-50' />
-                      <span className='align-middle'>Inactive</span>
+                      <span className='align-middle'>Don't Use</span>
                     </div>
                   ) : (
                       <div>
                         <CheckCircle size={14} className='mr-50' />
-                        <span className='align-middle'>Active</span>
+                        <span className='align-middle'>Use</span>
                       </div>
                     )
                 }
