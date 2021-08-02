@@ -33,7 +33,13 @@ const Routes = [
   },
   {
     path: '/mission',
+    exact: true,
     component: lazy(() => import('../../views/mission'))
+  },
+  {
+    path: '/mission/add',
+    exact: true,
+    component: lazy(() => import('../../views/mission/add'))
   },
   {
     path: '/vehicle',
