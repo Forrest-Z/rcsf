@@ -1,27 +1,37 @@
 // ** React Imports
 import { Fragment } from 'react'
 // ** Thrid Components
-import { Card, CardBody } from 'reactstrap'
+import {
+  Card,
+  CardBody,
+  Row,
+  Col,
+  Form,
+  FormGroup,
+  Label,
+  Input
+} from 'reactstrap'
 
 // ** Custom Components
-import BreadCrumbs from '@components/breadcrumbs'
+import AddCard from './AddCard'
+import AddActions from './AddActions'
+
+// ** Styles
+import '@styles/react/libs/flatpickr/flatpickr.scss'
+import '@styles/base/pages/app-invoice.scss'
 
 const MissionAdd = () => {
   return (
-    <Fragment>
-    <BreadCrumbs
-    breadCrumbTitle="Add Mission"
-    breadCrumbParent="Mission"
-    breadCrumbActive="Add Mission"
-  />
-    <Card>
-      <CardBody>
-
-
-      </CardBody>
-    </Card>
-    </Fragment>
-
+    <div className='invoice-add-wrapper'>
+      <Row className='invoice-add'>
+        <Col xl={9} md={8} sm={12}>
+          <AddCard />
+        </Col>
+        <Col xl={3} md={4} sm={12}>
+          <AddActions />
+        </Col>
+      </Row>
+    </div>
   )
 }
 

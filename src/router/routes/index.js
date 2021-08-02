@@ -39,6 +39,7 @@ const Routes = [
   {
     path: '/mission/add',
     exact: true,
+    // appLayout: true,
     component: lazy(() => import('../../views/mission/add'))
   },
   {
