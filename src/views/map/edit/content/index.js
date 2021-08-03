@@ -11,8 +11,6 @@ import { useDispatch } from 'react-redux'
 
 // ** Third Party Components
 import classnames from 'classnames'
-import { IoArrowRedoOutline, IoArrowUndoOutline } from 'react-icons/io5'
-import { SiSocketDotIo } from 'react-icons/si'
 import { useResizeDetector } from 'react-resize-detector'
 
 // ** Custom Components
@@ -21,6 +19,7 @@ import Header from './Header'
 import Footer from './Footer'
 
 // ** Mobx
+import StageMobx, { ShapeMobx } from '../../../../utility/mobx/StageMobx'
 
 const RCSCanvasContainer = () => {
   const { width, height, ref } = useResizeDetector()
@@ -39,6 +38,10 @@ const Content = props => {
   // ** Props & Store
   const { handleUser, handleUserSidebarRight, handleSidebar, store, userSidebarLeft, map } = props
 
+  useEffect(() => {
+    StageMobx.setShapes(map.raw.map(item => new ShapeMobx(item)))
+  }, [])
+
   return (
     <div className='chat-app-window'>
       {/* <div className={classnames('start-chat-area')}>
@@ -51,7 +54,7 @@ const Content = props => {
       </div> */}
       <div className={classnames('active-chat d-flex flex-column')}>
         <div className='chat-navbar'>
-          <Header handleSidebar={handleSidebar} />
+          <Header handleSidebar={handleSidebar} map={map} />
         </div>
         <RCSCanvasContainer />
         <Footer />
