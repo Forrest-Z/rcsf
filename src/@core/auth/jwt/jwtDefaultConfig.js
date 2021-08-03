@@ -1,9 +1,9 @@
 // ** Auth Endpoints
 export default {
-  loginEndpoint: '/jwt/login',
+  loginEndpoint: '/api/token/',
   registerEndpoint: '/jwt/register',
-  refreshEndpoint: '/jwt/refresh-token',
-  logoutEndpoint: '/jwt/logout',
+  refreshEndpoint: '/api/token/refresh/',
+  logoutEndpoint: '/api/logout',
 
   // ** This will be prefixed in authorization header with token
   // ? e.g. Authorization: Bearer <token>
