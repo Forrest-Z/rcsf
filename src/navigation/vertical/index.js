@@ -2,8 +2,11 @@ import { BarChart2, Home, Map, Send, Slack, Layers, HelpCircle, Circle } from 'r
 
 export default [
   {
-    id: 'dashboard',
-    title: 'Dashboard',
+    header: 'Data Monitor'
+  },
+  {
+    id: 'dashboards',
+    title: 'Dashboards',
     icon: <Home size={20} />,
     navLink: '/dashboard'
   },
@@ -12,6 +15,9 @@ export default [
     title: 'Statistics',
     icon: <BarChart2 size={20} />,
     navLink: '/statistics'
+  },
+  {
+    header: 'Data Manage'
   },
   {
     id: 'map',

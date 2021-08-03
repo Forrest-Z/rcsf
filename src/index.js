@@ -9,6 +9,9 @@ import { store } from './redux/storeConfig/store'
 // ** Toast & ThemeColors Context
 import { ToastContainer } from 'react-toastify'
 import { ThemeContext } from './utility/context/ThemeColors'
+import { IntlProviderWrapper } from './utility/context/Internationalization'
+import { AbilityContext } from './utility/context/Can'
+import ability from './configs/acl/ability'
 
 // ** Spinner (Splash Screen)
 import Spinner from './@core/components/spinner/Fallback-spinner'
@@ -43,11 +46,15 @@ import Notification from '@src/components/notification'
 ReactDOM.render(
   <Provider store={store}>
     <Suspense fallback={<Spinner />}>
-      <ThemeContext>
-        <LazyApp />
-        <Notification />
-        <ToastContainer newestOnTop />
-      </ThemeContext>
+      <AbilityContext.Provider value={ability}>
+        <ThemeContext>
+          <IntlProviderWrapper>
+            <LazyApp />
+            {/* <Notification /> */}
+            <ToastContainer newestOnTop />
+          </IntlProviderWrapper>
+        </ThemeContext>
+      </AbilityContext.Provider>
     </Suspense>
   </Provider>,
   document.getElementById('root')
