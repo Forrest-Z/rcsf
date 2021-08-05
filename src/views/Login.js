@@ -22,6 +22,7 @@ import '@styles/base/pages/page-auth.scss'
 import themeConfig from '@configs/themeConfig'
 import { useDispatch } from 'react-redux'
 import { getHomeRouteForLoggedInUser, isObjEmpty } from '@utils'
+import defaultImage from '@src/assets/images/pages/intelligent.jpg'
 
 const Login = () => {
   const [skin, setSkin] = useSkin()
@@ -122,6 +123,7 @@ const Login = () => {
         <Col className="d-none d-lg-flex align-items-center p-5" lg="8" sm="12">
           <div className="w-100 d-lg-flex align-items-center justify-content-center px-5">
             <img className="img-fluid" src={source} alt="Login V2" />
+            {/* <img className="img-fluid" src={defaultImage } alt={'Login V2'} /> */}
           </div>
         </Col>
         <Col

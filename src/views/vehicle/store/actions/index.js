@@ -11,3 +11,10 @@ export const getVehicle = params => {
     })
   }
 }
+
+export const getScanVehicle = () => {
+  return axios({
+    method: 'get',
+    url: '/api/vehicle/scan'
+  })
+}

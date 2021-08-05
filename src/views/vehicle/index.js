@@ -40,6 +40,8 @@ import { getVehicle } from './store/actions'
 import '@styles/base/pages/app-ecommerce.scss'
 import ScanForRobotsModal from './ScanForRobotsModal'
 
+import defaultImage from '@src/assets/images/pages/intelligent.jpg'
+
 const VehicleView = () => {
   // ** Store Vars
   const dispatch = useDispatch()
@@ -110,10 +112,10 @@ const VehicleView = () => {
     return store.data.map((item) => {
       return (
         <Card className="ecommerce-card" key={item.id}>
-          <div className="item-img text-center mx-auto">
-            <img className="img-fluid" src={item.image} alt={item.name} />
-          </div>
           <CardBody>
+          <div className="item-img text-center mx-auto">
+            <img className="img-fluid" src={item.image || defaultImage } alt={item.name} />
+          </div>
             <div className="item-wrapper">
               <div className="item-name">
                 <h5 color="primary">{item.name}</h5>

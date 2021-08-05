@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   Modal,
   ModalHeader,
@@ -8,25 +9,38 @@ import {
   CardHeader,
   CardTitle,
   CardBody,
-  Alert
+  Alert,
+  Media,
+  CustomInput
 } from 'reactstrap'
 import { CheckCircle, RefreshCw, Info } from 'react-feather'
 
-const ScanForRobotsModal = ({ isOpen, toggle, data }) => {
+// ** Store & Actions
+import { useDispatch, useSelector } from 'react-redux'
+import { getScanVehicle } from './store/actions'
+
+const ScanForRobotsModal = ({ isOpen, toggle }) => {
+  const [scanVehicles, setScanVehicles] = useState([])
+
   const renderData = () => {
-    if (data.length > 0) {
-      return data.map((item) => {
+    if (scanVehicles.length > 0) {
+      return scanVehicles.map((item, key) => {
         return (
-          <div key={item.id} className="browser-states">
-            <Media>
-              {/* <img className='rounded mr-1' src={state.avatar} height='30' alt={state.title} /> */}
-              <h6 className="align-self-center mb-0">{item.name}</h6>
-              <small>{item.type}</small>
-            </Media>
-            <div className="d-flex align-items-center">
-              <div className="btn-icon">
-                <CheckCircle />
-              </div>
+          <div key={key} className="business-item">
+            <div className="d-flex align-items-center justify-content-between">
+              <CustomInput
+                type="checkbox"
+                className="custom-control-Primary"
+                id={item}
+                label={item}
+              />
+              <Button.Ripple
+                size="sm"
+                className="btn-icon"
+                color="flat-primary"
+              >
+                <CheckCircle size={21} />
+              </Button.Ripple>
             </div>
           </div>
         )
@@ -44,17 +58,37 @@ const ScanForRobotsModal = ({ isOpen, toggle, data }) => {
   }
 
   return (
-    <Modal className="modal-dialog-centered" isOpen={isOpen} toggle={toggle}>
+    <Modal
+      className="modal-dialog-centered"
+      isOpen={isOpen}
+      toggle={toggle}
+      onOpened={() => {
+        getScanVehicle().then((response) => {
+          setScanVehicles(response.data)
+        })
+      }}
+    >
       <ModalHeader toggle={toggle}>Scan For Robots</ModalHeader>
       <ModalBody>
-        <Card>
+        <Card className="business-card">
           <CardHeader>
             <CardTitle>Scaning</CardTitle>
-            <Button.Ripple className='btn-icon' color="flat-info">
+            <Button.Ripple
+              size={'sm'}
+              className="btn-icon"
+              color="flat-info"
+              onClick={() => {
+                getScanVehicle().then((response) => {
+                  setScanVehicles(response.data)
+                })
+              }}
+            >
               <RefreshCw size={20} />
             </Button.Ripple>
           </CardHeader>
-          <CardBody>{renderData()}</CardBody>
+          <CardBody className='mt-2'>
+            <div className="business-items">{renderData()}</div>
+          </CardBody>
         </Card>
       </ModalBody>
       <ModalFooter>
