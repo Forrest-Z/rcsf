@@ -17,9 +17,11 @@ import { CheckCircle, RefreshCw, Info } from 'react-feather'
 
 // ** Store & Actions
 import { useDispatch, useSelector } from 'react-redux'
-import { getScanVehicle } from './store/actions'
+import { getScanVehicle, registerVehicle } from './store/actions'
 
 const ScanForRobotsModal = ({ isOpen, toggle }) => {
+  // ** Store Vars
+  const dispatch = useDispatch()
   const [scanVehicles, setScanVehicles] = useState([])
 
   const renderData = () => {
@@ -38,6 +40,14 @@ const ScanForRobotsModal = ({ isOpen, toggle }) => {
                 size="sm"
                 className="btn-icon"
                 color="flat-primary"
+                onClick={() => {
+                  dispatch(registerVehicle({ name: item }))
+                  setTimeout(() => {
+                    getScanVehicle().then((response) => {
+                      setScanVehicles(response.data)
+                    })
+                  }, 500)
+                }}
               >
                 <CheckCircle size={21} />
               </Button.Ripple>
@@ -86,17 +96,14 @@ const ScanForRobotsModal = ({ isOpen, toggle }) => {
               <RefreshCw size={20} />
             </Button.Ripple>
           </CardHeader>
-          <CardBody className='mt-2'>
+          <CardBody className="mt-2">
             <div className="business-items">{renderData()}</div>
           </CardBody>
         </Card>
       </ModalBody>
       <ModalFooter>
-        <Button outline color="primary">
+        <Button outline color="primary" onClick={toggle}>
           Confirm
-        </Button>
-        <Button outline color="danger">
-          Cancel
         </Button>
       </ModalFooter>
     </Modal>

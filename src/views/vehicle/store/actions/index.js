@@ -18,3 +18,15 @@ export const getScanVehicle = () => {
     url: '/api/vehicle/scan'
   })
 }
+
+export const registerVehicle = (data) => {
+  return dispatch => {
+    return axios({
+      method: 'post',
+      url: '/api/vehicle/register',
+      data
+    }).then(res => {
+      dispatch(getVehicle())
+    })
+  }
+}
