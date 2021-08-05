@@ -172,6 +172,7 @@ export class Dashboard extends React.Component {
     const { colors } = this.context
     return (
       <ResponsiveGridLayout
+        id='root-dashboard'
         layouts={this.state.layouts}
         autoSize={true}
         isResizable={true}

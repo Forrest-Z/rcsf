@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Form,
   Col,
@@ -12,11 +12,20 @@ import {
 } from 'reactstrap'
 import classnames from 'classnames'
 
+import { getMap, multiDelete } from '@src/views/map/store/actions'
+import { useDispatch, useSelector } from 'react-redux'
 import Avatar from '@components/avatar'
 
 const General = ({ vehicle }) => {
   // ** State
   const [selectedColor, setSelectedColor] = useState('primary')
+
+  const dispatch = useDispatch()
+  const store = useSelector((state) => state.maps)
+
+  useEffect(() => {
+    dispatch(getMap())
+  }, [dispatch])
 
   const renderVehicleAvatar = () => {
     if (vehicle.image === null || vehicle.image === undefined) {
@@ -154,9 +163,14 @@ const General = ({ vehicle }) => {
                 <Input
                   type="select"
                   id="vehicle-map"
-                  placeholder="Actived map"
+                  // placeholder="Actived map"
                   // defaultValue={vehicle && vehicle.name}
-                />
+                >
+                  {store.data.map((item) => {
+                    return <option value={item.id}>{item.name}</option>
+                  })}
+                </Input>
+                <FormText>Active map</FormText>
               </FormGroup>
             </Col>
             <Col md="4" xs="12">
