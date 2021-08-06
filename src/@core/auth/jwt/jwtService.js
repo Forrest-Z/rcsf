@@ -46,10 +46,10 @@ export default class JwtService {
               this.isAlreadyFetchingAccessToken = false
 
               // ** Update accessToken in localStorage
-              this.setToken(r.data.access)
-              this.setRefreshToken(r.data.refresh)
+              this.setToken(r.data.accessToken)
+              this.setRefreshToken(r.data.refreshToken)
 
-              this.onAccessTokenFetched(r.data.access)
+              this.onAccessTokenFetched(r.data.accessToken)
             })
           }
           const retryOriginalRequest = new Promise(resolve => {
@@ -58,7 +58,7 @@ export default class JwtService {
               // ** Check: https://pixinvent.ticksy.com/ticket/2413870
               // ** Change Authorization header
               originalRequest.headers.Authorization = `${this.jwtConfig.tokenType} ${accessToken}`
-              resolve(axios(originalRequest))
+              resolve(this.axios(originalRequest))
             })
           })
           return retryOriginalRequest
@@ -77,19 +77,19 @@ export default class JwtService {
   }
 
   getToken() {
-    return localStorage.getItem(this.jwtConfig.storageTokenKeyName)
+    return localStorage.getItem(this.jwtConfig.storageAccessKeyName)
   }
 
   getRefreshToken() {
-    return localStorage.getItem(this.jwtConfig.storageRefreshTokenKeyName)
+    return localStorage.getItem(this.jwtConfig.storageRefreshKeyName).split('"').join('')
   }
 
   setToken(value) {
-    localStorage.setItem(this.jwtConfig.storageTokenKeyName, value)
+    localStorage.setItem(this.jwtConfig.storageAccessKeyName, value)
   }
 
   setRefreshToken(value) {
-    localStorage.setItem(this.jwtConfig.storageRefreshTokenKeyName, value)
+    localStorage.setItem(this.jwtConfig.storageRefreshKeyName, value)
   }
 
   login(...args) {
@@ -102,7 +102,7 @@ export default class JwtService {
 
   refreshToken() {
     return axios.post(this.jwtConfig.refreshEndpoint, {
-      refresh: this.getRefreshToken().split('"').join('')
+      refreshToken: this.getRefreshToken()
     })
   }
 }

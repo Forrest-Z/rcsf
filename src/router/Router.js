@@ -168,8 +168,7 @@ const Router = () => {
                               : {})}
                             /*eslint-enable */
                           >
-                            <route.component {...props} />
-                            {/* <FinalRoute route={route} {...props} /> */}
+                            <FinalRoute route={route} {...props} />
                           </LayoutWrapper>
                         </Suspense>
                       )
@@ -195,17 +194,10 @@ const Router = () => {
             return isUserLoggedIn() ? <Redirect to={DefaultRoute} /> : <Redirect to='/login' />
           }}
         />
-        <Route
-          exact
-          path='/'
-          render={() => {
-            return <Redirect to={DefaultRoute} />
-          }}
-        />
         {/* Not Auth Route */}
         <Route
           exact
-          path='/not-authorized'
+          path='/misc/not-authorized'
           render={props => (
             <Layouts.BlankLayout>
               <NotAuthorized />
@@ -213,8 +205,9 @@ const Router = () => {
           )}
         />
         {ResolveRoutes()}
+
         {/* NotFound Error page */}
-        <Route path='*' component={Error} />/
+        <Route path='*' component={Error} />
       </Switch>
     </AppRouter>
   )

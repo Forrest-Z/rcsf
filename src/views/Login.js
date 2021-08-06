@@ -41,6 +41,14 @@ const Login = () => {
       useJwt
       .login({ username, password })
       .then(res => {
+        res.data.userData = {
+          ability: [
+            {
+              action: 'manage',
+              subject: 'all'
+            }
+          ]
+        }
         const data = { ...res.data.userData, accessToken: res.data.access, refreshToken: res.data.refresh }
         dispatch(handleLogin(data))
         history.push(getHomeRouteForLoggedInUser('admin'))
