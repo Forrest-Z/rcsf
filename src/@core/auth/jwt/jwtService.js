@@ -81,7 +81,7 @@ export default class JwtService {
   }
 
   getRefreshToken() {
-    return localStorage.getItem(this.jwtConfig.storageRefreshKeyName).split('"').join('')
+    return localStorage.getItem(this.jwtConfig.storageRefreshKeyName) && localStorage.getItem(this.jwtConfig.storageRefreshKeyName).split('"').join('')
   }
 
   setToken(value) {
