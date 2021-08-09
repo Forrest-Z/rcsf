@@ -84,8 +84,8 @@ const defaultLayouts = {
       i: 'three-demensional',
       x: 6,
       y: 0,
-      w: 4,
-      h: 20
+      w: 3,
+      h: 12
     },
     {
       i: 'vehicle-state',
@@ -106,14 +106,14 @@ const defaultLayouts = {
       x: 6,
       y: 20,
       w: 4,
-      h: 10
+      h: 8
     },
     {
       i: 'vehicle-lidar',
-      x: 6,
+      x: 9,
       y: 0,
-      w: 4,
-      h: 20
+      w: 3,
+      h: 12
     }
   ]
 }
@@ -167,6 +167,19 @@ const Dashboard = () => {
     }
   }, [store.data, store.data.length])
 
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      if (screen.height === window.innerHeight) {
+        setRowHeight(22.5)
+      } else {
+        setRowHeight(19)
+      }
+    })
+    return () => {
+      window.removeEventListener('resize', window)
+    }
+  }, [])
+
   return (
     <ResponsiveGridLayout
       id="root-dashboard"
@@ -198,9 +211,7 @@ const Dashboard = () => {
         {/**
          * TODO: Add not active map tips
          */}
-        {notUsedMap ? null : (
-          <TwoDemensional onFullScreen={handleFullScreen} />
-        )}
+        {notUsedMap ? null : <TwoDemensional onFullScreen={handleFullScreen} />}
       </div>
 
       <div
@@ -209,9 +220,13 @@ const Dashboard = () => {
       >
         <VehicleController />
       </div>
-      {/* <div key='three-demensional'>
+
+      <div
+        key="three-demensional"
+        hidden={!['all', 'vehicle-controller'].includes(visible)}
+      >
         <ThreeDemensional />
-      </div> */}
+      </div>
 
       <div
         key="vehicle-state"

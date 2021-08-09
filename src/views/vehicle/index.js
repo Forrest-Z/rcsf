@@ -13,7 +13,10 @@ import {
   Label,
   Input,
   Alert,
-  Badge
+  Badge,
+  Nav,
+  NavItem,
+  NavLink
 } from 'reactstrap'
 import {
   Info,
@@ -26,7 +29,8 @@ import {
   PauseCircle,
   AlertTriangle,
   Wifi,
-  Plus
+  Plus,
+  HardDrive
 } from 'react-feather'
 
 // ** Custom Components
@@ -46,8 +50,10 @@ const VehicleView = () => {
   // ** Store Vars
   const dispatch = useDispatch()
   const store = useSelector((state) => state.vehicle)
-  const [isOpenScanModal, setIsOpenScanModal] = useState(false)
 
+  // ** States
+  const [isOpenScanModal, setIsOpenScanModal] = useState(false)
+  const [active, setActive] = useState('1')
 
   const renderState = (state) => {
     switch (state) {
@@ -108,14 +114,22 @@ const VehicleView = () => {
     }
   }
 
+  const toggle = (tab) => {
+    setActive(tab)
+  }
+
   const renderVehicleList = () => {
     return store.data.map((item) => {
       return (
         <Card className="ecommerce-card" key={item.id}>
           <CardBody>
-          <div className="item-img text-center mx-auto">
-            <img className="img-fluid" src={item.image || defaultImage } alt={item.name} />
-          </div>
+            <div className="item-img text-center mx-auto">
+              <img
+                className="img-fluid"
+                src={item.image || defaultImage}
+                alt={item.name}
+              />
+            </div>
             <div className="item-wrapper">
               <div className="item-name">
                 <h5 color="primary">{item.name}</h5>
@@ -124,7 +138,7 @@ const VehicleView = () => {
             </div>
           </CardBody>
           <div className="item-options text-center">
-            <Button className="btn-wishlist remove-wishlist" color='primary'>
+            <Button className="btn-wishlist remove-wishlist" color="primary">
               <Menu className="mr-25" size={14} />
               <span>Detail</span>
             </Button>
@@ -133,7 +147,7 @@ const VehicleView = () => {
               to={{ pathname: '/vehicle/settings', vehicle: item }}
               // params={{ vehicle: item }}
               className="btn-cart move-cart"
-              color='primary'
+              color="primary"
             >
               <Settings className="mr-50" size={14} />
               <span>Setting</span>
@@ -150,35 +164,112 @@ const VehicleView = () => {
 
   return (
     <Fragment>
-      <ScanForRobotsModal isOpen={isOpenScanModal} toggle={() => setIsOpenScanModal(!isOpenScanModal)} data={[]} />
-      <Row className="w-100 d-flex">
+      <ScanForRobotsModal
+        isOpen={isOpenScanModal}
+        toggle={() => setIsOpenScanModal(!isOpenScanModal)}
+        data={[]}
+      />
+      {/* <Row className="w-100 d-flex">
         <Col xl="9">
           <BreadCrumbs breadCrumbTitle="VEHICLE" breadCrumbActive="Vehicle" />
         </Col>
         <Col xl="3">
-          <Button.Ripple className="mr-1 rounded" color='relief-primary' onClick={() => setIsOpenScanModal(!isOpenScanModal)}>
-            <Wifi className='mr-1' size={18} />
+          <Button.Ripple
+            className="mr-1 rounded"
+            color="relief-primary"
+            onClick={() => setIsOpenScanModal(!isOpenScanModal)}
+          >
+            <Wifi className="mr-1" size={18} />
             <span>Scan for robots</span>
           </Button.Ripple>
-          <Button.Ripple className="rounded" color='relief-primary'>
-            <Plus className='mr-1' size={18} />
+          <Button.Ripple className="rounded" color="relief-primary">
+            <Plus className="mr-1" size={18} />
             <span>Add robot manually</span>
           </Button.Ripple>
         </Col>
-      </Row>
+      </Row> */}
+      <Row>
+        <Col xl="8">
+          <div>
+            <header className="d-flex justify-content-center align-content-center w-100">
+              <div
+                className="d-flex justify-content-center align-content-center w-75 rounded-pill d-flex row"
+                style={{ backgroundColor: '#3f4364' }}
+              >
+                <div className="p-1 col-1">
+                  <HardDrive className="ml-1" size={20} />
+                </div>
 
-      {store.data && store.data.length ? (
-        <section className="grid-view wishlist-items">
-          {renderVehicleList()}
-        </section>
-      ) : (
-        <Alert color="info">
-          <div className="alert-body">
-            <Info size={14} />
-            <span className="align-middle ml-50">Vehicle list is empty</span>
+                <div
+                  className="d-flex ml-1 p-1 px-3 col-3 align-items-center"
+                  style={{ backgroundColor: '#2a2c42' }}
+                >
+                  <span className="font-weight-bolder mr-auto">DEVICES</span>
+                  <h3 className="m-0 text-light">9</h3>
+                </div>
+
+                <div
+                  className="d-flex ml-1 p-1 px-3 col-3 align-items-center"
+                  style={{ backgroundColor: '#2a2c42' }}
+                >
+                  <Badge color="info" className="px-0 mr-1">
+                    &ensp;
+                  </Badge>
+                  <span className="font-weight-bolder mr-auto">ONLINE</span>
+                  <h3 className="m-0 text-light">7</h3>
+                </div>
+
+                <div
+                  className="d-flex ml-1 p-1 px-3 col-3 align-items-center"
+                  style={{ backgroundColor: '#2a2c42' }}
+                >
+                  <Badge color="secondary" className="px-0 mr-1">
+                    &ensp;
+                  </Badge>
+                  <span className="font-weight-bolder mr-auto">OFFLINE</span>
+                  <h3 className="m-0 text-light">2</h3>
+                </div>
+
+                <div className="col-1 d-flex justify-content-center align-content-center">
+                  <Button.Ripple color="flat-primary btn-icon py-50 my-50" size='sm'>
+                    <Plus size={20} />
+                  </Button.Ripple>
+                </div>
+              </div>
+            </header>
+            <div className="row w-100 d-flex justify-content-center mt-1">
+              <Nav tabs>
+                <NavItem>
+                  <NavLink active={active === '1'} onClick={() => toggle('1')}>
+                    Map
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink active={active === '2'} onClick={() => toggle('2')}>
+                    LIST
+                  </NavLink>
+                </NavItem>
+              </Nav>
+            </div>
           </div>
-        </Alert>
-      )}
+        </Col>
+        <Col xl="4">
+          {store.data && store.data.length ? (
+            <section className="grid-view wishlist-items">
+              {renderVehicleList()}
+            </section>
+          ) : (
+            <Alert color="info">
+              <div className="alert-body">
+                <Info size={14} />
+                <span className="align-middle ml-50">
+                  Vehicle list is empty
+                </span>
+              </div>
+            </Alert>
+          )}
+        </Col>
+      </Row>
     </Fragment>
   )
 }
