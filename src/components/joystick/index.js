@@ -32,7 +32,7 @@ const Joystick = ({ onMove, onEnd }) => {
     inner.style.height = '170px'
     inner.style.width = '170px'
     inner.style.left = 'calc(50% - 75px)'
-    inner.style.backgroundImage = 'linear-gradient(0deg, #28314a, #28314a)'
+    inner.style.backgroundImage = 'linear-gradient(0deg, #2a2c42, #2a2c42)'
     inner.style.borderRadius = '50%'
     // inner.setAttribute('class', 'align-items-center')
     // inner.setAttribute('class', 'justify-content-center')
