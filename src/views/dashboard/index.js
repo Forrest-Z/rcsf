@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import {
   VehicleList,
@@ -11,6 +11,12 @@ import {
   VehicleLidar
 } from './panels'
 import { ThemeColors } from '@src/utility/context/ThemeColors'
+import { Facebook, Map } from 'react-feather'
+
+// ** Store & Actions
+import { getMap, multiDelete } from '@src/views/map/store/actions'
+import { useDispatch, useSelector } from 'react-redux'
+import StageMobx from '../../utility/mobx/StageMobx'
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
@@ -112,142 +118,136 @@ const defaultLayouts = {
   ]
 }
 
-export class Dashboard extends React.Component {
-  static contextType = ThemeColors
+// Styles
+import '@styles/base/pages/app-chat.scss'
+import '@styles/base/pages/app-chat-list.scss'
 
-  constructor() {
-    super()
+const Dashboard = () => {
+  const [layouts, setLayouts] = useState(defaultLayouts)
+  const [rowHeight, setRowHeight] = useState(19)
+  const [visible, setVisible] = useState('all')
+  const [notUsedMap, setNotUsedMap] = useState(false)
 
-    this.state = {
-      visible: 'all',
-      rowHeight: 19,
-      layouts: defaultLayouts
-    }
-    this.handleFullScreen = this.handleFullScreen.bind(this)
-  }
+  const themeColors = useContext(ThemeColors)
 
-  componentDidMount() {
-    window.addEventListener('resize', () => {
-      if (screen.height === window.innerHeight) {
-        this.setState({
-          rowHeight: 22.5
-        })
-      } else {
-        this.setState({
-          rowHeight: 19
-        })
-      }
-    })
-  }
+  const dispatch = useDispatch()
+  const store = useSelector((state) => state.maps)
 
-  componentWillUnmount() {}
-
-  handleFullScreen(i, tag) {
+  const handleFullScreen = (i, tag) => {
     if (!tag) {
-      this.setState((preState) => ({
-        layouts: {
-          ...preState.layouts,
-          lg: preState.layouts.lg.map((item) => {
-            return {
-              ...item,
-              w: item.i === i ? 12 : 0,
-              h: item.i === i ? 30 : 0,
-              x: 0,
-              y: 0
-            }
-          })
-        },
-        visible: i
-      }))
-    } else {
-      console.log(1111)
-      this.setState({
-        layouts: defaultLayouts,
-        visible: 'all'
+      setLayouts({
+        ...layouts,
+        lg: layouts.lg.map((item) => {
+          return {
+            ...item,
+            w: item.i === i ? 12 : 0,
+            h: item.i === i ? 30 : 0,
+            x: 0,
+            y: 0
+          }
+        })
       })
+      setVisible(i)
+    } else {
+      setLayouts(defaultLayouts)
+      setVisible('all')
     }
   }
 
-  render() {
-    const { colors } = this.context
-    return (
-      <ResponsiveGridLayout
-        id='root-dashboard'
-        layouts={this.state.layouts}
-        autoSize={true}
-        isResizable={true}
-        cols={{
-          lg: 12,
-          md: 12,
-          sm: 6,
-          xs: 4,
-          xxs: 2
-        }}
-        breakpoints={{ lg: 1700, md: 996, sm: 768, xs: 480, xxs: 0 }}
-        draggableHandle=".drag-handler"
-        rowHeight={this.state.rowHeight}
+  useEffect(() => {
+    dispatch(getMap({ active: true }))
+  }, [dispatch])
+
+  useEffect(() => {
+    if (store.data.length > 0) {
+      StageMobx.setMap(store.data[0])
+      setNotUsedMap(false)
+    } else {
+      setNotUsedMap(true)
+    }
+  }, [store.data, store.data.length])
+
+  return (
+    <ResponsiveGridLayout
+      id="root-dashboard"
+      layouts={layouts}
+      autoSize={true}
+      isResizable={true}
+      cols={{
+        lg: 12,
+        md: 12,
+        sm: 6,
+        xs: 4,
+        xxs: 2
+      }}
+      breakpoints={{ lg: 1700, md: 996, sm: 768, xs: 480, xxs: 0 }}
+      draggableHandle=".drag-handler"
+      rowHeight={rowHeight}
+    >
+      <div
+        key="vehicle-list"
+        hidden={!['all', 'vehicle-list'].includes(visible)}
       >
-        <div
-          key="vehicle-list"
-          hidden={!['all', 'vehicle-list'].includes(this.state.visible)}
-        >
-          <VehicleList />
-        </div>
+        <VehicleList />
+      </div>
 
-        <div
-          key="two-demensional"
-          hidden={!['all', 'two-demensional'].includes(this.state.visible)}
-        >
-          <TwoDemensional onFullScreen={this.handleFullScreen} />
-        </div>
+      <div
+        key="two-demensional"
+        hidden={!['all', 'two-demensional'].includes(visible)}
+      >
+        {/**
+         * TODO: Add not active map tips
+         */}
+        {notUsedMap ? null : (
+          <TwoDemensional onFullScreen={handleFullScreen} />
+        )}
+      </div>
 
-        <div
-          key="vehicle-controller"
-          hidden={!['all', 'vehicle-controller'].includes(this.state.visible)}
-        >
-          <VehicleController />
-        </div>
-        {/* <div key='three-demensional'>
-          <ThreeDemensional />
-        </div> */}
+      <div
+        key="vehicle-controller"
+        hidden={!['all', 'vehicle-controller'].includes(visible)}
+      >
+        <VehicleController />
+      </div>
+      {/* <div key='three-demensional'>
+        <ThreeDemensional />
+      </div> */}
 
-        <div
-          key="vehicle-state"
-          hidden={!['all', 'vehicle-state'].includes(this.state.visible)}
-        >
-          <VehicleState
-            primary={colors.primary.main}
-            danger={colors.danger.main}
-            success={colors.success.main}
-          />
-        </div>
+      <div
+        key="vehicle-state"
+        hidden={!['all', 'vehicle-state'].includes(visible)}
+      >
+        <VehicleState
+          primary={themeColors.colors.primary.main}
+          danger={themeColors.colors.danger.main}
+          success={themeColors.colors.success.main}
+        />
+      </div>
 
-        <div
-          key="vehicle-camera"
-          hidden={!['all', 'vehicle-camera'].includes(this.state.visible)}
-        >
-          <VehicleCamera
-            primary={colors.primary.main}
-            danger={colors.danger.main}
-          />
-        </div>
+      <div
+        key="vehicle-camera"
+        hidden={!['all', 'vehicle-camera'].includes(visible)}
+      >
+        <VehicleCamera
+          primary={themeColors.colors.primary.main}
+          danger={themeColors.colors.danger.main}
+        />
+      </div>
 
-        <div
-          key="mission-procession"
-          hidden={!['all', 'mission-procession'].includes(this.state.visible)}
-        >
-          <MissionProcession />
-        </div>
+      <div
+        key="mission-procession"
+        hidden={!['all', 'mission-procession'].includes(visible)}
+      >
+        <MissionProcession />
+      </div>
 
-        <div
-          key="vehicle-lidar"
-          hidden={!['all', 'vehicle-lidar'].includes(this.state.visible)}
-        >
-          <VehicleLidar />
-        </div>
-      </ResponsiveGridLayout>
-    )
-  }
+      <div
+        key="vehicle-lidar"
+        hidden={!['all', 'vehicle-lidar'].includes(visible)}
+      >
+        <VehicleLidar />
+      </div>
+    </ResponsiveGridLayout>
+  )
 }
-
 export default Dashboard

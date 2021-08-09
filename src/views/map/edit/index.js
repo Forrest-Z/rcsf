@@ -40,7 +40,7 @@ const MapEdit = observer(props => {
         <div className='content-wrapper'>
           <div className='content-body'>
             <Content
-              map={props.location.map}
+              map={StageMobx.map}
               handleSidebar={handleSidebar}
             />
           </div>

@@ -39,7 +39,18 @@ const Content = props => {
   const { handleUser, handleUserSidebarRight, handleSidebar, store, userSidebarLeft, map } = props
 
   useEffect(() => {
-    StageMobx.setShapes(map.raw.map(item => new ShapeMobx(item)))
+    if (map === undefined || map === null) {
+      const temp = JSON.parse(sessionStorage.getItem('map'))
+      StageMobx.setMap(temp)
+    } else {
+      sessionStorage.setItem('map', JSON.stringify(map))
+    }
+
+    return () => {
+      StageMobx.setMap(null)
+      StageMobx.setShapes([])
+    }
+    
   }, [])
 
   return (
