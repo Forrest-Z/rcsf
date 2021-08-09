@@ -16,7 +16,9 @@ import {
   Badge,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
+  TabContent,
+  TabPane
 } from 'reactstrap'
 import {
   Info,
@@ -45,6 +47,8 @@ import '@styles/base/pages/app-ecommerce.scss'
 import ScanForRobotsModal from './ScanForRobotsModal'
 
 import defaultImage from '@src/assets/images/pages/intelligent.jpg'
+import VehicleList from './List'
+import VehicleMap from './Map'
 
 const VehicleView = () => {
   // ** Store Vars
@@ -190,18 +194,18 @@ const VehicleView = () => {
       </Row> */}
       <Row>
         <Col xl="8">
-          <div>
-            <header className="d-flex justify-content-center align-content-center w-100">
+          <div className="d-fex flex-column">
+            <div className="d-flex justify-content-center align-content-center w-100">
               <div
                 className="d-flex justify-content-center align-content-center w-75 rounded-pill d-flex row"
                 style={{ backgroundColor: '#3f4364' }}
               >
-                <div className="p-1 col-1">
+                <div className="p-1 py-xl-50 col-1">
                   <HardDrive className="ml-1" size={20} />
                 </div>
 
                 <div
-                  className="d-flex ml-1 p-1 px-3 col-3 align-items-center"
+                  className="d-flex ml-1 p-1 py-xl-50 px-lg-3 px-xl-2 col-lg-3 align-items-center"
                   style={{ backgroundColor: '#2a2c42' }}
                 >
                   <span className="font-weight-bolder mr-auto">DEVICES</span>
@@ -209,7 +213,7 @@ const VehicleView = () => {
                 </div>
 
                 <div
-                  className="d-flex ml-1 p-1 px-3 col-3 align-items-center"
+                  className="d-flex ml-1 p-1 py-xl-50 px-3 px-xl-2 col-3 align-items-center"
                   style={{ backgroundColor: '#2a2c42' }}
                 >
                   <Badge color="info" className="px-0 mr-1">
@@ -220,7 +224,7 @@ const VehicleView = () => {
                 </div>
 
                 <div
-                  className="d-flex ml-1 p-1 px-3 col-3 align-items-center"
+                  className="d-flex ml-1 p-1 py-xl-50 px-3 px-xl-2 col-3 align-items-center"
                   style={{ backgroundColor: '#2a2c42' }}
                 >
                   <Badge color="secondary" className="px-0 mr-1">
@@ -230,14 +234,18 @@ const VehicleView = () => {
                   <h3 className="m-0 text-light">2</h3>
                 </div>
 
-                <div className="col-1 d-flex justify-content-center align-content-center">
-                  <Button.Ripple color="flat-primary btn-icon py-50 my-50" size='sm'>
+                <div className="col-1 d-flex justify-content-center align-content-center px-xl-0">
+                  <Button.Ripple
+                    color="flat-primary btn-icon py-lg-50 my-lg-50 py-xl-0 px-xl-50 mx-xl-0 my-xl-50"
+                    size="sm"
+                    onClick={() => setIsOpenScanModal(true)}
+                  >
                     <Plus size={20} />
                   </Button.Ripple>
                 </div>
               </div>
-            </header>
-            <div className="row w-100 d-flex justify-content-center mt-1">
+            </div>
+            <div className="w-100 d-flex justify-content-center mt-1">
               <Nav tabs>
                 <NavItem>
                   <NavLink active={active === '1'} onClick={() => toggle('1')}>
@@ -251,6 +259,14 @@ const VehicleView = () => {
                 </NavItem>
               </Nav>
             </div>
+            <TabContent activeTab={active}>
+              <TabPane tabId='1' className='h-100'>
+                <VehicleMap />
+              </TabPane>
+              <TabPane tabId="2">
+                <VehicleList />
+              </TabPane>
+            </TabContent>
           </div>
         </Col>
         <Col xl="4">
