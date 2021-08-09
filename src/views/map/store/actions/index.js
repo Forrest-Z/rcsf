@@ -68,3 +68,18 @@ export const multiDelete = ids => {
     .then(() => dispatch(getMap(getStore().maps.params)))
   }
 }
+
+export const updateMap = (id, data) => {
+  return (dispatch, getStore) => {
+    axios({
+      url: `/api/map/${id}`,
+      method: 'put',
+      data
+    }).then(response => {
+      dispatch({
+        type: 'UPDATE_MAP'
+      })
+    })
+    .then(() => dispatch(getMap(getStore().maps.params)))
+  }
+}

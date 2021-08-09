@@ -10,9 +10,7 @@ const vehicle = (state = initialState, action) => {
     case 'GET_VEHICLE':
       return {
         ...state,
-        data: action.data.results,
-        count: action.data.count,
-        params: action.params
+        data: action.data
       }
     default:
       return { ...state }

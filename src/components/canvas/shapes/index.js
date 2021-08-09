@@ -1,3 +1,5 @@
 export { ImageShape } from './image-shape'
 export { PointShape } from './point-shape'
 export { PolygonShape } from './polygon-shape'
+export { PlanPathShape } from './plan-path-shape'
+export { PredictionPathShape } from './prediction-path-shape'

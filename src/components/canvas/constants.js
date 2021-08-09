@@ -24,9 +24,9 @@ export const LAYER_Z_INDEX = {
 export const DRAW_TOOL_TYPE = {
   INACTIVE: 0,
   MOUSE_POINTER: 1,
-  ROUTE_POINT: 2,
-  CHARGE_POINT: 3,
-  PARK_POINT: 4,
+  ROUTE_POINT: 'Route',
+  CHARGE_POINT: 'Charge',
+  PARK_POINT: 'Park',
   AREA: 5,
   BLOCK: 6
 }

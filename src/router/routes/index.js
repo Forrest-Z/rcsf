@@ -20,7 +20,7 @@ const Routes = [
   {
     path: '/map/add',
     exact: true,
-    appLayout: true,
+    // appLayout: true,
     component: lazy(() => import('../../views/map/add'))
   },
   {
@@ -33,16 +33,39 @@ const Routes = [
   },
   {
     path: '/mission',
+    exact: true,
     component: lazy(() => import('../../views/mission'))
   },
   {
+    path: '/mission/add',
+    exact: true,
+    // appLayout: true,
+    component: lazy(() => import('../../views/mission/add'))
+  },
+  {
     path: '/vehicle',
+    exact: true,
     className: 'ecommerce-application',
     component: lazy(() => import('../../views/vehicle'))
   },
   {
+    path: '/vehicle/settings',
+    exact: true,
+    className: 'ecommerce-application',
+    component: lazy(() => import('../../views/vehicle/settings'))
+    // meta: {
+    //   contentWidth: 'boxed'
+    // }
+  },
+  {
     path: '/statistics',
     component: lazy(() => import('../../views/statistics'))
+  },
+  {
+    path: '/system',
+    exact: true,
+    className: 'ecommerce-application',
+    component: lazy(() => import('../../views/system'))
   },
   {
     path: '/login',

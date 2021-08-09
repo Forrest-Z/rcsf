@@ -9,7 +9,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         userData: action.data,
-        [action.config.storageTokenKeyName]: action[action.config.storageTokenKeyName],
+        [action.config.storageAccessKeyName]: action[action.config.storageAccessKeyName],
         [action.config.storageRefreshTokenKeyName]: action[action.config.storageRefreshTokenKeyName]
       }
     case 'LOGOUT':

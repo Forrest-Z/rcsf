@@ -71,19 +71,6 @@ export const ThreeDemensional = () => {
         </div>
       </CardHeader>
       <CardBody className='p-0'>
-        <ReactMapGL
-          mapStyle='mapbox://styles/yurui0106/ckp6lseg903iy18n4hdmkzvwm'
-          width={'100%'}
-          height={'100%'}
-          {...viewport}
-          onViewportChange={setViewport}
-          mapboxApiAccessToken={'pk.eyJ1IjoieXVydWkwMTA2IiwiYSI6ImNraTZzMmlubzBldjEyeXJ6NGhncWdpOXEifQ.HP8aRGENdnN_Qb8kPbhiEg'}
-        >
-          <AttributionControl compact={true} style={attributionStyle} />
-          <ScaleControl style={scaleControlStyle} />
-          <FullscreenControl style={fullscreenControlStyle} />
-          <NavigationControl style={navStyle} />
-        </ReactMapGL>
       </CardBody>
     </Card>
   )

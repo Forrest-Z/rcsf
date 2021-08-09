@@ -3,81 +3,88 @@ import { useState, useEffect } from 'react'
 
 // Thrid Components
 import Tree, { TreeNode } from 'rc-tree'
-import { X, Search, CheckSquare, Bell, User, Trash, Map, Circle, Square } from 'react-feather'
-import { observer } from "mobx-react"
+import {
+  X,
+  Search,
+  CheckSquare,
+  Bell,
+  User,
+  Trash,
+  Map,
+  Circle,
+  Square
+} from 'react-feather'
+import { observer } from 'mobx-react'
 import { DRAW_TOOL_TYPE } from '@src/components/canvas/constants'
 
 // Mobx
 import StageMobx from '../../../../utility/mobx/StageMobx'
-import { Stage } from 'react-konva'
 
-const Elements = observer(props => {
+
+const Elements = observer((props) => {
   // State
-  const [treeData, setTreeData] = useState([
-    {
-      title: 'Points',
-      icon:
-        <div className='d-flex justify-content-left align-items-center'>
-          <Circle className='text-success' size={15} />
-        </div>,
-      key: '0',
-      children: []
-    },
-    {
-      title: 'Areas',
-      icon:
-        <div className='d-flex justify-content-left align-items-center'>
-          <Square className='text-success' size={15} />
-        </div>,
-      key: '1',
-      children: []
-    },
-    {
-      title: 'Blocks',
-      icon:
-        <div className='d-flex justify-content-left align-items-center'>
-          <Square className='text-danger' size={15} />
-        </div>,
-      key: '2',
-      children: []
-    }
-  ])
-
   const [pointTree, setPointTree] = useState([])
+  const [areaTree, setAreaTree] = useState([])
+  const [blockTree, setBlockTree] = useState([])
 
-  const onLoadData = treeNode => {
-    return new Promise(resolve => {
+  const onLoadData = (treeNode) => {
+    return new Promise((resolve) => {
       setTimeout(() => {
-        const temp = []
-        let index = 0
+        const points = []
+        const areas = []
+        const blocks = []
+
+        let pointIndex = 0
+        let areaIndex = 0
+        let blockIndex = 0
         for (let i = 0; i < StageMobx.shapes.length; i++) {
-          if (StageMobx.shapes[i].type === DRAW_TOOL_TYPE.ROUTE_POINT ||
+          if (
+            StageMobx.shapes[i].type === DRAW_TOOL_TYPE.ROUTE_POINT ||
             StageMobx.shapes[i].type === DRAW_TOOL_TYPE.CHARGE_POINT ||
             StageMobx.shapes[i].type === DRAW_TOOL_TYPE.PARK_POINT
           ) {
-            temp.push({
-              key: `0-${index}`,
+            points.push({
+              key: `0-${pointIndex}`,
               title: StageMobx.shapes[i].id,
               isLeaf: true
             })
-            index++
+            pointIndex++
+          }
+
+          if (StageMobx.shapes[i].type === DRAW_TOOL_TYPE.AREA) {
+            areas.push({
+              key: `1-${areaIndex}`,
+              title: StageMobx.shapes[i].id,
+              isLeaf: true
+            })
+            areaIndex++
+          }
+
+          if (StageMobx.shapes[i].type === DRAW_TOOL_TYPE.BLOCK) {
+            blocks.push({
+              key: `2-${blockIndex}`,
+              title: StageMobx.shapes[i].id,
+              isLeaf: true
+            })
+            blockIndex++
           }
         }
-        setPointTree(temp)
-        resolve()
+        setAreaTree(areas)
+        setPointTree(points)
+        setBlockTree(blocks)
 
+        resolve()
       }, 100)
     })
   }
 
-  const handleSelect = (selectedKeys, info) => {
-    console.log('selected', selectedKeys, info)
-    // this.selKey = info.node.props.eventKey;
-  }
-
   const onTreeNodeClick = (selectedKeys, info) => {
-    const selection = StageMobx.shapes.find(element => element.id === info.node.title) 
-    StageMobx.setSelection(selection)
+    const selection = StageMobx.shapes.find(
+      (element) => element.id === info.node.title
+    )
+    if (selection !== undefined) {
+      StageMobx.setSelection(selection)
+    }
   }
 
   useEffect(() => {
@@ -85,19 +92,51 @@ const Elements = observer(props => {
   }, [StageMobx.shapes.length, StageMobx.shapes])
 
   return (
-    <div className='pl-2 pt-1 h-100'>
+    <div className="pl-2 pt-1 h-100">
       <Tree
-        // showLine
+        showLine
         // checkable={true}
-        // defaultExpandAll
+        defaultExpandAll
         onSelect={onTreeNodeClick}
       >
-        <TreeNode title='Points' key='0' icon={
-          <div className='d-flex justify-content-left align-items-center'>
-            <Circle className='text-success' size={15} />
-          </div>
-        }>
-          {pointTree.map((item, index) => (
+        <TreeNode
+          title="Points"
+          key="0"
+          icon={
+            <div className="d-flex justify-content-left align-items-center">
+              <Circle className="text-success" size={15} />
+            </div>
+          }
+        >
+          {pointTree.map((item) => (
+            <TreeNode title={item.title} key={item.key} />
+          ))}
+        </TreeNode>
+
+        <TreeNode
+          title="Areas"
+          key="1"
+          icon={
+            <div className="d-flex justify-content-left align-items-center">
+              <Square className="text-success" size={15} />
+            </div>
+          }
+        >
+          {areaTree.map((item) => (
+            <TreeNode title={item.title} key={item.key} />
+          ))}
+        </TreeNode>
+
+        <TreeNode
+          title="Blocks"
+          key="2"
+          icon={
+            <div className="d-flex justify-content-left align-items-center">
+              <Square className="text-danger" size={15} />
+            </div>
+          }
+        >
+          {blockTree.map((item) => (
             <TreeNode title={item.title} key={item.key} />
           ))}
         </TreeNode>
