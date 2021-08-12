@@ -5,7 +5,7 @@ const initialState = {
   status: 0
 }
 
-const vehicle = (state = initialState, action) => {
+export const vehicle = (state = initialState, action) => {
   switch (action.type) {
     case 'GET_VEHICLE':
       return {
@@ -17,4 +17,14 @@ const vehicle = (state = initialState, action) => {
   }
 }
 
-export default vehicle
+export const vehicleGroup = (state = initialState, action) => {
+  switch (action.type) {
+    case 'GET_VEHICLE_GROUP':
+      return {
+        ...state,
+        data: action.data
+      }
+    default:
+      return { ...state }
+  }
+}

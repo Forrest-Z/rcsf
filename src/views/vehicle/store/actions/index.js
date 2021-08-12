@@ -30,3 +30,14 @@ export const registerVehicle = (data) => {
     })
   }
 }
+
+export const getVehicleGroup = () => {
+  return dispatch => {
+    return axios({
+      method: 'get',
+      url: '/api/vehicle-group'
+    }).then(res => {
+      dispatch({ type: 'GET_VEHICLE_GROUP', data: res.data })
+    })
+  }
+}

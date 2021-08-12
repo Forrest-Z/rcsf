@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import ReactDOM from 'react-dom'
-import ReactMapGL, {
+import MapGL, {
   AttributionControl,
   ScaleControl,
   FullscreenControl,
   NavigationControl
 } from 'react-map-gl'
-import { ref } from 'yup'
 
 const attributionStyle = {
   right: 0,
@@ -58,8 +56,8 @@ const VehicleMap = () => {
   }, [])
 
   return (
-    <div className='px-1'>
-      <ReactMapGL
+    <div className="px-1">
+      <MapGL
         className="vehicle-map"
         mapStyle="mapbox://styles/yurui0106/cks4qo0m752mo17peyvtkf113"
         width={'100%'}
@@ -75,7 +73,7 @@ const VehicleMap = () => {
         <ScaleControl style={scaleControlStyle} />
         <FullscreenControl style={fullscreenControlStyle} />
         <NavigationControl style={navStyle} />
-      </ReactMapGL>
+      </MapGL>
     </div>
   )
 }

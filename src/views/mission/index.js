@@ -4,8 +4,19 @@ import { Link } from 'react-router-dom'
 
 // ** Third Party Components
 import DataTable from 'react-data-table-component'
-import { Card, CardBody, Button, Row, Col, CustomInput, Label, Input } from 'reactstrap'
+import { Card, CardBody, Button, Row, Col, CustomInput, Label, Input, CardText } from 'reactstrap'
 import { ChevronDown } from 'react-feather'
+
+import '@styles/react/libs/tables/react-dataTable-component.scss'
+
+const NoDataComponent = () => {
+  return (
+    <Card className='w-100 h-100 m-0 rounded-0 d-flex align-items-center'>
+      <CardText className='text-light'>There are no records to display</CardText>
+    </Card>
+  )
+}
+
 
 const Header = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
   return (
@@ -58,7 +69,7 @@ const Header = ({ toggleSidebar, handlePerPage, rowsPerPage, handleFilter, searc
 
 const MissionView = () => {
   return (
-    <Card>
+    <Card className="app-user-list">
       <CardBody>
         <DataTable
           noHeader
@@ -68,6 +79,7 @@ const MissionView = () => {
           sortIcon={<ChevronDown />}
           paginationServer
           className='react-dataTable'
+          noDataComponent={<NoDataComponent />}
           subHeaderComponent={
             <Header />
           }

@@ -1,11 +1,9 @@
 import { useEffect } from 'react'
 
 // ** Thrid Components
+import { Card, CardText } from 'reactstrap'
 import DataTable from 'react-data-table-component'
 import { ChevronDown } from 'react-feather'
-
-// ** Styles
-import '@styles/react/libs/tables/react-dataTable-component.scss'
 
 // ** Custom Components
 import { columns } from './columns'
@@ -13,6 +11,18 @@ import { columns } from './columns'
 // ** Store & Actions
 import { useDispatch, useSelector } from 'react-redux'
 import { getVehicle } from './store/actions'
+
+// ** Styles
+// import '@styles/react/libs/tables/react-dataTable-component.scss'
+
+
+const NoDataComponent = () => {
+  return (
+    <Card className='w-100 h-100 m-0 rounded-0 d-flex align-items-center py-2'>
+      <CardText className='text-light'>There are no records to display</CardText>
+    </Card>
+  )
+}
 
 const VehicleList = ({ data }) => {
   // ** Store Vars
@@ -41,6 +51,7 @@ const VehicleList = ({ data }) => {
         className="react-dataTable"
         data={dataToRender()}
         columns={columns}
+        noDataComponent={<NoDataComponent />}
       />
     </div>
   )

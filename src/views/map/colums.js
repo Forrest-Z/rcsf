@@ -30,7 +30,6 @@ export const columns = [
   {
     name: 'ID',
     minWidth: '197',
-    selector: 'id',
     sortable: true,
     cell: (row) => (
       <Link to={`/apps/invoice/preview/${row.id}`}>{`# ${row.id}`}</Link>
@@ -39,7 +38,6 @@ export const columns = [
   {
     name: 'Name',
     minWidth: '197',
-    selector: 'name',
     cell: (row) => {
       return (
         <div className="d-flex justify-content-left align-items-center">
@@ -56,7 +54,6 @@ export const columns = [
   {
     name: 'Create Time',
     minWidth: '297',
-    selector: 'createTime',
     sortable: true,
     cell: (row) => (
       <div>
@@ -67,7 +64,6 @@ export const columns = [
   {
     name: 'Update Time',
     minWidth: '297',
-    selector: 'active',
     sortable: true,
     cell: (row) => (
       <div>
@@ -78,7 +74,6 @@ export const columns = [
   {
     name: 'Using',
     minWidth: '47',
-    selector: 'using',
     sortable: true,
     cell: (row) => (
       <div>
@@ -88,7 +83,6 @@ export const columns = [
   },
   {
     name: 'Action',
-    selector: '',
     cell: (row) => (
       <div className="column-action d-flex align-items-center">
         <div className="mr-1">

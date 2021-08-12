@@ -32,15 +32,17 @@ import {
   AlertTriangle,
   Wifi,
   Plus,
-  HardDrive
+  HardDrive,
+  Grid
 } from 'react-feather'
 
 // ** Custom Components
 import BreadCrumbs from '@components/breadcrumbs'
+import Avatar from '@components/avatar'
 
 // ** Store & Actions
 import { useDispatch, useSelector } from 'react-redux'
-import { getVehicle } from './store/actions'
+import { getVehicle, getVehicleGroup } from './store/actions'
 
 // ** Styles
 import '@styles/base/pages/app-ecommerce.scss'
@@ -49,15 +51,17 @@ import ScanForRobotsModal from './ScanForRobotsModal'
 import defaultImage from '@src/assets/images/pages/intelligent.jpg'
 import VehicleList from './List'
 import VehicleMap from './Map'
+import { columns } from './columns'
 
 const VehicleView = () => {
   // ** Store Vars
   const dispatch = useDispatch()
-  const store = useSelector((state) => state.vehicle)
+  const store = useSelector((state) => state.vehicleGroup)
 
   // ** States
   const [isOpenScanModal, setIsOpenScanModal] = useState(false)
   const [active, setActive] = useState('1')
+  const [showGroup, setShowGroup] = useState(true)
 
   const renderState = (state) => {
     switch (state) {
@@ -130,7 +134,7 @@ const VehicleView = () => {
             <div className="item-img text-center mx-auto">
               <img
                 className="img-fluid"
-                src={item.image || defaultImage}
+                src={item.avatar || defaultImage}
                 alt={item.name}
               />
             </div>
@@ -162,8 +166,27 @@ const VehicleView = () => {
     })
   }
 
+  const renderGroups = () => {
+    return store.data.map((item) => {
+      return (
+        <Card className="ecommerce-card" key={item.id}>
+          <CardBody className="d-flex justify-content-center">
+            <div className="row align-items-center w-75 border-primary">
+              <div className="col-2 bg-primary px-50 py-50">
+                <Grid className='text-light' size={25} />
+              </div>
+              <div className="col-8">
+                <h4 className="p-0 m-0">{item.name}</h4>
+              </div>
+            </div>
+          </CardBody>
+        </Card>
+      )
+    })
+  }
+
   useEffect(() => {
-    dispatch(getVehicle())
+    dispatch(getVehicleGroup())
   }, [dispatch])
 
   return (
@@ -193,7 +216,7 @@ const VehicleView = () => {
         </Col>
       </Row> */}
       <Row>
-        <Col xl="8">
+        <Col xl="7">
           <div className="d-fex flex-column">
             <div className="d-flex justify-content-center align-content-center w-100">
               <div
@@ -249,7 +272,7 @@ const VehicleView = () => {
               <Nav tabs>
                 <NavItem>
                   <NavLink active={active === '1'} onClick={() => toggle('1')}>
-                    Map
+                    MAP
                   </NavLink>
                 </NavItem>
                 <NavItem>
@@ -260,7 +283,7 @@ const VehicleView = () => {
               </Nav>
             </div>
             <TabContent activeTab={active}>
-              <TabPane tabId='1' className='h-100'>
+              <TabPane tabId="1" className="h-100">
                 <VehicleMap />
               </TabPane>
               <TabPane tabId="2">
@@ -269,10 +292,10 @@ const VehicleView = () => {
             </TabContent>
           </div>
         </Col>
-        <Col xl="4">
+        <Col xl="5">
           {store.data && store.data.length ? (
             <section className="grid-view wishlist-items">
-              {renderVehicleList()}
+              {showGroup ? renderGroups() : renderVehicleList()}
             </section>
           ) : (
             <Alert color="info">
