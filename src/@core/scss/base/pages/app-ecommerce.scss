@@ -2,7 +2,7 @@
 // 	File Name: app-ecommerce.scss
 // 	Description: SCSS file for ecommerce shop, wishlist and checkout page.
 // 	----------------------------------------------------------------------------------------------
-// 	Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+// 	Item Name: Vuexy - Vuejs, React, Angular, HTML & Laravel Admin Dashboard Template
 // 	Author: PIXINVENT
 // 	Author URL: http://www.themeforest.net/user/pixinvent
 // ================================================================================================
@@ -26,7 +26,7 @@ $search-bar-height: 48px;
   .sidebar-shop {
     margin-top: 0.85rem;
     width: $sidebar-width;
-    z-index: 14;
+    z-index: 998;
 
     // for heading
     .filter-heading {
@@ -234,7 +234,7 @@ $search-bar-height: 48px;
   // Grid View Specific style
   .grid-view {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     column-gap: 2rem;
     &.wishlist-items {
       grid-template-columns: 1fr 1fr;

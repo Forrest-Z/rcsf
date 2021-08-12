@@ -18,7 +18,9 @@ import {
   NavItem,
   NavLink,
   TabContent,
-  TabPane
+  TabPane,
+  CardHeader,
+  CardTitle
 } from 'reactstrap'
 import {
   Info,
@@ -35,6 +37,7 @@ import {
   HardDrive,
   Grid
 } from 'react-feather'
+import Chart from 'react-apexcharts'
 
 // ** Custom Components
 import BreadCrumbs from '@components/breadcrumbs'
@@ -49,14 +52,100 @@ import '@styles/base/pages/app-ecommerce.scss'
 import ScanForRobotsModal from './ScanForRobotsModal'
 
 import defaultImage from '@src/assets/images/pages/intelligent.jpg'
+import connection from '@src/assets/images/icons/rocket.svg'
+import bell from '@src/assets/images/icons/bell.png'
+
 import VehicleList from './List'
 import VehicleMap from './Map'
 import { columns } from './columns'
 
+const onlineChartOptions = {
+  options: {
+    height: '100%'
+  },
+  plotOptions: {
+    radialBar: {
+      hollow: {
+        margin: 15,
+        size: '66%',
+        image: connection,
+        imageWidth: 30,
+        imageHeight: 30,
+        imageClipped: false,
+        imageOffsetY: -12
+      },
+      track: {
+        background: '#303147'
+      },
+      dataLabels: {
+        showOn: 'always',
+        name: {
+          show: false
+        },
+        value: {
+          show: true,
+          fontFamily: 'Montserrat',
+          fontSize: '1.514rem',
+          color: '#f2f2f2',
+          offsetY: 35,
+          formatter: (val) => {
+            return val / 100
+          }
+        }
+      }
+    }
+  },
+  stroke: {
+    lineCap: 'round'
+  }
+}
+
+const noticeChartOptions = {
+  options: {
+    height: '100%'
+  },
+  plotOptions: {
+    radialBar: {
+      hollow: {
+        margin: 15,
+        size: '66%',
+        image: bell,
+        imageWidth: 30,
+        imageHeight: 30,
+        imageClipped: false,
+        imageOffsetY: -12
+      },
+      track: {
+        background: '#303147'
+      },
+      dataLabels: {
+        showOn: 'always',
+        name: {
+          show: false
+        },
+        value: {
+          show: true,
+          fontFamily: 'Montserrat',
+          fontSize: '1.514rem',
+          color: '#f2f2f2',
+          offsetY: 35,
+          formatter: (val) => {
+            return val / 100
+          }
+        }
+      }
+    }
+  },
+  stroke: {
+    lineCap: 'round'
+  }
+}
+
 const VehicleView = () => {
   // ** Store Vars
   const dispatch = useDispatch()
-  const store = useSelector((state) => state.vehicleGroup)
+  const vehicleGroupStore = useSelector((state) => state.vehicleGroup)
+  const vehicleStore = useSelector((state) => state.vehicle)
 
   // ** States
   const [isOpenScanModal, setIsOpenScanModal] = useState(false)
@@ -127,7 +216,7 @@ const VehicleView = () => {
   }
 
   const renderVehicleList = () => {
-    return store.data.map((item) => {
+    return vehicleStore.data.map((item) => {
       return (
         <Card className="ecommerce-card" key={item.id}>
           <CardBody>
@@ -167,16 +256,44 @@ const VehicleView = () => {
   }
 
   const renderGroups = () => {
-    return store.data.map((item) => {
+    return vehicleGroupStore.data.map((item) => {
       return (
-        <Card className="ecommerce-card" key={item.id}>
-          <CardBody className="d-flex justify-content-center">
+        <Card
+          className="ecommerce-card"
+          key={item.id}
+          onClick={() => setShowGroup(!showGroup)}
+        >
+          <CardBody className="d-flex justify-content-center flex-column align-items-center">
             <div className="row align-items-center w-75 border-primary">
-              <div className="col-2 bg-primary px-50 py-50">
-                <Grid className='text-light' size={25} />
+              <div className="col-2 bg-primary px-50 py-25">
+                <Grid className="text-light" size={25} />
               </div>
               <div className="col-8">
                 <h4 className="p-0 m-0">{item.name}</h4>
+              </div>
+            </div>
+            <div className="row w-100 d-flex my-1">
+              <div className="col-6 d-flex">
+                <Chart
+                  label={11}
+                  options={onlineChartOptions}
+                  colors={['red']}
+                  series={[item.online_count || 0]}
+                  type={'radialBar'}
+                  height={'100%'}
+                  width={'100%'}
+                />
+              </div>
+              <div className="col-6 d-flex">
+                <Chart
+                  label={11}
+                  options={noticeChartOptions}
+                  colors={['red']}
+                  series={[item.online_count || 0]}
+                  type={'radialBar'}
+                  height={'100%'}
+                  width={'100%'}
+                />
               </div>
             </div>
           </CardBody>
@@ -293,20 +410,9 @@ const VehicleView = () => {
           </div>
         </Col>
         <Col xl="5">
-          {store.data && store.data.length ? (
-            <section className="grid-view wishlist-items">
-              {showGroup ? renderGroups() : renderVehicleList()}
-            </section>
-          ) : (
-            <Alert color="info">
-              <div className="alert-body">
-                <Info size={14} />
-                <span className="align-middle ml-50">
-                  Vehicle list is empty
-                </span>
-              </div>
-            </Alert>
-          )}
+          <section className="grid-view wishlist-items">
+            {showGroup ? renderGroups() : renderVehicleList()}
+          </section>
         </Col>
       </Row>
     </Fragment>

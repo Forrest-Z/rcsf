@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getVehicle } from './store/actions'
 
 // ** Styles
-// import '@styles/react/libs/tables/react-dataTable-component.scss'
+import '@styles/react/libs/tables/react-dataTable-component.scss'
 
 
 const NoDataComponent = () => {
@@ -42,7 +42,7 @@ const VehicleList = ({ data }) => {
   }, [dispatch])
 
   return (
-    <div>
+    <div className='app-user-list'>
       <DataTable
         noHeader
         responsive

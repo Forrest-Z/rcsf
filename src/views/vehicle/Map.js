@@ -47,12 +47,13 @@ const VehicleMap = () => {
     console.log(bound)
     setMapWidth(window.innerWidth - bound.x - bound.right)
     setMapHeight(window.innerHeight - bound.y - 30)
+    // window.removeEventListener('resize', window)
   }
 
   useEffect(() => {
     initMapHeight()
-    window.addEventListener('resize', initMapHeight)
-    return () => window.removeEventListener('resize', window)
+    // window.addEventListener('resize', initMapHeight)
+    // return () => window.removeEventListener('resize', window)
   }, [])
 
   return (
