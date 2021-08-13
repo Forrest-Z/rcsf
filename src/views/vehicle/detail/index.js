@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import { Responsive, WidthProvider } from 'react-grid-layout'
 
 // ** Custom Components
-import { BatteryPanel } from '../../../components/panels'
+import { BatteryPanel, CPUPanel, MemoryPanel } from '../../../components/panels'
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
@@ -14,6 +14,20 @@ const defaultLayouts = {
     {
       i: 'battery',
       x: 0,
+      y: 0,
+      w: 3,
+      h: 10
+    },
+    {
+      i: 'cpu',
+      x: 3,
+      y: 0,
+      w: 3,
+      h: 10
+    },
+    {
+      i: 'memory',
+      x: 6,
       y: 0,
       w: 3,
       h: 10
@@ -85,8 +99,11 @@ const VehicleDetail = () => {
       draggableHandle=".drag-handler"
       rowHeight={rowHeight}
     >
-      <div key="battery">
-        <BatteryPanel />
+      <div key="cpu">
+        <CPUPanel />
+      </div>
+      <div key="memory">
+        <MemoryPanel />
       </div>
     </ResponsiveGridLayout>
   )
