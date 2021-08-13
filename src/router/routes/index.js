@@ -58,6 +58,12 @@ const Routes = [
     // }
   },
   {
+    path: '/vehicle/detail',
+    exact: true,
+    // className: 'ecommerce-application',
+    component: lazy(() => import('../../views/vehicle/detail'))
+  },
+  {
     path: '/statistics',
     component: lazy(() => import('../../views/statistics'))
   },

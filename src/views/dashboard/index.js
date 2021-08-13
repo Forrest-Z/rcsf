@@ -133,7 +133,7 @@ const Dashboard = () => {
   const dispatch = useDispatch()
   const store = useSelector((state) => state.maps)
 
-  const handleFullScreen = (i, tag) => {
+  const handleMaximize = (i, tag) => {
     if (!tag) {
       setLayouts({
         ...layouts,
@@ -211,7 +211,7 @@ const Dashboard = () => {
         {/**
          * TODO: Add not active map tips
          */}
-        {notUsedMap ? null : <TwoDemensional onFullScreen={handleFullScreen} />}
+        {notUsedMap ? null : <TwoDemensional onFullScreen={handleMaximize} />}
       </div>
 
       <div

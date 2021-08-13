@@ -235,10 +235,10 @@ const VehicleView = () => {
             </div>
           </CardBody>
           <div className="item-options text-center">
-            <Button className="btn-wishlist remove-wishlist" color="primary">
+            <Button.Ripple tag={Link} to='/vehicle/detail' className="btn-wishlist remove-wishlist" color="primary" >
               <Menu className="mr-25" size={14} />
               <span>Detail</span>
-            </Button>
+            </Button.Ripple>
             <Button
               tag={Link}
               to={{ pathname: '/vehicle/settings', vehicle: item }}

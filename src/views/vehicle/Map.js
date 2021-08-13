@@ -1,10 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import MapGL, {
   AttributionControl,
+  Source,
+  Layer,
   ScaleControl,
   FullscreenControl,
   NavigationControl
 } from 'react-map-gl'
+import {
+  clusterCountLayer,
+  clusterLayer,
+  unclusteredPointLayer
+} from './Layers'
 
 const attributionStyle = {
   right: 0,
@@ -70,6 +77,18 @@ const VehicleMap = () => {
           'pk.eyJ1IjoieXVydWkwMTA2IiwiYSI6ImNraTZzMmlubzBldjEyeXJ6NGhncWdpOXEifQ.HP8aRGENdnN_Qb8kPbhiEg'
         }
       >
+        <Source
+          id="earthquakes"
+          type="geojson"
+          data="https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson"
+          cluster={true}
+          clusterMaxZoom={14}
+          clusterRadius={50}
+        >
+          <Layer {...clusterLayer} />
+          <Layer {...clusterCountLayer} />
+          <Layer {...unclusteredPointLayer} />
+        </Source>
         <AttributionControl compact={true} style={attributionStyle} />
         <ScaleControl style={scaleControlStyle} />
         <FullscreenControl style={fullscreenControlStyle} />
