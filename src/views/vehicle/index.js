@@ -45,7 +45,7 @@ import Avatar from '@components/avatar'
 
 // ** Store & Actions
 import { useDispatch, useSelector } from 'react-redux'
-import { getVehicle, getVehicleGroup } from './store/actions'
+import { getVehicle, getVehicleType } from './store/actions'
 
 // ** Styles
 import '@styles/base/pages/app-ecommerce.scss'
@@ -256,6 +256,7 @@ const VehicleView = () => {
   }
 
   const renderGroups = () => {
+    console.log(vehicleGroupStore.data)
     return vehicleGroupStore.data.map((item) => {
       return (
         <Card
@@ -303,7 +304,7 @@ const VehicleView = () => {
   }
 
   useEffect(() => {
-    dispatch(getVehicleGroup())
+    dispatch(getVehicleType())
   }, [dispatch])
 
   return (

@@ -59,14 +59,14 @@ const SystemView = (props) => {
                   </span>
                 </NavLink>
               </NavItem>
-              <NavItem>
+              {/* <NavItem>
                 <NavLink active={activeTab === '3'} onClick={() => toggle('3')}>
                   <Clock size={16} />
                   <span className="align-middle d-none d-sm-block">
                     Datetime
                   </span>
                 </NavLink>
-              </NavItem>
+              </NavItem> */}
             </Nav>
 
             <TabContent activeTab={activeTab}>
@@ -76,9 +76,9 @@ const SystemView = (props) => {
               <TabPane tabId="2">
                 <Advanced />
               </TabPane>
-              <TabPane tabId="3">
+              {/* <TabPane tabId="3">
                 <Datetime />
-              </TabPane>
+              </TabPane> */}
             </TabContent>
           </CardBody>
         </Card>

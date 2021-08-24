@@ -31,13 +31,13 @@ export const registerVehicle = (data) => {
   }
 }
 
-export const getVehicleGroup = () => {
+export const getVehicleType = () => {
   return dispatch => {
     return axios({
       method: 'get',
-      url: '/api/vehicle-group'
+      url: '/api/vehicle-type'
     }).then(res => {
-      dispatch({ type: 'GET_VEHICLE_GROUP', data: res.data })
+      dispatch({ type: 'GET_VEHICLE_TYPE', data: res.data })
     })
   }
 }
