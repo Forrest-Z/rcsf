@@ -19,7 +19,7 @@ export const vehicle = (state = initialState, action) => {
 
 export const vehicleGroup = (state = initialState, action) => {
   switch (action.type) {
-    case 'GET_VEHICLE_GROUP':
+    case 'GET_VEHICLE_TYPE':
       return {
         ...state,
         data: action.data

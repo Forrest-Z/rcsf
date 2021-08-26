@@ -63,10 +63,10 @@ const General = ({ vehicle }) => {
   }
 
   const renderColorOptions = () => {
-    return ['success', 'danger', 'warning', 'info', 'primary'].map((color) => {
+    return ['success', 'danger', 'warning', 'info', 'primary'].map((color, index) => {
       return (
         <li
-          key={color}
+          key={index}
           className={classnames('d-inline-block', {
             selected: selectedColor === color
           })}
@@ -84,9 +84,9 @@ const General = ({ vehicle }) => {
     <Row className="w-100">
       <Col sm="12">
         <Media className="mb-2">
-          {renderVehicleAvatar()}
+          {vehicle && renderVehicleAvatar()}
           <Media className="mt-50" body>
-            <h4>{vehicle.name}</h4>
+            <h4>{vehicle && vehicle.name}</h4>
             <small>Sweep Robot</small>
           </Media>
         </Media>
@@ -123,7 +123,7 @@ const General = ({ vehicle }) => {
                 </Input>
               </FormGroup>
             </Col>
-            <Col md="4" xs="12">
+            {/* <Col md="4" xs="12">
               <FormGroup>
                 <Label for="vehicle-max-velocity">Max Linear Speed</Label>
                 <Input
@@ -138,8 +138,8 @@ const General = ({ vehicle }) => {
                   icon to define a variable.
                 </FormText>
               </FormGroup>
-            </Col>
-            <Col md="4" xs="12">
+            </Col> */}
+            {/* <Col md="4" xs="12">
               <FormGroup>
                 <Label for="vehicle-max-reverse-velocity">
                   Max Angular Speed
@@ -156,7 +156,7 @@ const General = ({ vehicle }) => {
                   variable.
                 </FormText>
               </FormGroup>
-            </Col>
+            </Col> */}
             <Col md="4" xs="12">
               <FormGroup>
                 <Label for="vehicle-map">Map</Label>
@@ -167,7 +167,7 @@ const General = ({ vehicle }) => {
                   // defaultValue={vehicle && vehicle.name}
                 >
                   {store.data.map((item) => {
-                    return <option value={item.id}>{item.name}</option>
+                    return <option key={item.id} value={item.id}>{item.name}</option>
                   })}
                 </Input>
                 <FormText>Active map</FormText>
@@ -190,7 +190,7 @@ const General = ({ vehicle }) => {
               <FormGroup className="product-color-options mt-0">
                 <Label for="theme-color">Theme Color</Label>
                 <ul className="list-unstyled mb-0 mt-50">
-                  {renderColorOptions()}
+                  {vehicle && renderColorOptions()}
                 </ul>
               </FormGroup>
             </Col>

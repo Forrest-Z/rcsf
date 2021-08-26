@@ -48,7 +48,7 @@ export const PointProperties = observer(() => {
             </InputGroupAddon>
             <Input
               value={StageMobx.selection.x}
-              onChange={() => StageMobx.selection.setX(StageMobx.selection.x)}
+              onChange={(e) => StageMobx.selection.setX(e.target.value)}
             />
           </InputGroup>
         </Col>
@@ -101,15 +101,15 @@ export const PointProperties = observer(() => {
           </Input>
         </Col>
       </Row>
-      <hr />
+      {/* <hr />
       <Row>
         <Col xl="4">
           <Label>Group</Label>
         </Col>
         <Col xl="8">
-          <Input type="select" name="select" bsSize="sm" id="select-sm"></Input>
+          <Input type="select" name="select" bsSize="sm" id="select-sm" />
         </Col>
-      </Row>
+      </Row> */}
       <hr />
       <Row>
         <Col xl="4">

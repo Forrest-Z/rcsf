@@ -29,7 +29,6 @@ export const ShapeLayer = observer(props => {
 
     // and we snap over edges and center of each object on the canvas
     stage.find('.object').forEach((guideItem) => {
-      console.log(guideItem)
       if (guideItem === skipShape) {
         return
       }

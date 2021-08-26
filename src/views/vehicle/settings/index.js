@@ -27,15 +27,19 @@ import Sounds from './Sounds'
 import Lights from './Lights'
 
 const Settings = (props) => {
-  const { vehicle } = props.location
-
+  const [vehicle, setVehicle] = useState()
   const [activeTab, setActiveTab] = useState('1')
-  // const { vehicle } = useParams()
+  
   // ** Function to toggle tabs
   const toggle = (tab) => setActiveTab(tab)
 
   useEffect(() => {
-    console.log(props.location.vehicle)
+    if (props.location.vehicle) {
+      localStorage.setItem('vehicle', JSON.stringify(props.location.vehicle))
+      setVehicle(props.location.vehicle)
+    } else {
+      setVehicle(JSON.parse(localStorage.getItem('vehicle')))
+    }
   }, [])
 
   return (
