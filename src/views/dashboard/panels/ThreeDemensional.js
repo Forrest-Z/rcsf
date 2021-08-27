@@ -7,6 +7,7 @@ import ReactMapGL, {
   FullscreenControl,
   NavigationControl
 } from 'react-map-gl'
+import ThreeFiber from '../../../components/three-fiber'
 
 const attributionStyle = {
   right: 0,
@@ -43,7 +44,7 @@ export const ThreeDemensional = () => {
   const [toggle, setToggle] = useState(true)
 
   return (
-    <Card className='h-100'>
+    <Card className="h-100">
       <CardHeader
         onMouseEnter={(e) => {
           setToggle(false)
@@ -54,23 +55,26 @@ export const ThreeDemensional = () => {
       >
         <div className="d-flex align-items-center">
           <List className="mr-2" size={20} />
-          <CardTitle tag='h4'>
-            Three Demensional
-          </CardTitle>
+          <CardTitle tag="h4">Three Demensional</CardTitle>
         </div>
         <div
-          className='ml-auto'
+          className="ml-auto"
           style={{ visibility: toggle ? 'hidden' : 'visible' }}
         >
-          <Button.Ripple size='sm' className='btn-icon drag-handler' color='flat-primary'>
-            <Move className='cursor-move' size={16} />
+          <Button.Ripple
+            size="sm"
+            className="btn-icon drag-handler"
+            color="flat-primary"
+          >
+            <Move className="cursor-move" size={16} />
           </Button.Ripple>
-          <Button.Ripple size='sm' className='btn-icon' color='flat-primary'>
+          <Button.Ripple size="sm" className="btn-icon" color="flat-primary">
             <Maximize size={16} />
           </Button.Ripple>
         </div>
       </CardHeader>
-      <CardBody className='p-0'>
+      <CardBody className="p-0">
+        <ThreeFiber points={[0, 0, 0, 10, 10, 10, 10, 0, 0, 0]} />
       </CardBody>
     </Card>
   )
