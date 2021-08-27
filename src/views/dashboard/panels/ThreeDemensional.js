@@ -74,7 +74,7 @@ export const ThreeDemensional = () => {
         </div>
       </CardHeader>
       <CardBody className="p-0">
-        <ThreeFiber points={[0, 0, 0, 10, 10, 10, 10, 0, 0, 0]} />
+        <ThreeFiber />
       </CardBody>
     </Card>
   )

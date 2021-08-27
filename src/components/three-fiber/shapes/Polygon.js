@@ -58,14 +58,11 @@ const Polygon = (props) => {
   const shape = useMemo(() => {
     const _shape = new THREE.Shape()
 
-    const width = 8,
-      length = 12
-
-    _shape.moveTo(points[0], points[1])
-    _shape.lineTo(points[2], points[3])
-    _shape.lineTo(points[4], points[5])
-    _shape.lineTo(points[6], points[7])
-    _shape.lineTo(points[0], points[1])
+    _shape.moveTo(-points[0], -points[1])
+    for (let i = 2; i < points.length; i += 2) {
+      _shape.lineTo(-points[i], -points[i + 1])
+    }
+    _shape.lineTo(-points[0], -points[1])
 
     return _shape
   }, [])
