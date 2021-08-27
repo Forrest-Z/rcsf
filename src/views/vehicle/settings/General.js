@@ -1,4 +1,7 @@
+// ** React Imports
 import { useState, useEffect } from 'react'
+
+// ** Thrid Components
 import {
   Form,
   Col,
@@ -11,24 +14,53 @@ import {
   FormText
 } from 'reactstrap'
 import classnames from 'classnames'
+import { useForm } from 'react-hook-form'
+import { Check } from 'react-feather'
 
-import { getMap, multiDelete } from '@src/views/map/store/actions'
+// ** Store
+import { getMap } from '@src/views/map/store/actions'
 import { useDispatch, useSelector } from 'react-redux'
+import { getVehicle, updateVehicle } from '../store/actions'
+
+// ** Custom Components
 import Avatar from '@components/avatar'
 
-const General = ({ vehicle }) => {
+const General = ({ vehicleId }) => {
+  const {
+    control,
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+    setValue
+  } = useForm()
+
   // ** State
   const [selectedColor, setSelectedColor] = useState('primary')
-
+  const [vehicle, setVehicle] = useState({
+    name: '',
+    state: '',
+    map: '',
+    ip: ''
+  })
   const dispatch = useDispatch()
-  const store = useSelector((state) => state.maps)
+  const mapStore = useSelector((state) => state.maps)
+  const vehicleStore = useSelector((state) => state.vehicle)
 
   useEffect(() => {
     dispatch(getMap())
+    dispatch(getVehicle({ id: vehicleId }))
   }, [dispatch])
 
+  useEffect(() => {
+    if (vehicleStore.data.length > 0) {
+      setVehicle(vehicleStore.data[0])
+    }
+  }, [vehicleStore, vehicleStore.data.length])
+
   const renderVehicleAvatar = () => {
-    if (vehicle.image === null || vehicle.image === undefined) {
+    // TODO: show vehicle avatar
+    if (true) {
       return (
         <Avatar
           initials
@@ -62,22 +94,28 @@ const General = ({ vehicle }) => {
     }
   }
 
+  const onSubmit = () => {
+    dispatch(updateVehicle({ id: vehicle.id, data: vehicle }))
+  }
+
   const renderColorOptions = () => {
-    return ['success', 'danger', 'warning', 'info', 'primary'].map((color, index) => {
-      return (
-        <li
-          key={index}
-          className={classnames('d-inline-block', {
-            selected: selectedColor === color
-          })}
-          onClick={() => setSelectedColor(color)}
-        >
-          <div className={`color-option b-${color}`}>
-            <div className={`filloption bg-${color}`}></div>
-          </div>
-        </li>
-      )
-    })
+    return ['success', 'danger', 'warning', 'info', 'primary'].map(
+      (color, index) => {
+        return (
+          <li
+            key={index}
+            className={classnames('d-inline-block', {
+              selected: selectedColor === color
+            })}
+            onClick={() => setSelectedColor(color)}
+          >
+            <div className={`color-option b-${color}`}>
+              <div className={`filloption bg-${color}`}></div>
+            </div>
+          </li>
+        )
+      }
+    )
   }
 
   return (
@@ -92,7 +130,7 @@ const General = ({ vehicle }) => {
         </Media>
       </Col>
       <Col sm="12">
-        <Form onSubmit={(e) => e.preventDefault()}>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <Row className="d-flex flex-column">
             <Col md="4" xs="12">
               <FormGroup>
@@ -101,7 +139,10 @@ const General = ({ vehicle }) => {
                   type="text"
                   id="vehicle-name"
                   placeholder="Vehicle name"
-                  defaultValue={vehicle && vehicle.name}
+                  value={vehicle && vehicle.name}
+                  onChange={(e) => {
+                    setVehicle({ ...vehicle, name: e.target.value })
+                  }}
                 />
               </FormGroup>
             </Col>
@@ -112,7 +153,9 @@ const General = ({ vehicle }) => {
                   type="select"
                   id="vehicle-state"
                   value={vehicle && vehicle.state}
-                  // defaultValue={vehicle && vehicle.name}
+                  onChange={(e) => {
+                    setVehicle({ ...vehicle, state: e.target.value })
+                  }}
                 >
                   <option value={0}>Offline</option>
                   <option value={1}>Idle</option>
@@ -163,11 +206,17 @@ const General = ({ vehicle }) => {
                 <Input
                   type="select"
                   id="vehicle-map"
-                  // placeholder="Actived map"
-                  // defaultValue={vehicle && vehicle.name}
+                  value={vehicle && vehicle.map}
+                  onChange={(e) => {
+                    setVehicle({ ...vehicle, state: e.target.value })
+                  }}
                 >
-                  {store.data.map((item) => {
-                    return <option key={item.id} value={item.id}>{item.name}</option>
+                  {mapStore.data.map((item) => {
+                    return (
+                      <option key={item.id} value={item.id}>
+                        {item.name}
+                      </option>
+                    )
                   })}
                 </Input>
                 <FormText>Active map</FormText>

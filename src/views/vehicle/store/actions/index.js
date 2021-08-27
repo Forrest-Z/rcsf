@@ -12,6 +12,18 @@ export const getVehicle = params => {
   }
 }
 
+export const updateVehicle = ({id, data}) => {
+  return dispatch => {
+    return axios({
+      method: 'put',
+      url: `/api/vehicle/${id}`,
+      data
+    }).then(res => {
+      dispatch({ type: 'UPDATE_VEHICLE', data: res.data })
+    })
+  }
+}
+
 export const getScanVehicle = () => {
   return axios({
     method: 'get',

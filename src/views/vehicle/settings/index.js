@@ -33,6 +33,10 @@ const Settings = (props) => {
   // ** Function to toggle tabs
   const toggle = (tab) => setActiveTab(tab)
 
+  const onSubmit = (data) => {
+    console.log(data)
+  }
+
   useEffect(() => {
     if (props.location.vehicle) {
       localStorage.setItem('vehicle', JSON.stringify(props.location.vehicle))
@@ -88,7 +92,7 @@ const Settings = (props) => {
             </Nav>
             <TabContent activeTab={activeTab}>
               <TabPane tabId="1">
-                <General vehicle={vehicle} />
+                <General vehicleId={vehicle && vehicle.id}/>
               </TabPane>
               <TabPane tabId="2">
                 <Hardware />

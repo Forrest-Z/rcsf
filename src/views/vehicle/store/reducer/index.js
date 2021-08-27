@@ -12,6 +12,11 @@ export const vehicle = (state = initialState, action) => {
         ...state,
         data: action.data
       }
+    case 'UPDATE_VEHICLE':
+      return {
+        ...state,
+        data: action.data
+      }
     default:
       return { ...state }
   }
