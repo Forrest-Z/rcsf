@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
 // ** Thrid Components
-import { Card, CardText } from 'reactstrap'
+import { Card, CardText} from 'reactstrap'
 import DataTable from 'react-data-table-component'
 import { ChevronDown } from 'react-feather'
 
@@ -15,11 +15,12 @@ import { getVehicle } from './store/actions'
 // ** Styles
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
-
 const NoDataComponent = () => {
   return (
-    <Card className='w-100 h-100 m-0 rounded-0 d-flex align-items-center py-2'>
-      <CardText className='text-light'>There are no records to display</CardText>
+    <Card className="w-100 h-100 m-0 rounded-0 d-flex align-items-center py-2">
+      <CardText className="text-light">
+        There are no records to display
+      </CardText>
     </Card>
   )
 }
@@ -42,7 +43,7 @@ const VehicleList = ({ data }) => {
   }, [dispatch])
 
   return (
-    <div className='app-user-list'>
+    <div className="app-user-list">
       <DataTable
         noHeader
         responsive

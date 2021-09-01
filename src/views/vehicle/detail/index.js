@@ -1,5 +1,6 @@
 // ** React Components
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { Card } from 'reactstrap'
 
 // ** Thrid Components
 import { Responsive, WidthProvider } from 'react-grid-layout'
@@ -7,39 +8,72 @@ import { Responsive, WidthProvider } from 'react-grid-layout'
 // ** Custom Components
 import { BatteryPanel, CPUPanel, MemoryPanel } from '../../../components/panels'
 
+import LineColorChart from '../../../components/echarts/lineColorChart'
+import LineChart from '../../../components/echarts/lineChart'
+import TableComponent from './table'
+import Xshell from './xshell'
+
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
 const defaultLayouts = {
   lg: [
     {
       i: 'battery',
-      x: 0,
+      x: 9,
       y: 0,
-      w: 3,
-      h: 10
+      w: 6,
+      h: 9
     },
     {
       i: 'cpu',
-      x: 3,
+      x: 0,
       y: 0,
-      w: 3,
-      h: 10
+      w: 6,
+      h: 9
     },
     {
-      i: 'memory',
-      x: 6,
-      y: 0,
-      w: 3,
-      h: 10
+      i: 'task',
+      x: 0,
+      y: 9,
+      w: 12,
+      h: 9
+    },
+    {
+      i: 'xshell',
+      x: 0,
+      y: 22,
+      w: 12,
+      h: 16
     }
   ],
   md: [
     {
       i: 'battery',
+      x: 9,
+      y: 0,
+      w: 4,
+      h: 10
+    },
+    {
+      i: 'cpu',
       x: 0,
       y: 0,
-      w: 2,
-      h: 20
+      w: 8,
+      h: 10
+    },
+    {
+      i: 'task',
+      x: 0,
+      y: 10,
+      w: 12,
+      h: 12
+    },
+    {
+      i: 'xshell',
+      x: 0,
+      y: 22,
+      w: 12,
+      h: 16
     }
   ]
 }
@@ -47,6 +81,20 @@ const defaultLayouts = {
 const VehicleDetail = () => {
   const [layouts, setLayouts] = useState(defaultLayouts)
   const [rowHeight, setRowHeight] = useState(19)
+  const LineColorChartRef = useRef()
+  const LineChartRef = useRef()
+  const LineColorData = {
+    title: '',
+    dateData: [],
+    data: [],
+    id: 'battery'
+  }
+  const LineData = {
+    title: '',
+    dateData: [],
+    data: [],
+    id: 'cpu'
+  }
 
   const handleMaximize = (i, tag) => {
     if (!tag) {
@@ -67,6 +115,11 @@ const VehicleDetail = () => {
       setLayouts(defaultLayouts)
       setVisible('all')
     }
+  }
+
+  const dropStart = () => {
+    LineColorChartRef.current.resizeFun()
+    LineChartRef.current.resizeFun2()
   }
 
   useEffect(() => {
@@ -98,12 +151,19 @@ const VehicleDetail = () => {
       breakpoints={{ lg: 1700, md: 996, sm: 768, xs: 480, xxs: 0 }}
       draggableHandle=".drag-handler"
       rowHeight={rowHeight}
+      onResizeStop={dropStart}
     >
-      <div key="cpu">
-        <CPUPanel />
+      <div key="battery">
+        <LineColorChart ref1={LineColorChartRef} LineData={LineColorData} />
       </div>
-      <div key="memory">
-        <MemoryPanel />
+      <div key="cpu">
+        <LineChart ref2={LineChartRef} data={LineData} />
+      </div>
+      <div key="task">
+        <TableComponent />
+      </div>
+      <div key="xshell">
+        <Xshell />
       </div>
     </ResponsiveGridLayout>
   )

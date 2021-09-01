@@ -13,11 +13,11 @@ import {
   ListGroup,
   ListGroupItem
 } from 'reactstrap'
-import { Send, Move, Maximize, Check } from 'react-feather'
-import { ProgressBar, Step } from "react-step-progress-bar"
+import { Send, Move, Maximize, Check, X } from 'react-feather'
+import { ProgressBar, Step } from 'react-step-progress-bar'
 import Avatar from '@components/avatar'
 
-import "react-step-progress-bar/styles.css"
+import 'react-step-progress-bar/styles.css'
 
 const movements = [
   {
@@ -40,12 +40,14 @@ const movements = [
   }
 ]
 
-export const MissionProcession = () => {
+export const MissionProcession = (props) => {
   const [toggle, setToggle] = useState(true)
   const [progress, setProgress] = useState(0)
-
+  const deleteChild = () => {
+    props.onClick()
+  }
   return (
-    <Card className='h-100'>
+    <Card className="h-100">
       <CardHeader
         onMouseEnter={(e) => {
           setToggle(false)
@@ -56,30 +58,44 @@ export const MissionProcession = () => {
       >
         <div className="d-flex align-items-center">
           <Send className="mr-2" size={20} />
-          <CardTitle tag='h4'>
-            Mission Progress
-          </CardTitle>
+          <CardTitle tag="h4">Mission Progress</CardTitle>
         </div>
         <div
-          className='ml-auto'
+          className="ml-auto"
           style={{ visibility: toggle ? 'hidden' : 'visible' }}
         >
-          <Button.Ripple size='sm' className='btn-icon drag-handler' color='flat-primary'>
-            <Move className='cursor-move' size={16} />
+          <Button.Ripple
+            size="sm"
+            className="btn-icon drag-handler"
+            color="flat-primary"
+          >
+            <Move className="cursor-move" size={16} />
           </Button.Ripple>
-          <Button.Ripple size='sm' className='btn-icon' color='flat-primary'>
+          <Button.Ripple size="sm" className="btn-icon" color="flat-primary">
             <Maximize size={16} />
+          </Button.Ripple>
+          <Button.Ripple
+            size="sm"
+            onClick={deleteChild}
+            className="btn-icon"
+            style={{ display: Boolean(Number(sessionStorage.getItem('showDelete'))) && !toggle ? '' : 'none' }}
+            color="flat-primary"
+          >
+            <X size={16} />
           </Button.Ripple>
         </div>
       </CardHeader>
-      <CardBody className='p-0'>
+      <CardBody className="p-0">
         <ListGroup>
-          <ListGroupItem className='pt-0 pb-0 border-0'>
+          <ListGroupItem className="pt-0 pb-0 border-0">
             <Row>
-              <Col className='p-1 justify-content-center align-items-center' xl='3'>
+              <Col
+                className="p-1 justify-content-center align-items-center"
+                xl="3"
+              >
                 <h3>Robot-02</h3>
               </Col>
-              <Col className='p-2' xl='9'>
+              <Col className="p-2" xl="9">
                 <ProgressBar
                   height={5}
                   percent={progress}
@@ -87,42 +103,60 @@ export const MissionProcession = () => {
                 >
                   <Step>
                     {({ accomplished }) => (
-                      <div className='d-flex flex-column'>
-                        <Avatar content={'1'} color={`${accomplished ? 'info' : 'secondary'}`} />
+                      <div className="d-flex flex-column">
+                        <Avatar
+                          content={'1'}
+                          color={`${accomplished ? 'info' : 'secondary'}`}
+                        />
                       </div>
                     )}
                   </Step>
                   <Step>
                     {({ accomplished }) => (
-                      <Avatar content='2' color={`${accomplished ? 'info' : 'secondary'}`} />
+                      <Avatar
+                        content="2"
+                        color={`${accomplished ? 'info' : 'secondary'}`}
+                      />
                     )}
                   </Step>
                   <Step>
                     {({ accomplished }) => (
-                      <Avatar content='3' color={`${accomplished ? 'info' : 'secondary'}`} />
+                      <Avatar
+                        content="3"
+                        color={`${accomplished ? 'info' : 'secondary'}`}
+                      />
                     )}
                   </Step>
                   <Step>
                     {({ accomplished }) => (
-                      <Avatar content='4' color={`${accomplished ? 'info' : 'secondary'}`} />
+                      <Avatar
+                        content="4"
+                        color={`${accomplished ? 'info' : 'secondary'}`}
+                      />
                     )}
                   </Step>
                   <Step>
                     {({ accomplished }) => (
-                      <Avatar content='5' color={`${accomplished ? 'info' : 'secondary'}`} />
+                      <Avatar
+                        content="5"
+                        color={`${accomplished ? 'info' : 'secondary'}`}
+                      />
                     )}
                   </Step>
                 </ProgressBar>
               </Col>
             </Row>
           </ListGroupItem>
-          <hr className='w-100 m-0' />
-          <ListGroupItem className='pt-0 pb-0 border-0'>
+          <hr className="w-100 m-0" />
+          <ListGroupItem className="pt-0 pb-0 border-0">
             <Row>
-              <Col className='p-1 justify-content-center align-items-center' xl='3'>
+              <Col
+                className="p-1 justify-content-center align-items-center"
+                xl="3"
+              >
                 <h3>Robot-02</h3>
               </Col>
-              <Col className='p-2' xl='9'>
+              <Col className="p-2" xl="9">
                 <ProgressBar
                   height={5}
                   percent={progress}
@@ -130,29 +164,44 @@ export const MissionProcession = () => {
                 >
                   <Step>
                     {({ accomplished }) => (
-                      <div className='d-flex flex-column'>
-                        <Avatar content={'1'} color={`${accomplished ? 'info' : 'secondary'}`} />
+                      <div className="d-flex flex-column">
+                        <Avatar
+                          content={'1'}
+                          color={`${accomplished ? 'info' : 'secondary'}`}
+                        />
                       </div>
                     )}
                   </Step>
                   <Step>
                     {({ accomplished }) => (
-                      <Avatar content='2' color={`${accomplished ? 'info' : 'secondary'}`} />
+                      <Avatar
+                        content="2"
+                        color={`${accomplished ? 'info' : 'secondary'}`}
+                      />
                     )}
                   </Step>
                   <Step>
                     {({ accomplished }) => (
-                      <Avatar content='3' color={`${accomplished ? 'info' : 'secondary'}`} />
+                      <Avatar
+                        content="3"
+                        color={`${accomplished ? 'info' : 'secondary'}`}
+                      />
                     )}
                   </Step>
                   <Step>
                     {({ accomplished }) => (
-                      <Avatar content='4' color={`${accomplished ? 'info' : 'secondary'}`} />
+                      <Avatar
+                        content="4"
+                        color={`${accomplished ? 'info' : 'secondary'}`}
+                      />
                     )}
                   </Step>
                   <Step>
                     {({ accomplished }) => (
-                      <Avatar content='5' color={`${accomplished ? 'info' : 'secondary'}`} />
+                      <Avatar
+                        content="5"
+                        color={`${accomplished ? 'info' : 'secondary'}`}
+                      />
                     )}
                   </Step>
                 </ProgressBar>

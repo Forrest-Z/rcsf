@@ -10,7 +10,16 @@ import {
   Col,
   Row
 } from 'reactstrap'
-import { PieChart, Maximize, Minimize, Move, MapPin, Check, AlertCircle, X } from 'react-feather'
+import {
+  PieChart,
+  Maximize,
+  Minimize,
+  Move,
+  MapPin,
+  Check,
+  AlertCircle,
+  X
+} from 'react-feather'
 import Chart from 'react-apexcharts'
 
 // ** Custom Components
@@ -141,8 +150,11 @@ export class VehicleState extends Component {
   }
 
   render() {
+    const deleteChild = () => {
+      this.props.onClick()
+    }
     return (
-      <Card className='h-100'>
+      <Card className="h-100">
         <CardHeader
           onMouseEnter={(e) => {
             this.setState({
@@ -157,29 +169,51 @@ export class VehicleState extends Component {
         >
           <div className="d-flex align-items-center">
             <PieChart className="mr-2" size={20} />
-            <CardTitle tag='h4'>
-              State
-            </CardTitle>
+            <CardTitle tag="h4">State</CardTitle>
           </div>
           <div
-            className='ml-auto'
+            className="ml-auto"
             style={{ visibility: this.state.toggle ? 'hidden' : 'visible' }}
           >
-            <Button.Ripple size='sm' className='btn-icon drag-handler' color='flat-primary'>
-              <Move className='cursor-move' size={16} />
+            <Button.Ripple
+              size="sm"
+              className="btn-icon drag-handler"
+              color="flat-primary"
+            >
+              <Move className="cursor-move" size={16} />
             </Button.Ripple>
-            <Button.Ripple size='sm' className='btn-icon' color='flat-primary'>
+            <Button.Ripple size="sm" className="btn-icon" color="flat-primary">
               <Maximize size={16} />
+            </Button.Ripple>
+            <Button.Ripple
+              size="sm"
+              onClick={deleteChild}
+              className="btn-icon"
+              style={{ display: Boolean(Number(sessionStorage.getItem('showDelete'))) && !this.state.toggle ? '' : 'none' }}
+              color="flat-primary"
+            >
+              <X size={16} />
             </Button.Ripple>
           </div>
         </CardHeader>
-        <CardBody className='p-0 d-flex'>
+        <CardBody className="p-0 d-flex">
           <Row>
-            <Col xl='6' md='6'>
-              <Chart options={this.state.speedChart.options} series={[0.5 * 100]} height={280} type='radialBar' id='support-tracker-card' />
+            <Col xl="6" md="6">
+              <Chart
+                options={this.state.speedChart.options}
+                series={[0.5 * 100]}
+                height={280}
+                type="radialBar"
+                id="support-tracker-card"
+              />
             </Col>
-            <Col xl='6' md='6'>
-              <Chart options={this.state.progress.options} series={[89]} height={280} type='radialBar' />
+            <Col xl="6" md="6">
+              <Chart
+                options={this.state.progress.options}
+                series={[89]}
+                height={280}
+                type="radialBar"
+              />
             </Col>
           </Row>
           {/* <div className='d-flex flex-column ml-2 mt-1'>

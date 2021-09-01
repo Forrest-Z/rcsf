@@ -8,7 +8,11 @@ import {
   VehicleState,
   VehicleCamera,
   MissionProcession,
-  VehicleLidar
+  VehicleLidar,
+  TimeLine,
+  Robot,
+  TableList,
+  NoData
 } from './panels'
 import { ThemeColors } from '@src/utility/context/ThemeColors'
 import { Facebook, Map } from 'react-feather'
@@ -17,116 +21,165 @@ import { Facebook, Map } from 'react-feather'
 import { getMap, multiDelete } from '@src/views/map/store/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import StageMobx from '../../utility/mobx/StageMobx'
+import { getUserDashboardConfig, setUserDashboardConfig } from './store/actions'
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
-
-const defaultLayouts = {
-  md: [
-    {
-      i: 'vehicle-list',
-      x: 0,
-      y: 0,
-      w: 3,
-      h: 20
-    },
-    {
-      i: 'two-demensional',
-      x: 3,
-      y: 0,
-      w: 5,
-      h: 20
-    },
-    {
-      i: 'vehicle-controller',
-      x: 0,
-      y: 15,
-      w: 3,
-      h: 10
-    },
-    {
-      i: 'vehicle-state',
-      x: 3,
-      y: 20,
-      w: 5,
-      h: 10
-    },
-    {
-      i: 'vehicle-camera',
-      x: 10,
-      y: 0,
-      w: 2,
-      h: 8
-    }
-  ],
-  lg: [
-    {
-      i: 'vehicle-list',
-      x: 0,
-      y: 0,
-      w: 2,
-      h: 20
-    },
-    {
-      i: 'two-demensional',
-      x: 2,
-      y: 0,
-      w: 4,
-      h: 20
-    },
-    {
-      i: 'vehicle-controller',
-      x: 0,
-      y: 20,
-      w: 2,
-      h: 10
-    },
-    {
-      i: 'three-demensional',
-      x: 6,
-      y: 0,
-      w: 3,
-      h: 12
-    },
-    {
-      i: 'vehicle-state',
-      x: 2,
-      y: 20,
-      w: 4,
-      h: 10
-    },
-    {
-      i: 'vehicle-camera',
-      x: 10,
-      y: 0,
-      w: 2,
-      h: 10
-    },
-    {
-      i: 'mission-procession',
-      x: 6,
-      y: 20,
-      w: 4,
-      h: 8
-    },
-    {
-      i: 'vehicle-lidar',
-      x: 9,
-      y: 0,
-      w: 3,
-      h: 12
-    }
-  ]
-}
 
 // Styles
 import '@styles/base/pages/app-chat.scss'
 import '@styles/base/pages/app-chat-list.scss'
 
 const Dashboard = () => {
-  const [layouts, setLayouts] = useState(defaultLayouts)
+  const componentObj = {
+    VehicleList,
+    TwoDemensional,
+    VehicleController,
+    ThreeDemensional,
+    VehicleState,
+    VehicleCamera,
+    MissionProcession,
+    VehicleLidar,
+    TimeLine,
+    Robot,
+    TableList
+  }
+
+  const [layouts, setLayouts] = useState({})
+
   const [rowHeight, setRowHeight] = useState(19)
   const [visible, setVisible] = useState('all')
   const [notUsedMap, setNotUsedMap] = useState(false)
+  const [defaultLayouts, setDefaultLayouts] = useState({
+    md: [],
+    lg: []
+  })
+  const [pageJson, setPageJson] = useState([])
+  // pageJson.forEach((el) => {
+  //   defaultLayouts.md.push({
+  //     i: el.i,
+  //     x: el.x,
+  //     y: el.y,
+  //     w: el.w,
+  //     h: el.h
+  //   })
+  //   defaultLayouts.lg.push({
+  //     i: el.i,
+  //     x: el.x,
+  //     y: el.y,
+  //     w: el.w,
+  //     h: el.h
+  //   })
+  // })
+
+  // {
+  //   i: 'VehicleList', // 机器人信息
+  //   name: VehicleList,
+  //   x: 0,
+  //   y: 0,
+  //   w: 3,
+  //   h: 20
+  // },
+  // {
+  //   // 时间线
+  //   i: 'TimeLine',
+  //   name: TimeLine,
+  //   x: 3,
+  //   y: 0,
+  //   w: 4,
+  //   h: 20
+  // },
+  // {
+  //   // 2d 显示所有机器人点位
+  //   i: 'TwoDemensional',
+  //   name: TwoDemensional,
+  //   x: 7,
+  //   y: 0,
+  //   w: 5,
+  //   h: 20
+  // },
+  // {
+  //   // 点云
+  //   i: 'VehicleLidar',
+  //   name: VehicleLidar,
+  //   x: 0,
+  //   y: 19,
+  //   w: 4,
+  //   h: 16
+  // },
+  // {
+  //   // 3d
+  //   i: 'ThreeDemensional',
+  //   name: ThreeDemensional,
+  //   x: 4,
+  //   y: 20,
+  //   w: 8,
+  //   h: 16
+  // },
+  // {
+  //   // 任务详细列表
+  //   i: 'TableList',
+  //   name: TableList,
+  //   x: 0,
+  //   y: 36,
+  //   w: 12,
+  //   h: 16
+  // }
+  // {
+  //   key: 'robot',
+  //   name: Robot,
+  //   x: 6,
+  //   y: 0,
+  //   w: 6,
+  //   h: 20
+  // },
+  // {
+  //   key: 'vehicle-controller',
+  //   name: VehicleController,
+  //   x: 3,
+  //   y: 20,
+  //   w: 5,
+  //   h: 10
+  // },
+  // {
+  //   key: 'three-demensional',
+  //   name: ThreeDemensional,
+  //   x: 0,
+  //   y: 22,
+  //   w: 8,
+  //   h: 12
+  // },
+  // {
+  //   key: 'vehicle-camera',
+  //   name: VehicleCamera,
+  //   x: 10,
+  //   y: 0,
+  //   w: 2,
+  //   h: 8,
+  // },
+  // {
+  //   key: 'mission-procession',
+  //   name: MissionProcession,
+  //   x: 3,
+  //   y: 21,
+  //   w: 5,
+  //   h: 12
+  // },
+  // {
+  //   key: 'vehicle-state',
+  //   name: VehicleState,
+  //   x: 2,
+  //   y: 20,
+  //   w: 4,
+  //   h: 10
+  // },
+  // {
+  //   key: 'vehicle-lidar',
+  //   name: VehicleLidar,
+  //   x: 0,
+  //   y: 15,
+  //   w: 3,
+  //   h: 12
+  // }
 
   const themeColors = useContext(ThemeColors)
 
@@ -154,6 +207,22 @@ const Dashboard = () => {
     }
   }
 
+  // const stopDragEvent = (data) => {
+  //   data.forEach((el, indexE) => {
+  //     pageJson.forEach((page, indexPage) => {
+  //       if (el.i === page.i) {
+  //         el.name = page.name
+  //       }
+  //     })
+  //   })
+  //   console.log(data)
+  //   setUserDashboardConfig({
+  //     // 修改各个组件的位置
+  //     id: 1,
+  //     data: { dashboard_layout: data, user: 1 }
+  //   })
+  // }
+
   useEffect(() => {
     dispatch(getMap({ active: true }))
   }, [dispatch])
@@ -168,6 +237,33 @@ const Dashboard = () => {
   }, [store.data, store.data.length])
 
   useEffect(() => {
+    sessionStorage.setItem('showDelete', 0) // 0 不显示 1 显示
+    getUserDashboardConfig().then((res) => {
+      // 获取用户界面
+      res.data[0].dashboard_layout.forEach((el, index) => {
+        const name = el.i
+        el.name = componentObj[name] // 将子组件绑定到name属性上
+      })
+      console.log(res.data[0].dashboard_layout)
+      setPageJson(res.data[0].dashboard_layout)
+      pageJson.forEach((el) => {
+        defaultLayouts.md.push({
+          i: el.i,
+          x: el.x,
+          y: el.y,
+          w: el.w,
+          h: el.h
+        })
+        defaultLayouts.lg.push({
+          i: el.i,
+          x: el.x,
+          y: el.y,
+          w: el.w,
+          h: el.h
+        })
+      })
+      setLayouts(defaultLayouts)
+    })
     window.addEventListener('resize', () => {
       if (screen.height === window.innerHeight) {
         setRowHeight(22.5)
@@ -179,6 +275,25 @@ const Dashboard = () => {
       window.removeEventListener('resize', window)
     }
   }, [])
+
+  useEffect(() => {
+    pageJson.forEach((el) => {
+      defaultLayouts.md.push({
+        i: el.i,
+        x: el.x,
+        y: el.y,
+        w: el.w,
+        h: el.h
+      })
+      defaultLayouts.lg.push({
+        i: el.i,
+        x: el.x,
+        y: el.y,
+        w: el.w,
+        h: el.h
+      })
+    })
+  }, [pageJson])
 
   return (
     <ResponsiveGridLayout
@@ -196,8 +311,39 @@ const Dashboard = () => {
       breakpoints={{ lg: 1700, md: 996, sm: 768, xs: 480, xxs: 0 }}
       draggableHandle=".drag-handler"
       rowHeight={rowHeight}
+      // onDragStop={stopDragEvent}
+      // onResizeStop={stopDragEvent}
     >
-      <div
+      {pageJson.map((el) => {
+        // if (el.key === 'two-demensional') {
+        //   if (notUsedMap) {
+        //     return (
+        //       <div>
+        //         <NoData key="nodata" />
+        //       </div>
+        //     )
+        //   } else {
+        //     return (
+        //       <div key={el.key} hidden={!['all', el.name].includes(visible)}>
+        //         <el.name />
+        //       </div>
+        //     )
+        //   }
+        // } else {
+        return (
+          <div key={el.i} hidden={!['all', el.name].includes(visible)}>
+            <el.name onFullScreen={handleMaximize} />
+          </div>
+        )
+        // }
+        // return (
+        //   <div key={el.key} hidden={!['all', el.name].includes(visible)}>
+        //      <el.name />
+        //     {/* {notUsedMap ? <NoData /> : <el.name />} */}
+        //   </div>
+        // )
+      })}
+      {/* <div
         key="vehicle-list"
         hidden={!['all', 'vehicle-list'].includes(visible)}
       >
@@ -208,9 +354,6 @@ const Dashboard = () => {
         key="two-demensional"
         hidden={!['all', 'two-demensional'].includes(visible)}
       >
-        {/**
-         * TODO: Add not active map tips
-         */}
         {notUsedMap ? null : <TwoDemensional onFullScreen={handleMaximize} />}
       </div>
 
@@ -223,7 +366,7 @@ const Dashboard = () => {
 
       <div
         key="three-demensional"
-        hidden={!['all', 'vehicle-controller'].includes(visible)}
+        hidden={!['all', 'three-demensional'].includes(visible)}
       >
         <ThreeDemensional />
       </div>
@@ -262,6 +405,7 @@ const Dashboard = () => {
       >
         <VehicleLidar />
       </div>
+      */}
     </ResponsiveGridLayout>
   )
 }

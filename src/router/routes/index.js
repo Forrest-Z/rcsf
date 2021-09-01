@@ -10,7 +10,13 @@ const DefaultRoute = '/dashboard'
 const Routes = [
   {
     path: '/dashboard',
+    exact: true,
     component: lazy(() => import('../../views/dashboard'))
+  },
+  {
+    path: '/dashboard/set',
+    exact: true,
+    component: lazy(() => import('../../views/dashboard/setIndex'))
   },
   {
     path: '/map',

@@ -29,7 +29,7 @@ export const MapLayer = observer(props => {
       visible={visible}
     >
       {StageMobx.map && (
-        <ImageShape url={`http://localhost:8000/media/maps/${StageMobx.map.name}/map.png`} />
+        <ImageShape url={`http://192.168.1.240:8000/media/maps/${StageMobx.map.name}/map.png`} />
       )}
     </Layer>
   )

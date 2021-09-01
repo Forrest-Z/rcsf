@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 // Thrid Components
 import { Stage } from 'react-konva'
-import { observer } from "mobx-react"
+import { observer } from 'mobx-react'
 
 // Custom Components
 import { GridLayer, OriginAxisLayer, MapLayer, ShapeLayer } from './layers'
@@ -15,7 +15,7 @@ import { DRAW_TOOL_TYPE } from './constants'
 import StageMobx from '@src/utility/mobx/StageMobx'
 import { ShapeMobx } from '../../utility/mobx/StageMobx'
 
-export const RCSCanvas = observer(props => {
+export const RCSCanvas = observer((props) => {
   const {
     // Render options
     data,
@@ -39,7 +39,7 @@ export const RCSCanvas = observer(props => {
     ]
   }
 
-  const onWheel = e => {
+  const onWheel = (e) => {
     e.evt.preventDefault()
     const scaleBy = 1.06
 
@@ -77,12 +77,13 @@ export const RCSCanvas = observer(props => {
     stageRef.current.batchDraw()
   }
 
-  const onMouseMove = e => {
+  const onMouseMove = (e) => {
     StageMobx.setMousePosition(getMouseRealPos(e))
   }
 
-  const onClick = e => {
+  const onClick = (e) => {
     e.evt.preventDefault()
+    console.log(e)
     const position = getMouseRealPos(e)
 
     if (position === null) {
@@ -93,35 +94,46 @@ export const RCSCanvas = observer(props => {
       switch (StageMobx.drawTool) {
         case DRAW_TOOL_TYPE.INACTIVE:
           break
-        case DRAW_TOOL_TYPE.ROUTE_POINT: case DRAW_TOOL_TYPE.CHARGE_POINT: case DRAW_TOOL_TYPE.PARK_POINT:
-          StageMobx.setShapes(StageMobx.shapes.concat(
-            new ShapeMobx({
-              id: `Point-${StageMobx.getPointIndex()}`,
-              x: position.x,
-              y: position.y,
-              type: StageMobx.drawTool,
-              rotation: 0
-            })))
+        case DRAW_TOOL_TYPE.ROUTE_POINT:
+        case DRAW_TOOL_TYPE.CHARGE_POINT:
+        case DRAW_TOOL_TYPE.PARK_POINT:
+          StageMobx.setShapes(
+            StageMobx.shapes.concat(
+              new ShapeMobx({
+                id: `Point-${StageMobx.getPointIndex()}`,
+                x: position.x,
+                y: position.y,
+                type: StageMobx.drawTool,
+                rotation: 0
+              })
+            )
+          )
           break
         case DRAW_TOOL_TYPE.AREA:
-          StageMobx.setShapes(StageMobx.shapes.concat(
-            new ShapeMobx({
-              id: `Area-${StageMobx.getAreaIndex()}`,
-              x: 0,
-              y: 0,
-              type: StageMobx.drawTool,
-              points: polyDefaultPoints(position)
-            })))
-            break
+          StageMobx.setShapes(
+            StageMobx.shapes.concat(
+              new ShapeMobx({
+                id: `Area-${StageMobx.getAreaIndex()}`,
+                x: 0,
+                y: 0,
+                type: StageMobx.drawTool,
+                points: polyDefaultPoints(position)
+              })
+            )
+          )
+          break
         case DRAW_TOOL_TYPE.BLOCK:
-          StageMobx.setShapes(StageMobx.shapes.concat(
-            new ShapeMobx({
-              id: `Block-${StageMobx.getBlockIndex()}`,
-              x: 0,
-              y: 0,
-              type: StageMobx.drawTool,
-              points: polyDefaultPoints(position)
-            })))
+          StageMobx.setShapes(
+            StageMobx.shapes.concat(
+              new ShapeMobx({
+                id: `Block-${StageMobx.getBlockIndex()}`,
+                x: 0,
+                y: 0,
+                type: StageMobx.drawTool,
+                points: polyDefaultPoints(position)
+              })
+            )
+          )
           break
 
           break
@@ -130,15 +142,15 @@ export const RCSCanvas = observer(props => {
       StageMobx.setSelection({ id: -1 })
     }
 
-    const selection = StageMobx.shapes.find(element => element.id === e.target.id())
+    const selection = StageMobx.shapes.find(
+      (element) => element.id === e.target.id()
+    )
     if (selection) {
       StageMobx.setSelection(selection)
     }
   }
 
-  useEffect(() => {
-    console.log(width, height)
-  }, [props])
+  useEffect(() => {}, [props])
 
   return (
     <Stage
@@ -154,8 +166,19 @@ export const RCSCanvas = observer(props => {
       onClick={onClick}
     >
       <MapLayer />
-      <GridLayer visible={StageMobx.grid} width={10000} height={10000} padding={30} />
-      <OriginAxisLayer visible={StageMobx.axis} width={width} height={height} x={0} y={0} />
+      <GridLayer // 网格辅助线
+        visible={StageMobx.grid}
+        width={10000}
+        height={10000}
+        padding={30}
+      />
+      <OriginAxisLayer // 坐标系
+        visible={StageMobx.axis}
+        width={width}
+        height={height}
+        x={0}
+        y={0}
+      />
       <ShapeLayer visible={true} />
     </Stage>
   )

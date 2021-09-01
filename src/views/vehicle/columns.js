@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import Chart from 'react-apexcharts'
-import { Battery } from 'react-feather'
+import { Battery, Menu, Settings } from 'react-feather'
+import { Button } from 'reactstrap'
 
 const chartOptions = {
   grid: {
@@ -51,7 +52,7 @@ export const columns = [
         >
           &ensp;
         </div>
-        <Link to='/'># {row.id}</Link>
+        <Link to="/"># {row.id}</Link>
       </div>
     )
   },
@@ -89,7 +90,7 @@ export const columns = [
             x1="0%"
             y1="0%"
             x2={`${row.battery || 0}%`}
-            x3='50%'
+            x3="50%"
             y2="0%"
           >
             <stop stopColor="#6dd5ed" offset="0%" />
@@ -97,7 +98,7 @@ export const columns = [
             <stop stopColor="#2a2c42" offset="100%" />
           </linearGradient>
         </svg>
-        <Battery size={28} fill='url(#blue-gradient)' />
+        <Battery size={28} fill="url(#blue-gradient)" />
       </div>
     )
   },
@@ -152,6 +153,35 @@ export const columns = [
           height={25}
           width={25}
         />
+      </div>
+    )
+  },
+  {
+    name: 'Action',
+    minWidth: '257px',
+    sortable: true,
+    cell: (row) => (
+      <div className="d-flex align-items-center">
+        <Button.Ripple
+          tag={Link}
+          to="/vehicle/detail"
+          className="btn-wishlist remove-wishlist mr-1 d-flex"
+          size="sm"
+          color="primary"
+        >
+          <Menu className="mr-25" size={14} />&nbsp;
+          <span>Detail</span>
+        </Button.Ripple>
+        <Button
+          tag={Link}
+          to={{ pathname: '/vehicle/settings', vehicle: row }}
+          className="btn-cart move-cart mr-1 d-flex"
+          size="sm"
+          color="primary"
+        >
+          <Settings className="mr-25" size={14} />
+          <span >Setting</span>
+        </Button>
       </div>
     )
   }

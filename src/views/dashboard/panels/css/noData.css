@@ -1,0 +1,18 @@
+.ant-result-title {
+  color: white;
+  font-size: 16px;
+}
+
+.ant-result-extra button {
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 14px;
+}
+
+.ant-result-extra button:hover {
+  border: none;
+  background-color: transparent;
+  color: white;
+}
+

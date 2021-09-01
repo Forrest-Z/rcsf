@@ -1,17 +1,20 @@
 import React, { Component } from 'react'
 import { Card, CardHeader, CardBody, CardTitle, Button } from 'reactstrap'
-import { Camera, Maximize, Minimize, Move } from 'react-feather'
+import { Camera, Maximize, Minimize, Move, X } from 'react-feather'
 import { Reflv } from '@src/components/flv-player'
 
 export class VehicleCamera extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       toggle: true
     }
   }
 
   render() {
+    const deleteChild = () => {
+      this.props.onClick()
+    }
     return (
       <Card className='h-100'>
         <CardHeader
@@ -42,6 +45,15 @@ export class VehicleCamera extends Component {
             <Button.Ripple size='sm' className='btn-icon' color='flat-primary'>
               <Maximize size={16} />
             </Button.Ripple>
+            <Button.Ripple
+            size="sm"
+            onClick={deleteChild}
+            className="btn-icon"
+            style={{ display: Boolean(Number(sessionStorage.getItem('showDelete'))) && !this.state.toggle ? '' : 'none' }}
+            color="flat-primary"
+          >
+            <X size={16} />
+          </Button.Ripple>
           </div>
         </CardHeader>
         <CardBody className='p-0'>

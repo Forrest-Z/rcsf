@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 // Thrid Components
 import { Circle, Group, Transformer, Arrow } from 'react-konva'
-import { observer } from "mobx-react"
+import { observer } from 'mobx-react'
 
 // Custom Conponents
 import { SHAPE_STYLES_STROKE, SHAPE_STYLES_FILL } from '../constants'
@@ -12,7 +12,9 @@ import { SHAPE_STYLES_STROKE, SHAPE_STYLES_FILL } from '../constants'
 // Mobx
 import StageMobx from '../../../utility/mobx/StageMobx'
 
-export const PointShape = observer(props => {
+export const PointShape = observer((props) => {
+  console.log(props)
+
   const { id, x, y, rotation, type } = props.data
 
   // State
@@ -25,29 +27,28 @@ export const PointShape = observer(props => {
   const trRef = useRef()
   const pointRef = useRef()
 
-
   // Callback
-  const onMouseOver = e => {
+  const onMouseOver = (e) => {
     setFill(SHAPE_STYLES_FILL.HOVERED)
   }
 
-  const onMouseLeave = e => {
+  const onMouseLeave = (e) => {
     setFill(SHAPE_STYLES_FILL.INACTIVE)
   }
 
-  const onTransformEnd = e => {
+  const onTransformEnd = (e) => {
     console.log(props.data)
     const node = pointRef.current
     props.data.setRotation(node.rotation())
     trRef.current.getLayer().batchDraw()
   }
 
-  const onDragMove = e => {
+  const onDragMove = (e) => {
     props.data.setX(e.target.attrs.x)
     props.data.setY(e.target.attrs.y)
   }
 
-  const onContextMenu = e => {
+  const onContextMenu = (e) => {
     e.evt.preventDefault(true)
     StageMobx.shapes.remove(props.data)
   }
@@ -73,7 +74,7 @@ export const PointShape = observer(props => {
   return (
     <Group>
       <Group
-        name='object'
+        name="object"
         rotation={rotation}
         ref={pointRef}
         x={x}
@@ -107,17 +108,15 @@ export const PointShape = observer(props => {
           pointerWidth={6}
         />
       </Group>
-      {
-        transformerShow && (
-          <Transformer
-            listening={transformerShow}
-            borderEnabled={true}
-            ref={trRef}
-            ignoreStroke
-            enabledAnchors={[]}
-          />
-        )
-      }
+      {transformerShow && (
+        <Transformer
+          listening={transformerShow}
+          borderEnabled={true}
+          ref={trRef}
+          ignoreStroke
+          enabledAnchors={[]}
+        />
+      )}
     </Group>
   )
 })

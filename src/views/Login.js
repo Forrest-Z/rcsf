@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useSkin } from '@hooks/useSkin'
 import { Link, useHistory } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { AbilityContext } from '@src/utility/context/Can'
 import useJwt from '@src/auth/jwt/useJwt'
 import { Facebook, Twitter, Mail, GitHub } from 'react-feather'
 import InputPasswordToggle from '@components/input-password-toggle'
@@ -28,19 +29,21 @@ const Login = () => {
   const [skin, setSkin] = useSkin()
   const dispatch = useDispatch()
   const history = useHistory()
-  const [username, setUsername] = useState('admin')
-  const [password, setPassword] = useState('admin')
-
-  const { register, formState: { errors }, handleSubmit } = useForm()
+  const [username, setUsername] = useState('rcs')
+  const [password, setPassword] = useState('123456')
+  const ability = useContext(AbilityContext)
+  const {
+    register,
+    formState: { errors },
+    handleSubmit
+  } = useForm()
 
   const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
     source = require(`@src/assets/images/pages/${illustration}`).default
 
   const onSubmit = (data) => {
     if (isObjEmpty(errors)) {
-      useJwt
-      .login({ username, password })
-      .then(res => {
+      useJwt.login({ username, password }).then((res) => {
         res.data.userData = {
           ability: [
             {
@@ -49,9 +52,16 @@ const Login = () => {
             }
           ]
         }
-        const data = { ...res.data.userData, accessToken: res.data.access, refreshToken: res.data.refresh }
+        const data = {
+          ...res.data.userData,
+          accessToken: res.data.access,
+          refreshToken: res.data.refresh
+        }
         dispatch(handleLogin(data))
+        console.log(res)
+        ability.update(res.data.userData.ability)
         history.push(getHomeRouteForLoggedInUser('admin'))
+        localStorage.setItem('userId', res.data.user.id)
       })
     }
   }
@@ -183,7 +193,7 @@ const Login = () => {
                   label="Remember Me"
                 />
               </FormGroup>
-              <Button.Ripple type='submit' color="primary" block>
+              <Button.Ripple type="submit" color="primary" block>
                 Sign in
               </Button.Ripple>
             </Form>

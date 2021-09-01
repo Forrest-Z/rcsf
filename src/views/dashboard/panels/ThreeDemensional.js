@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Card, CardHeader, CardBody, CardTitle, Button } from 'reactstrap'
-import { List, Maximize, Minimize, Move } from 'react-feather'
+import { List, Maximize, Minimize, Move, X } from 'react-feather'
 import ReactMapGL, {
   AttributionControl,
   ScaleControl,
@@ -32,7 +32,7 @@ const fullscreenControlStyle = {
   padding: '10px'
 }
 
-export const ThreeDemensional = () => {
+export const ThreeDemensional = (props) => {
   const [viewport, setViewport] = useState({
     latitude: 30.508,
     longitude: 114.394,
@@ -42,7 +42,9 @@ export const ThreeDemensional = () => {
   })
 
   const [toggle, setToggle] = useState(true)
-
+  const deleteChild = () => {
+    props.onClick()
+  }
   return (
     <Card className="h-100">
       <CardHeader
@@ -70,6 +72,15 @@ export const ThreeDemensional = () => {
           </Button.Ripple>
           <Button.Ripple size="sm" className="btn-icon" color="flat-primary">
             <Maximize size={16} />
+          </Button.Ripple>
+          <Button.Ripple
+            size="sm"
+            onClick={deleteChild}
+            className="btn-icon"
+            style={{ display: Boolean(Number(sessionStorage.getItem('showDelete'))) && !toggle ? '' : 'none' }}
+            color="flat-primary"
+          >
+            <X size={16} />
           </Button.Ripple>
         </div>
       </CardHeader>

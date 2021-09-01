@@ -1,4 +1,13 @@
-import { BarChart2, Home, Map, Send, Slack, Layers, HelpCircle, Circle } from 'react-feather'
+import {
+  BarChart2,
+  Home,
+  Map,
+  Send,
+  Slack,
+  Layers,
+  HelpCircle,
+  Circle
+} from 'react-feather'
 
 export default [
   {
@@ -52,7 +61,7 @@ export default [
         id: 'apidoc',
         title: 'API Document',
         icon: <Circle size={12} />,
-        navLink: 'http://localhost:8000/api/schema/doc',
+        navLink: 'http://192.168.1.240:8000/api/schema/doc',
         externalLink: true
       }
     ]

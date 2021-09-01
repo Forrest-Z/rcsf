@@ -235,7 +235,12 @@ const VehicleView = () => {
             </div>
           </CardBody>
           <div className="item-options text-center">
-            <Button.Ripple tag={Link} to='/vehicle/detail' className="btn-wishlist remove-wishlist" color="primary" >
+            <Button.Ripple
+              tag={Link}
+              to="/vehicle/detail"
+              className="btn-wishlist remove-wishlist"
+              color="primary"
+            >
               <Menu className="mr-25" size={14} />
               <span>Detail</span>
             </Button.Ripple>
@@ -334,7 +339,7 @@ const VehicleView = () => {
         </Col>
       </Row> */}
       <Row>
-        <Col xl="7">
+        <Col xl="12">
           <div className="d-fex flex-column">
             <div className="d-flex justify-content-center align-content-center w-100">
               <div
@@ -410,11 +415,11 @@ const VehicleView = () => {
             </TabContent>
           </div>
         </Col>
-        <Col xl="5">
+        {/* <Col xl="5">
           <section className="grid-view wishlist-items">
             {showGroup ? renderGroups() : renderVehicleList()}
           </section>
-        </Col>
+        </Col> */}
       </Row>
     </Fragment>
   )

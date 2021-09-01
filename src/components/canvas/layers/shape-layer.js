@@ -182,6 +182,9 @@ export const ShapeLayer = observer(props => {
     if (e.target.className === 'Transformer') {
       return
     }
+    
+    console.log(e)
+
     // clear all previous lines on the screen
     layerRef.current.find('.guid-line').forEach((l) => l.destroy())
 

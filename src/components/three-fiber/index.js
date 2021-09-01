@@ -22,7 +22,13 @@ const ThreeFiber = observer(({ points }) => {
       {StageMobx.shapes.map((item, index) => {
         switch (item.type) {
           case DRAW_TOOL_TYPE.AREA:
-            return <Polygon position={[1.2, 0, 0]} points={item.points} />
+            return (
+              <Polygon
+                key={index}
+                position={[1.2, 0, 0]}
+                points={item.points}
+              />
+            )
         }
       })}
 

@@ -8,6 +8,7 @@ import layout from './layout'
 import maps from '@src/views/map/store/reducer'
 import { vehicle, vehicleGroup } from '@src/views/vehicle/store/reducer'
 import mission from '@src/views/mission/store/reducer'
+import dashboardConfig from '../../views/dashboard/store/reducer'
 import notification from '@src/components/notification/store/reducer'
 
 const rootReducer = combineReducers({
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   mission,
   vehicle,
   vehicleGroup,
-  notification
+  notification,
+  dashboardConfig
 })
 
 export default rootReducer
