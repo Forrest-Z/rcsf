@@ -59,7 +59,7 @@ export default class JwtService {
               // ** Check: https://pixinvent.ticksy.com/ticket/2413870
               // ** Change Authorization header
               originalRequest.headers.Authorization = `${this.jwtConfig.tokenType} ${accessToken}`
-              resolve(this.axios(originalRequest)) // 经常报错
+              resolve(axios(originalRequest)) 
             })
           })
           return retryOriginalRequest
@@ -114,6 +114,7 @@ export default class JwtService {
   }
 
   refreshToken() {
+    console.log(this.getRefreshToken())
     return axios.post(this.jwtConfig.refreshEndpoint, {
       refresh: this.getRefreshToken()
     })

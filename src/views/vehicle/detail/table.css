@@ -1,0 +1,11 @@
+.dark-layout .dropdown-menu .dropdown-item {
+  width: 100%;
+}
+[dir='ltr'] .pr-1,
+[dir='ltr'] .px-1 {
+  position: fixed;
+  bottom: 0px;
+}
+[dir=ltr] .pr-1, [dir=ltr] .px-1{
+  right: 0;
+}

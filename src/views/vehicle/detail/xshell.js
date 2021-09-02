@@ -1,20 +1,28 @@
 import React, { useState, useEffect } from 'react'
 import { Card, CardBody, CardHeader, CardTitle, Button } from 'reactstrap'
 import { MoreVertical, Edit, Trash, List, Move, Maximize } from 'react-feather'
-// import './xshell.css'
-import 'xterm/css/xterm.css'
+import './xshell.css'
+// import 'xterm/css/xterm.css'
 import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
 import { AttachAddon } from 'xterm-addon-attach'
+import axios from 'axios'
+// import Sockets from '../../../components/websocket'
 
 const Xshell = () => {
   const [toggle, setToggle] = useState(true)
-  const socketURI = 'ws://127.0.0.1:4000/terminals/832'
+  let socketURI = 'ws://127.0.0.1:4000/terminals/12528'
+
   let socket = ''
   const initTerm = () => {
-    let term = new Terminal({
-      fontSize: 14,
-      cursorBlink: true
+    const term = new Terminal({
+      // fontSize: 13,
+      cursorBlink: true,
+      fontWeight: 400,
+      fontSize: 15,
+      rows: 22
+      // cols: 400
+      // cursorBlink: true
       // cursorStyle: 'underline', //光标样式
       //   cursorBlink: true, // 光标闪烁
       //   convertEol: true, //启用时，光标将设置为下一行的开头
@@ -25,18 +33,28 @@ const Xshell = () => {
       //       cursor: 'help',//设置光标
       //   }
     })
-    const attachAddon = new AttachAddon(socket)
+    term.open(document.getElementById('xterm'))
+    // term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ')
+    // let term = new Terminal({
+    //   fontSize: 14,
+
+    // })
+    const attachAddon = new AttachAddon(socket) // 引入这个会导致滚动条到最底部
     const fitAddon = new FitAddon()
     term.loadAddon(attachAddon)
     term.loadAddon(fitAddon)
-    term.open(document.getElementById('xterm'))
+    // term.open(document.getElementById('xterm'))
     fitAddon.fit()
-    term.focus()
-    term = term
+    // term.prompt = () => {
+    //   term.write('15151548515 ')
+    // }
+    // term.focus()
+    // term = term
   }
 
   const socketOnOpen = () => {
-    socket.onopen = () => {
+    socket.onopen = (e) => {
+      console.log(e)
       // 链接成功后
       initTerm()
     }
@@ -47,7 +65,9 @@ const Xshell = () => {
     }
   }
   const socketOnError = () => {
-    socket.onerror = () => {}
+    socket.onerror = (e) => {
+      // alert('websocket连接失败，请检查后重试……')
+    }
   }
   const initSocket = () => {
     socket = new WebSocket(socketURI)
@@ -57,7 +77,21 @@ const Xshell = () => {
   }
 
   useEffect(() => {
-    initSocket()
+    axios
+      .post('http://127.0.0.1:4000/terminals')
+      .then((res) => {
+        // 获取分配的pid
+        console.log(res.data)
+        socketURI = `ws://127.0.0.1:4000/terminals/${res.data}`
+        console.log(socketURI)
+        initSocket()
+        console.log(document.getElementById('xterm').scrollHeight)
+      })
+      .catch((e) => {
+        document.getElementById(
+          'xterm'
+        ).innerHTML = `<h3 class='text-center'>websocket连接失败，请检查后重试……</h3>`
+      })
   }, [])
 
   return (
@@ -92,7 +126,7 @@ const Xshell = () => {
           </div>
         </CardHeader>
         <CardBody>
-          <div id="xterm" class="xterm" />
+          <div id="xterm" className="xterm" />
         </CardBody>
       </Card>
     </div>

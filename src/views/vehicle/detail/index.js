@@ -12,6 +12,8 @@ import LineColorChart from '../../../components/echarts/lineColorChart'
 import LineChart from '../../../components/echarts/lineChart'
 import TableComponent from './table'
 import Xshell from './xshell'
+import Ctrolls from './ctrolls'
+import Camera from './camera'
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
@@ -32,18 +34,18 @@ const defaultLayouts = {
       h: 9
     },
     {
-      i: 'task',
-      x: 0,
-      y: 9,
-      w: 12,
-      h: 9
-    },
-    {
       i: 'xshell',
       x: 0,
       y: 22,
       w: 12,
       h: 16
+    },
+    {
+      i: 'task',
+      x: 0,
+      y: 38,
+      w: 12,
+      h: 22
     }
   ],
   md: [
@@ -62,10 +64,17 @@ const defaultLayouts = {
       h: 10
     },
     {
-      i: 'task',
+      i: 'camera',
+      x: 4,
+      y: 10,
+      w: 8,
+      h: 12
+    },
+    {
+      i: 'ctrolls',
       x: 0,
       y: 10,
-      w: 12,
+      w: 4,
       h: 12
     },
     {
@@ -74,6 +83,13 @@ const defaultLayouts = {
       y: 22,
       w: 12,
       h: 16
+    },
+    {
+      i: 'task',
+      x: 0,
+      y: 38,
+      w: 12,
+      h: 22
     }
   ]
 }
@@ -164,6 +180,12 @@ const VehicleDetail = () => {
       </div>
       <div key="xshell">
         <Xshell />
+      </div>
+      <div key="ctrolls">
+        <Ctrolls />
+      </div>
+      <div key="camera">
+        <Camera />
       </div>
     </ResponsiveGridLayout>
   )

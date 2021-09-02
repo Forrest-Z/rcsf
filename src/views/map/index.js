@@ -143,6 +143,7 @@ const MapView = () => {
 
   const dataToRender = () => {
     if (store.data.length > 0) {
+      console.log(store.data)
       return store.data
     } else {
       return []
