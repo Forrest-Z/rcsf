@@ -7,7 +7,7 @@ import { Stage } from 'react-konva'
 import { observer } from 'mobx-react'
 
 // Custom Components
-import { GridLayer, OriginAxisLayer, MapLayer, ShapeLayer } from './layers'
+import { GridLayer, OriginAxisLayer, MapLayer, ShapeLayer, PathLayer } from './layers'
 import { getMouseRealPos } from './utils/Coordinate'
 import { DRAW_TOOL_TYPE } from './constants'
 
@@ -180,6 +180,7 @@ export const RCSCanvas = observer((props) => {
         y={0}
       />
       <ShapeLayer visible={true} />
+      <PathLayer />
     </Stage>
   )
 })

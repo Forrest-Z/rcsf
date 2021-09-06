@@ -20,7 +20,6 @@ import { DRAW_TOOL_TYPE } from '@src/components/canvas/constants'
 // Mobx
 import StageMobx from '../../../../utility/mobx/StageMobx'
 
-
 const Elements = observer((props) => {
   // State
   const [pointTree, setPointTree] = useState([])
@@ -109,7 +108,13 @@ const Elements = observer((props) => {
           }
         >
           {pointTree.map((item) => (
-            <TreeNode title={item.title} key={item.key} />
+            <TreeNode
+              title={item.title}
+              key={item.key}
+              icon={
+                <Circle className="mb-50 bg-light rounded-circle" size={10} />
+              }
+            />
           ))}
         </TreeNode>
 
@@ -123,7 +128,13 @@ const Elements = observer((props) => {
           }
         >
           {areaTree.map((item) => (
-            <TreeNode title={item.title} key={item.key} />
+            <TreeNode
+              title={item.title}
+              key={item.key}
+              icon={
+                <Circle className="mb-50 bg-light rounded-circle" size={10} />
+              }
+            />
           ))}
         </TreeNode>
 
@@ -137,7 +148,9 @@ const Elements = observer((props) => {
           }
         >
           {blockTree.map((item) => (
-            <TreeNode title={item.title} key={item.key} />
+            <TreeNode title={item.title} key={item.key}               icon={
+              <Circle className="mb-50 bg-light rounded-circle" size={10} />
+            } />
           ))}
         </TreeNode>
       </Tree>

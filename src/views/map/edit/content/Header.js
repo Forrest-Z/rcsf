@@ -55,9 +55,9 @@ const PointDrawTool = () => {
   const [type, setType] = useState('Route Point')
 
   return (
-    <UncontrolledButtonDropdown className="h-100">
+    <UncontrolledButtonDropdown className="h-100" direction='down'>
       <Button
-        className="d-flex align-items-center justify-content-center flex-column m-0 h-100 px-1 rounded-0"
+        className="d-flex align-items-center justify-content-center flex-column m-0 h-100 px-25 rounded-0"
         color="flat-dark"
         onClick={() => {
           if (type === 'Route Point') {
@@ -68,9 +68,6 @@ const PointDrawTool = () => {
             StageMobx.setDrawTool(DRAW_TOOL_TYPE.PARK_POINT)
           }
         }}
-        style={{
-          minWidth: '111px'
-        }}
       >
         <Circle
           className={`${type === 'Charge Point' && 'text-info'} 
@@ -78,12 +75,12 @@ const PointDrawTool = () => {
              ${type === 'Route Point' && 'text-success'}`}
           size={23}
         />
-        <small className="font-weight-bold" style={{ paddingTop: '5px' }}>
+        <small className="font-weight-bold pt-25" >
           {type}
         </small>
       </Button>
       <DropdownToggle
-        className="dropdown-toggle-split pl-0"
+        className="dropdown-toggle-split px-50"
         outline
         color="flat-success"
         caret
@@ -143,7 +140,7 @@ const Header = (props) => {
         <Row className="w-100 h-100">
           <Col xl="1">
             <Button
-              className="d-flex align-items-center justify-content-center flex-column m-0 h-100 rounded-0"
+              className="w-100 d-flex align-items-center justify-content-center flex-column m-0 h-100 rounded-0"
               color="flat-dark"
               onClick={() => {
                 store.dispatch(updateMap(map.id, {
@@ -154,7 +151,7 @@ const Header = (props) => {
               }}
             >
               <Save size={23} />
-              <small className="font-weight-bold" style={{ paddingTop: '5px' }}>
+              <small className="font-weight-bold pt-50">
                 Save
               </small>
             </Button>
@@ -162,14 +159,14 @@ const Header = (props) => {
 
           <Col xl="1">
             <Button
-              className="d-flex align-items-center justify-content-center flex-column m-0 h-100 rounded-0"
+              className="w-100 d-flex align-items-center justify-content-center flex-column m-0 h-100 rounded-0"
               color="flat-dark"
               onClick={() => {
                 StageMobx.setDrawTool(DRAW_TOOL_TYPE.INACTIVE)
               }}
             >
               <MousePointer size={23} />
-              <small className="font-weight-bold" style={{ paddingTop: '5px' }}>
+              <small className="font-weight-bold pt-50">
                 Mouse
               </small>
             </Button>
@@ -181,14 +178,14 @@ const Header = (props) => {
 
           <Col xl="1">
             <Button
-              className="d-flex align-items-center justify-content-center flex-column m-0 h-100 rounded-0"
+              className="w-100 d-flex align-items-center justify-content-center flex-column m-0 h-100 rounded-0"
               color="flat-dark"
               onClick={() => {
                 StageMobx.setDrawTool(DRAW_TOOL_TYPE.AREA)
               }}
             >
               <Square className="text-success" size={23} />
-              <small className="font-weight-bold" style={{ paddingTop: '5px' }}>
+              <small className="font-weight-bold pt-50">
                 Area
               </small>
             </Button>
@@ -196,14 +193,14 @@ const Header = (props) => {
 
           <Col xl="1">
             <Button
-              className="d-flex align-items-center justify-content-center flex-column m-0 h-100 rounded-0"
+              className="w-100 d-flex align-items-center justify-content-center flex-column m-0 h-100 rounded-0"
               color="flat-dark"
               onClick={() => {
                 StageMobx.setDrawTool(DRAW_TOOL_TYPE.BLOCK)
               }}
             >
               <Square className="text-danger text-lighten-2" size={23} />
-              <small className="font-weight-bold" style={{ paddingTop: '5px' }}>
+              <small className="font-weight-bold pt-50">
                 Block
               </small>
             </Button>
@@ -211,11 +208,11 @@ const Header = (props) => {
 
           <Col xl="1">
             <Button
-              className="d-flex align-items-center justify-content-center flex-column m-0 h-100 rounded-0"
+              className="w-100 d-flex align-items-center justify-content-center flex-column m-0 h-100 rounded-0"
               color="flat-dark"
             >
               <CreditCard className="text-info text-lighten-2" size={23} />
-              <small className="font-weight-bold" style={{ paddingTop: '5px' }}>
+              <small className="font-weight-bold pt-25">
                 Group
               </small>
             </Button>

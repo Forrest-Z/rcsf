@@ -27,47 +27,43 @@ import { FcHighBattery, FcChargeBattery } from 'react-icons/fc'
 import { GiPlug, GiUnplugged } from 'react-icons/gi'
 import { Menu, Item, useContextMenu } from 'react-contexify'
 import { createPortal } from 'react-dom'
+
 // ** Custom Components
 import Avatar from '@components/avatar'
+
+// ** Store & Actions
+import { useDispatch, useSelector } from 'react-redux'
+import { getVehicle } from '../../vehicle/store/actions'
 
 // Styles
 import 'react-contexify/dist/ReactContexify.min.css'
 import '@styles/react/libs/context-menu/context-menu.scss'
+import ClientsMobx from '../../../utility/mobx/ClientsMobx'
 
 function Portal({ children }) {
   return createPortal(children, document.body)
 }
 
 export const VehicleList = (props) => {
+  const dispatch = useDispatch()
+  const store = useSelector((state) => state.vehicle)
+
   const [toggle, setToggle] = useState(false)
   const [actived, setActived] = useState(0)
 
-  const datas = [
-    {
-      robot_name: 'Robot-01',
-      robot_label: 'Sweep Robot',
-      robot_battery: 100,
-      robot_status: 'CHARGING'
-    },
-    {
-      robot_name: 'Robot-02',
-      robot_label: 'Sweep Robot',
-      robot_battery: 100,
-      robot_status: 'CHARGING'
-    },
-    {
-      robot_name: 'Robot-03',
-      robot_label: 'Sweep Robot',
-      robot_battery: 100,
-      robot_status: 'CHARGING'
-    },
-    {
-      robot_name: 'Robot-04',
-      robot_label: 'Sweep Robot',
-      robot_battery: 100,
-      robot_status: 'CHARGING'
-    }
-  ]
+  useEffect(() => {
+    dispatch(getVehicle())
+  }, [dispatch])
+
+  useEffect(() => {
+    const vehicleList = []
+    store.data.map((item) => {
+      vehicleList.push(item.name)
+    })
+
+    ClientsMobx.init(vehicleList)
+    ClientsMobx.enableAll()
+  }, [store && store.data.length])
 
   const { show } = useContextMenu({
     id: 'menu_id'
@@ -115,7 +111,10 @@ export const VehicleList = (props) => {
             size="sm"
             onClick={deleteChild}
             className="btn-icon"
-            style={{ display: Boolean(Number(sessionStorage.getItem('showDelete'))) && !toggle ? '' : 'none' }}
+            style={{
+              display:
+                Boolean(Number(sessionStorage.getItem('showDelete'))) && !toggle ? '' : 'none'
+            }}
             color="flat-primary"
           >
             <X size={16} />
@@ -149,155 +148,59 @@ export const VehicleList = (props) => {
           </Menu>
         </Portal>
         <ListGroup>
-          {datas.map((el, index) => {
-            return (
-              <div key={index}>
-                <ListGroupItem
-                  className={`border-0 ${
-                    actived === index ? 'bg-primary' : ''
-                  }`}
-                  onContextMenu={handleContextMenu}
-                  onClick={() => {
-                    setActived(index)
-                  }}
-                  key={index}
-                  id={el.robot_name}
-                >
-                  <Row>
-                    <Col
-                      className="d-flex justify-content-left align-items-center"
-                      xl="7"
-                    >
-                      <Avatar
-                        className="mr-1"
-                        content="R"
-                        size="lg"
-                        status="online"
-                        color="dark"
-                      />
-                      <div className="d-flex flex-column mr-2">
-                        <h4 className="text-truncate mb-0">{el.robot_name}</h4>
-                        <small className="text-truncate mb-0">
-                          {el.robot_label}
-                        </small>
-                      </div>
-                    </Col>
-                    <Col xl="5">
-                      <div className="d-flex flex-column">
-                        <div className="mb-50">
-                          <FcChargeBattery size={20} />
+          {store &&
+            store.data.map((el, index) => {
+              return (
+                <div key={index}>
+                  <ListGroupItem
+                    className={`border-0 ${
+                      actived === index ? 'bg-primary' : ''
+                    }`}
+                    onContextMenu={handleContextMenu}
+                    onClick={() => {
+                      setActived(index)
+                    }}
+                    key={index}
+                    id={el.name}
+                  >
+                    <Row>
+                      <Col
+                        className="d-flex justify-content-left align-items-center"
+                        xl="7"
+                      >
+                        <Avatar
+                          className="mr-1"
+                          content="R"
+                          size="lg"
+                          status="online"
+                          color="dark"
+                        />
+                        <div className="d-flex flex-column mr-2">
+                          <h4 className="text-truncate mb-0">{el.name}</h4>
                           <small className="text-truncate mb-0">
-                            {el.robot_battery}%
+                            {el.type}
                           </small>
                         </div>
-                        <div>
-                          <Badge color="light-info">{el.robot_status}</Badge>
+                      </Col>
+                      <Col xl="5">
+                        <div className="d-flex flex-column">
+                          <div className="mb-50">
+                            <FcChargeBattery size={20} />
+                            <small className="text-truncate mb-0">
+                              {el.battry} %
+                            </small>
+                          </div>
+                          <div>
+                            <Badge color="light-info">{el.state}</Badge>
+                          </div>
                         </div>
-                      </div>
-                    </Col>
-                  </Row>
-                </ListGroupItem>
-                <hr className="w-100 p-0 my-25" />
-              </div>
-            )
-          })}
-
-          {/* <ListGroupItem className="border-0">
-            <Row>
-              <Col
-                className="d-flex justify-content-left align-items-center"
-                xl="7"
-              >
-                <Avatar
-                  className="mr-1"
-                  content="R"
-                  size="lg"
-                  status="online"
-                  color="dark"
-                />
-                <div className="d-flex flex-column mr-2">
-                  <h4 className="text-truncate mb-0">Robot-02</h4>
-                  <small className="text-truncate mb-0">Sweep Robot</small>
+                      </Col>
+                    </Row>
+                  </ListGroupItem>
+                  <hr className="w-100 p-0 my-25" />
                 </div>
-              </Col>
-              <Col xl="5">
-                <div className="d-flex flex-column">
-                  <div className="mb-50">
-                    <FcHighBattery size={20} />
-                    <small className="text-truncate mb-0">80%</small>
-                  </div>
-                  <div>
-                    <Badge color="light-primary">IDLE</Badge>
-                  </div>
-                </div>
-              </Col>
-            </Row>
-          </ListGroupItem>
-          <hr className="w-100 p-0 mb-1" />
-          <ListGroupItem className="border-0">
-            <Row>
-              <Col
-                className="d-flex justify-content-left align-items-center"
-                xl="7"
-              >
-                <Avatar
-                  className="mr-1"
-                  content="R"
-                  size="lg"
-                  status="online"
-                  color="dark"
-                />
-                <div className="d-flex flex-column mr-2">
-                  <h4 className="text-truncate mb-0">Robot-03</h4>
-                  <small className="text-truncate mb-0">Sweep Robot</small>
-                </div>
-              </Col>
-              <Col xl="5">
-                <div className="d-flex flex-column">
-                  <div className="mb-50">
-                    <FcHighBattery size={20} />
-                    <small className="text-truncate mb-0">80%</small>
-                  </div>
-                  <div>
-                    <Badge color="light-success">PROCESS</Badge>
-                  </div>
-                </div>
-              </Col>
-            </Row>
-          </ListGroupItem>
-          <hr className="w-100 p-0 mb-1" />
-          <ListGroupItem className="border-0">
-            <Row>
-              <Col
-                className="d-flex justify-content-left align-items-center"
-                xl="7"
-              >
-                <Avatar
-                  className="mr-1"
-                  content="R"
-                  size="lg"
-                  status="online"
-                  color="dark"
-                />
-                <div className="d-flex flex-column mr-2">
-                  <h4 className="text-truncate mb-0 text-black">Robot-04</h4>
-                  <small className="text-truncate mb-0">Sweep Robot</small>
-                </div>
-              </Col>
-              <Col xl="5">
-                <div className="d-flex flex-column">
-                  <div className="mb-50">
-                    <FcHighBattery size={20} />
-                    <small className="text-truncate mb-0">80%</small>
-                  </div>
-                  <div>
-                    <Badge color="light-danger">ERROR</Badge>
-                  </div>
-                </div>
-              </Col>
-            </Row>
-          </ListGroupItem>
-          <hr className="w-100 p-0 mb-1" /> */}
+              )
+            })}
         </ListGroup>
       </CardBody>
     </Card>
