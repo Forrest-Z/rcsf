@@ -11,9 +11,9 @@ import {
   VehicleLidar,
   TimeLine,
   Robot,
-  TableList,
   NoData
 } from './panels' // 首页所有子组件
+import TableList from '../../components/table'
 import { ThemeColors } from '@src/utility/context/ThemeColors'
 
 // ** Store & Actions

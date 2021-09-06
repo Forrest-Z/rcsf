@@ -11,9 +11,11 @@ import {
   VehicleLidar,
   TimeLine,
   Robot,
-  TableList,
   NoData
 } from './panels'
+
+import TableList from '../../components/table'
+
 import { ThemeColors } from '@src/utility/context/ThemeColors'
 import { Facebook, Map } from 'react-feather'
 
@@ -199,7 +201,7 @@ const Dashboard = () => {
             y: 0,
             name: componentObj[i]
           }
-        }), 
+        }),
         md: layouts.lg.map((item) => {
           return {
             ...item,

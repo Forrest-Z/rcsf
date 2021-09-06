@@ -25,13 +25,13 @@ import {
   DropdownToggle
 } from 'reactstrap'
 import { VscDebugStart } from 'react-icons/vsc'
-import './table.css'
+import '../../assets/css/table.css'
 import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
 // ** Styles
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
-const TableComponent = () => {
+const TableList = () => {
   const [toggle, setToggle] = useState(true)
   const [currentPage, setCurrentPage] = useState(0)
 
@@ -280,4 +280,4 @@ const TableComponent = () => {
   )
 }
 
-export default TableComponent
+export default TableList

@@ -10,7 +10,7 @@ import { BatteryPanel, CPUPanel, MemoryPanel } from '../../../components/panels'
 
 import LineColorChart from '../../../components/echarts/lineColorChart'
 import LineChart from '../../../components/echarts/lineChart'
-import TableComponent from './table'
+import TableList from '../../../components/table'
 import Xshell from './xshell'
 import Ctrolls from './ctrolls'
 import Camera from './camera'
@@ -184,7 +184,7 @@ const VehicleDetail = () => {
         <LineChart ref2={LineChartRef} data={LineData} />
       </div>
       <div key="task">
-        <TableComponent />
+        <TableList />
       </div>
       <div key="xshell">
         <Xshell />
