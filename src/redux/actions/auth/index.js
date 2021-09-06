@@ -4,8 +4,8 @@ import useJwt from '@src/auth/jwt/useJwt'
 const config = useJwt.jwtConfig
 
 // ** Handle User Login
-export const handleLogin = data => {
-  return dispatch => {
+export const handleLogin = (data) => {
+  return (dispatch) => {
     dispatch({
       type: 'LOGIN',
       data,
@@ -13,18 +13,21 @@ export const handleLogin = data => {
       [config.storageAccessKeyName]: data[config.storageAccessKeyName],
       [config.storageRefreshKeyName]: data[config.storageRefreshKeyName]
     })
-
     // ** Add to user, accessToken & refreshToken to localStorage
     localStorage.setItem('userData', JSON.stringify(data))
-    localStorage.setItem(config.storageAccessKeyName, JSON.stringify(data.access))
-    localStorage.setItem(config.storageRefreshKeyName, JSON.stringify(data.refresh))
+    localStorage.setItem(config.storageAccessKeyName, data.access)
+    localStorage.setItem(config.storageRefreshKeyName, data.refresh)
   }
 }
 
 // ** Handle User Logout
 export const handleLogout = () => {
-  return dispatch => {
-    dispatch({ type: 'LOGOUT', [config.storageAccessKeyName]: null, [config.storageRefreshKeyName]: null })
+  return (dispatch) => {
+    dispatch({
+      type: 'LOGOUT',
+      [config.storageAccessKeyName]: null,
+      [config.storageRefreshKeyName]: null
+    })
 
     // ** Remove user, accessToken & refreshToken from localStorage
     localStorage.removeItem('userData')
