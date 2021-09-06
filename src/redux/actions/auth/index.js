@@ -16,8 +16,8 @@ export const handleLogin = data => {
 
     // ** Add to user, accessToken & refreshToken to localStorage
     localStorage.setItem('userData', JSON.stringify(data))
-    localStorage.setItem(config.storageAccessKeyName, JSON.stringify(data.accessToken))
-    localStorage.setItem(config.storageRefreshKeyName, JSON.stringify(data.refreshToken))
+    localStorage.setItem(config.storageAccessKeyName, JSON.stringify(data.access))
+    localStorage.setItem(config.storageRefreshKeyName, JSON.stringify(data.refresh))
   }
 }
 

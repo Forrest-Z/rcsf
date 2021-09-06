@@ -13,7 +13,6 @@ export default class JwtService {
 
   constructor(jwtOverrideConfig) {
     this.jwtConfig = { ...this.jwtConfig, ...jwtOverrideConfig }
-    axios.defaults.baseURL = 'http://192.168.1.240:8000'
 
     // ** Request Interceptor
     axios.interceptors.request.use(

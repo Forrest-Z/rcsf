@@ -54,8 +54,8 @@ const Login = () => {
         }
         const data = {
           ...res.data.userData,
-          accessToken: res.data.access,
-          refreshToken: res.data.refresh
+          access: res.data.access,
+          refresh: res.data.refresh
         }
         dispatch(handleLogin(data))
         console.log(res)
