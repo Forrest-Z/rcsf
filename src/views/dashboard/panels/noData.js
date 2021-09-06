@@ -1,29 +1,27 @@
 import React from 'react'
-import { Result, Button } from 'antd'
 import { useHistory } from 'react-router'
-import 'antd/dist/antd.css' // or 'antd/dist/antd.less'
 import { ArrowRight } from 'react-feather'
-import './css/noData.css'
+import noComponent from '../../../assets/images/noData.png'
+import { Button } from 'reactstrap'
 export const NoData = () => {
-  const colorWhite = {
-    color: 'white'
-  }
   const history = useHistory()
   const goMap = () => {
     history.push('/map')
   }
   return (
-    <div className='pt-5'>
-      <Result
-        style={colorWhite}
-        title="暂无地图数据,请前往添加或启用地图"
-        extra={
-          <Button onClick={goMap} type="info" key="console">
-            前往地图配置 <ArrowRight />
-          </Button>
-        }
-        status="warning"
+    <div className="h-100 p-1">
+      <img
+        style={{ width: '100%', height: '80%', padding: '10px' }}
+        src={noComponent}
+        alt=""
       />
+      <Button
+        color="primary"
+        onClick={goMap}
+        style={{ position: 'fixed', right: '6%', bottom: '30px' }}
+      >
+        前往地图配置页
+      </Button>
     </div>
   )
 }

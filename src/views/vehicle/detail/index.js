@@ -10,10 +10,11 @@ import { BatteryPanel, CPUPanel, MemoryPanel } from '../../../components/panels'
 
 import LineColorChart from '../../../components/echarts/lineColorChart'
 import LineChart from '../../../components/echarts/lineChart'
-import TableComponent from './table'
+import TableList from '../../../components/table'
 import Xshell from './xshell'
 import Ctrolls from './ctrolls'
 import Camera from './camera'
+import Log from './log'
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
@@ -81,15 +82,22 @@ const defaultLayouts = {
       i: 'xshell',
       x: 0,
       y: 22,
-      w: 12,
-      h: 16
+      w: 6,
+      h: 19
+    },
+    {
+      i: 'log',
+      x: 6,
+      y: 22,
+      w: 6,
+      h: 19
     },
     {
       i: 'task',
       x: 0,
       y: 38,
       w: 12,
-      h: 22
+      h: 14
     }
   ]
 }
@@ -176,10 +184,13 @@ const VehicleDetail = () => {
         <LineChart ref2={LineChartRef} data={LineData} />
       </div>
       <div key="task">
-        <TableComponent />
+        <TableList />
       </div>
       <div key="xshell">
         <Xshell />
+      </div>
+      <div key="log">
+        <Log />
       </div>
       <div key="ctrolls">
         <Ctrolls />

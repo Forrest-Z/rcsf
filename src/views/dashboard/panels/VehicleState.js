@@ -63,14 +63,14 @@ export class VehicleState extends Component {
               }
             }
           },
-          colors: [this.props && this.props.danger],
+          // colors: [this.props && this.props.danger],
           fill: {
             type: 'gradient',
             gradient: {
               shade: 'dark',
               type: 'horizontal',
               shadeIntensity: 0.5,
-              gradientToColors: [this.props && this.props.primary],
+              // gradientToColors: [this.props && this.props.primary],
               inverseColors: true,
               opacityFrom: 1,
               opacityTo: 1,
@@ -129,7 +129,7 @@ export class VehicleState extends Component {
               shade: 'dark',
               type: 'horizontal',
               shadeIntensity: 0.5,
-              gradientToColors: [this.props.success],
+              // gradientToColors: [this.props.success],
               inverseColors: true,
               opacityFrom: 1,
               opacityTo: 1,

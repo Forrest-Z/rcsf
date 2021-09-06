@@ -8,7 +8,9 @@ import {
   Maximize,
   StopCircle,
   AlignLeft,
-  ChevronDown
+  ChevronDown,
+  Loader,
+  Eye
 } from 'react-feather'
 import {
   Card,
@@ -23,13 +25,13 @@ import {
   DropdownToggle
 } from 'reactstrap'
 import { VscDebugStart } from 'react-icons/vsc'
-import './table.css'
+import '../../assets/css/table.css'
 import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
 // ** Styles
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
-const TableComponent = () => {
+const TableList = () => {
   const [toggle, setToggle] = useState(true)
   const [currentPage, setCurrentPage] = useState(0)
 
@@ -74,17 +76,6 @@ const TableComponent = () => {
     }
   ])
 
-  const ExpandableTable = ({ data }) => {
-    // 下拉显示的内容
-    return (
-      <div className="expandable-content p-2">
-        <p>
-          任务描述: <span>{data.describe}</span>
-        </p>
-      </div>
-    )
-  }
-
   const stopClick = (el) => {
     // 暂停
     el.status = 0
@@ -100,10 +91,6 @@ const TableComponent = () => {
   const handlePagination = (page) => {
     // 分页
     setCurrentPage(page.selected)
-  }
-
-  const rowClick = (e) => {
-    console.log(e)
   }
 
   const columns = [
@@ -167,9 +154,6 @@ const TableComponent = () => {
             <UncontrolledDropdown>
               <DropdownToggle
                 className="icon-btn hide-arrow"
-                style={{
-                  visibility: row.status === 2 ? 'hidden' : 'visible'
-                }}
                 color="transparent"
                 size="sm"
                 caret
@@ -177,6 +161,15 @@ const TableComponent = () => {
                 <MoreVertical size={15} />
               </DropdownToggle>
               <DropdownMenu right>
+                <DropdownItem
+                  // href="/" // 查看详情
+                  onClick={() => {
+                    // runClick(row)
+                  }}
+                >
+                  <Eye className="mr-50" size={15} />
+                  <span className="align-middle">Detail</span>
+                </DropdownItem>
                 <DropdownItem
                   // href="/" // 暂停
                   onClick={() => {
@@ -187,16 +180,7 @@ const TableComponent = () => {
                   <StopCircle className="mr-50" size={15} />
                   <span className="align-middle">Stop</span>
                 </DropdownItem>
-                <DropdownItem
-                  // href="/" // 开始
-                  onClick={() => {
-                    runClick(row)
-                  }}
-                  style={{ display: row.status === 0 ? '' : 'none' }}
-                >
-                  <VscDebugStart className="mr-50" size={15} />
-                  <span className="align-middle">Runing</span>
-                </DropdownItem>
+
                 <DropdownItem // 编辑
                   // href="/"
                   onClick={(e) => e.preventDefault()}
@@ -282,119 +266,18 @@ const TableComponent = () => {
             noHeader
             pagination
             data={TableData}
-            expandableRows
             columns={columns}
-            expandOnRowClicked
             className="react-dataTable"
             sortIcon={<ChevronDown size={10} />}
             paginationDefaultPage={currentPage + 1}
-            expandableRowsComponent={<ExpandableTable />}
+            striped={true}
             paginationRowsPerPageOptions={[10, 25, 50, 100]}
             paginationComponent={CustomPagination} // 引入分页组件
           />
-
-          {/* <Table responsive>
-            <thead>
-              <tr>
-                <th>Id</th>
-                <th>Job Name</th>
-                <th>Status</th>
-                <th>Job Describe</th>
-                <th>Start Time</th>
-                <th>Final Time</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {TableData.map((el, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{el.id}</td>
-                    <td>{el.jobName}</td>
-                    <td>
-                      {el.status === 0 ? (
-                        <Badge pill color="light-warning" className="mr-1">
-                          Waiting
-                        </Badge>
-                      ) : el.status === 1 ? (
-                        <Badge pill color="light-success" className="mr-1">
-                          Runing
-                        </Badge>
-                      ) : (
-                        <Badge pill color="light-danger" className="mr-1">
-                          Finish
-                        </Badge>
-                      )}
-                    </td>
-                    <td>{el.describe}</td>
-                    <td>{el.starTime}</td>
-                    <td>{el.endTime}</td>
-                    <td>
-                      <UncontrolledDropdown>
-                        <DropdownToggle
-                          className="icon-btn hide-arrow"
-                          // style={{
-                          //   visibility: el.status === 2 ? 'hidden' : 'visible'
-                          // }}
-                          color="transparent"
-                          size="sm"
-                          caret
-                        >
-                          <MoreVertical size={15} />
-                        </DropdownToggle>
-                        <DropdownMenu right>
-                          <DropdownItem
-                            // href="/" // 暂停
-                            onClick={() => {
-                              stopClick(el)
-                            }}
-                            style={{ display: el.status === 1 ? '' : 'none' }}
-                          >
-                            <StopCircle className="mr-50" size={15} />
-                            <span className="align-middle">Stop</span>
-                          </DropdownItem>
-                          <DropdownItem
-                            // href="/" // 开始
-                            onClick={(e) => e.preventDefault()}
-                            style={{ display: el.status === 0 ? '' : 'none' }}
-                          >
-                            <VscDebugStart className="mr-50" size={15} />
-                            <span className="align-middle">Runing</span>
-                          </DropdownItem>
-                          <DropdownItem // 编辑
-                            // href="/"
-                            onClick={(e) => e.preventDefault()}
-                            style={{ display: el.status === 0 ? '' : 'none' }}
-                          >
-                            <Edit className="mr-50" size={15} />{' '}
-                            <span className="align-middle">Edit</span>
-                          </DropdownItem>
-                          <DropdownItem // 查看详情
-                            onClick={() => detailClick(el)}
-                          >
-                            <AlignLeft className="mr-50" size={15} />{' '}
-                            <span className="align-middle">Detail</span>
-                          </DropdownItem>
-                          <DropdownItem
-                            // href="/" // 删除
-                            onClick={(e) => e.preventDefault()}
-                            style={{ display: el.status === 0 ? '' : 'none' }}
-                          >
-                            <Trash className="mr-50" size={15} />{' '}
-                            <span className="align-middle">Delete</span>
-                          </DropdownItem>
-                        </DropdownMenu>
-                      </UncontrolledDropdown>
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </Table> */}
         </CardBody>
       </Card>
     </div>
   )
 }
 
-export default TableComponent
+export default TableList

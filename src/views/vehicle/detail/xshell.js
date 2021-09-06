@@ -7,7 +7,6 @@ import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
 import { AttachAddon } from 'xterm-addon-attach'
 import axios from 'axios'
-// import Sockets from '../../../components/websocket'
 
 const Xshell = () => {
   const [toggle, setToggle] = useState(true)
@@ -20,7 +19,7 @@ const Xshell = () => {
       cursorBlink: true,
       fontWeight: 400,
       fontSize: 15,
-      rows: 22
+      rows: 27
       // cols: 400
       // cursorBlink: true
       // cursorStyle: 'underline', //光标样式
@@ -59,14 +58,16 @@ const Xshell = () => {
       initTerm()
     }
   }
+
   const socketOnClose = () => {
     socket.onclose = () => {
       // console.log('close socket')
     }
   }
+
   const socketOnError = () => {
     socket.onerror = (e) => {
-      // alert('websocket连接失败，请检查后重试……')
+
     }
   }
   const initSocket = () => {
@@ -95,7 +96,7 @@ const Xshell = () => {
   }, [])
 
   return (
-    <div>
+    <div className="h-100">
       <Card className="h-100">
         <CardHeader
           onMouseEnter={(e) => {
@@ -126,7 +127,7 @@ const Xshell = () => {
           </div>
         </CardHeader>
         <CardBody>
-          <div id="xterm" className="xterm" />
+          <div  id="xterm" className="xterm h-100" />
         </CardBody>
       </Card>
     </div>

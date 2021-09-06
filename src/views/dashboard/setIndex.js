@@ -11,9 +11,9 @@ import {
   VehicleLidar,
   TimeLine,
   Robot,
-  TableList,
   NoData
 } from './panels' // 首页所有子组件
+import TableList from '../../components/table'
 import { ThemeColors } from '@src/utility/context/ThemeColors'
 
 // ** Store & Actions
@@ -108,8 +108,8 @@ const setDashboard = () => {
     console.log(data)
     setUserDashboardConfig({
       // 修改各个组件的位置
-      id: 1,
-      data: { dashboard_layout: data, user: 1 }
+      id: localStorage.getItem('userId'),
+      data: { dashboard_layout: data, user: localStorage.getItem('userId') }
     })
   }
 
