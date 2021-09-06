@@ -25,6 +25,7 @@ const RCSCanvasContainer = () => {
   }, [])
   return (
     <div className="h-100" ref={ref}>
+       {/* <NoData className="h-100" /> */}
       {status ? (
         <NoData className="h-100" />
       ) : (
@@ -102,7 +103,7 @@ export class TwoDemensional extends Component {
                 color="flat-primary"
                 onClick={() => {
                   this.props.onFullScreen(
-                    'two-demensional',
+                    'TwoDemensional',
                     this.state.fullScreen
                   )
                   this.setState({

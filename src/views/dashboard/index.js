@@ -196,7 +196,18 @@ const Dashboard = () => {
             w: item.i === i ? 12 : 0,
             h: item.i === i ? 30 : 0,
             x: 0,
-            y: 0
+            y: 0,
+            name: componentObj[i]
+          }
+        }), 
+        md: layouts.lg.map((item) => {
+          return {
+            ...item,
+            w: item.i === i ? 12 : 0,
+            h: item.i === i ? 30 : 0,
+            x: 0,
+            y: 0,
+            name: componentObj[i]
           }
         })
       })
@@ -244,8 +255,8 @@ const Dashboard = () => {
         const name = el.i
         el.name = componentObj[name] // 将子组件绑定到name属性上
       })
-      console.log(res.data[0].dashboard_layout)
       setPageJson(res.data[0].dashboard_layout)
+      // debugger
       pageJson.forEach((el) => {
         defaultLayouts.md.push({
           i: el.i,
@@ -331,7 +342,7 @@ const Dashboard = () => {
         //   }
         // } else {
         return (
-          <div key={el.i} hidden={!['all', el.name].includes(visible)}>
+          <div key={el.i} hidden={!['all', el.i].includes(visible)}>
             <el.name onFullScreen={handleMaximize} />
           </div>
         )
